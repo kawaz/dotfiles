@@ -1,0 +1,14 @@
+[user]
+	name = Yoshiaki Kawazu
+	email = kawazzz@gmail.com
+[color]
+  ui = auto
+[alias]
+  ci = commit -a
+  st = status
+  co = checkout
+  tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --date=iso
+[core]
+  editor = vim
+  pager = "LESS=-R less"
+  excludesfile = ~/.gitignore

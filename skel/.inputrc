@@ -1,0 +1,4 @@
+# コマンド履歴の補完
+# 例えば s と入力した状態で C-p を押すと s で始まるコマンド履歴が補完されるようになります。
+"\C-n":history-search-forward
+"\C-p":history-search-backward

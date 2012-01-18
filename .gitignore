@@ -1,0 +1,3 @@
+skel/.vim/bundle/*
+!skel/.vim/bundle/vundle
+skel/.vim/phpmanual-cache/
