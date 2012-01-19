@@ -78,8 +78,8 @@ Bundle 'ref.vim'
 Bundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
-" 後で調べて試す
-"Bundle 'AutoComplPop'
+" C-pとかしなくても勝手に補完が動くようになる
+Bundle 'AutoComplPop'
 
 "-----------------------------------------------------------------------------
 " 文字コード関連
