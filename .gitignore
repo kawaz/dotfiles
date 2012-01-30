@@ -1,3 +1,5 @@
 skel/.vim/bundle/*
 !skel/.vim/bundle/vundle
+skel/.vim/dict/
 skel/.vim/phpmanual-cache/
+skel/.vim/tags/
