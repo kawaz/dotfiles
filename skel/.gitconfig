@@ -3,11 +3,13 @@
 	email = kawazzz@gmail.com
 [color]
   ui = auto
+[log]
+  date = iso
 [alias]
   ci = commit -a
   st = status
   co = checkout
-  tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --date=iso
+  tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
 [core]
   editor = vim
   pager = "LESS=-R less"
