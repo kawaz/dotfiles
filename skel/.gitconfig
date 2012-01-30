@@ -12,5 +12,5 @@
   tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
 [core]
   editor = vim
-  pager = "LESS=-R less"
+  paget = "less -R"
   excludesfile = ~/.gitignore
