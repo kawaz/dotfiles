@@ -19,3 +19,9 @@ if [ -s ~/.nvm/nvm.sh ]; then
   . ~/.nvm/nvm.sh
 fi
 
+
+keychain -q --agents ssh 2>/dev/null
+if [ -f ~/.keychain/$HOSTNAME-sh ]; then
+  . ~/.keychain/$HOSTNAME-sh
+fi
+
