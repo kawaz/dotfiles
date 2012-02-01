@@ -220,6 +220,8 @@ if has("syntax")
 endif
 "行番号を表示しない
 set nonumber
+"カーソル行の強調表示
+set cursorline
 "タブの左側にカーソル表示
 set listchars=tab:\ \ 
 set list
