@@ -22,7 +22,7 @@ Bundle 'buftabs'
   set laststatus=2
   set statusline=%{exists('g:buftabs_list')?(g:buftabs_list):''}%=\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
 
-if $SUDO_USER == ''
+if $SUDO_USER == '' "uniteはsudo vimでは使えないのでifで囲む
   Bundle 'unite.vim'
     "以下の設定は http://www.karakaram.com/vim/unite/#vimrc を参考にした
     "unite prefix key.
