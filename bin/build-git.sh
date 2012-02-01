@@ -8,7 +8,7 @@ src="$env/src/git"
 dest="$env/dest/git"
 mkdir -p "$src" "$dest" || exit 1
 
-if [ ! -d "$src" ]; then
+if [ ! -d "$src/.git" ]; then
   git clone git://github.com/gitster/git.git "$src" || exit 1
 fi
 cd "$src" || exit 1
