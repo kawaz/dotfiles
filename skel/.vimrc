@@ -192,6 +192,12 @@ function! ToggleAutoIndent()
     set autoindent
   endif
 endfunction
+"補完ウィンドウ表示中、Enterで補完キャンセル＆改行する
+inoremap <expr> <CR> pumvisible() ? "\<C-E>\<CR>" : "\<CR>"
+"補完ウィンドウ表示中、Tabで補完決定にする
+inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
+"補完ウィンドウ表示中、ESCで補完キャンセルする
+inoremap <expr> <ESC> pumvisible() ? "\<C-E>" : "\<ESC>"
 
 "-----------------------------------------------------------------------------
 " 検索関連
