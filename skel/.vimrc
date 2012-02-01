@@ -183,6 +183,15 @@ inoremap <expr> ( &ai==1 ? "()\<LEFT>" : "("
 inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
 inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
 inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
+"オートインデントを<INSERT>でトグルする
+nnoremap <expr> <INSERT> ToggleAutoIndent()
+function! ToggleAutoIndent()
+  if &ai
+    set noai
+  else
+    set ai
+  endif
+endfunction
 
 "-----------------------------------------------------------------------------
 " 検索関連
