@@ -13,6 +13,9 @@ Bundle 'coffee.vim'
 Bundle 'vim-coffee-script'
 Bundle 'Markdown'
 
+" フォルディング系
+Bundle 'phpfolding.vim'
+
 Bundle 'buftabs'
   "バッファタブにパスを省略してファイル名のみ表示する(buftabs.vim)
   let g:buftabs_only_basename=1
@@ -181,6 +184,7 @@ inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
+inoremap ` ``<LEFT>
 
 "-----------------------------------------------------------------------------
 " 検索関連
