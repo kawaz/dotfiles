@@ -182,13 +182,13 @@ augroup END
 set nocompatible
 "バックスペースで改行やインデントを削除出来るようにする
 set backspace=indent,eol,start
-"閉じ括弧や閉じクオートを自動補完
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-inoremap ` ``<LEFT>
+"閉じ括弧や閉じクオートを自動補完(autoindent有効時のみ)
+inoremap <expr> { &ai==1 ? "{}\<LEFT>" : "{"
+inoremap <expr> [ &ai==1 ? "[]\<LEFT>" : "["
+inoremap <expr> ( &ai==1 ? "()\<LEFT>" : "("
+inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
+inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
+inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
 
 "-----------------------------------------------------------------------------
 " 検索関連
