@@ -186,10 +186,10 @@ inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
 "オートインデントを<INSERT>でトグルする
 nnoremap <expr> <INSERT> ToggleAutoIndent()
 function! ToggleAutoIndent()
-  if &ai
-    set noai
+  if &autoindent
+    set noautoindent
   else
-    set ai
+    set autoindent
   endif
 endfunction
 
