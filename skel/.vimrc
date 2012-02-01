@@ -25,7 +25,8 @@ Bundle 'buftabs'
   set laststatus=2
   set statusline=%{exists('g:buftabs_list')?(g:buftabs_list):''}%=\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
 
-if $SUDO_USER == '' "uniteはsudo vimでは使えないのでifで囲む
+"uniteはsudo vimや古いvimで使えないのでifで囲む
+if $SUDO_USER == '' && !(v:version < 702)
   Bundle 'unite.vim'
     "以下の設定は http://www.karakaram.com/vim/unite/#vimrc を参考にした
     "unite prefix key.
@@ -84,19 +85,22 @@ Bundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
 " C-pとかしなくても勝手に補完が動くようになる
-Bundle 'AutoComplPop'
-  " 言語ごとの保管辞書を読み込む
-  autocmd FileType * let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i'
-  autocmd FileType php let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/php.dict'
-  autocmd FileType perl let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/perl.dict'
-  autocmd FileType ruby let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/ruby.dict'
-  autocmd FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
-  autocmd FileType erlang let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/erlang.dict'
-  " PHPの辞書とtagsを読み込む
-  autocmd FileType php :set dictionary=~/.vim/dict/php.dict
-  autocmd FileType php :set tags+=~/.vim/tags/pear.tags
-  " 大文字小文字を無視して自動補完
-  let g:AutoComplPop_IgnoreCaseOption = 1
+" AutoComplPopは古いvimで動かないのでifで囲む"
+if !(v:version < 702)
+  Bundle 'AutoComplPop'
+    " 言語ごとの保管辞書を読み込む
+    autocmd FileType * let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i'
+    autocmd FileType php let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/php.dict'
+    autocmd FileType perl let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/perl.dict'
+    autocmd FileType ruby let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/ruby.dict'
+    autocmd FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
+    autocmd FileType erlang let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/erlang.dict'
+    " PHPの辞書とtagsを読み込む
+    autocmd FileType php :set dictionary=~/.vim/dict/php.dict
+    autocmd FileType php :set tags+=~/.vim/tags/pear.tags
+    " 大文字小文字を無視して自動補完
+    let g:AutoComplPop_IgnoreCaseOption = 1
+endif
 
 "-----------------------------------------------------------------------------
 " 文字コード関連
