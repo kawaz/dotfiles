@@ -16,14 +16,8 @@ Bundle 'Markdown'
 " フォルディング系
 Bundle 'phpfolding.vim'
 
-Bundle 'buftabs'
-  "バッファタブにパスを省略してファイル名のみ表示する(buftabs.vim)
-  let g:buftabs_only_basename=1
-  "バッファタブをステータスライン内に表示する
-  let g:buftabs_in_statusline=1
-  "ステータスラインにbuftagsと一緒に文字コードや改行コードも表示する
-  set laststatus=2
-  set statusline=%{exists('g:buftabs_list')?(g:buftabs_list):''}%=\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
+" 複数ファイル名をタブ表示
+Bundle 'TabBar'
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
@@ -229,6 +223,7 @@ set hlsearch
 set laststatus=2
 "ステータスラインに文字コードと改行文字を表示する
 "set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+set statusline=%<%f\ %m%=%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
 
 "-----------------------------------------------------------------------------
 " マウス関連
