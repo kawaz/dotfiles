@@ -271,4 +271,7 @@ nnoremap <Up> gk
 "フレームサイズを怠惰に変更する
 map <kPlus> <C-W>+
 map <kMinus> <C-W>-
+"インデント操作後も選択範囲を保つ
+vnoremap > >gv
+vnoremap < <gv
 
