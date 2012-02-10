@@ -69,6 +69,10 @@ endif
 
 " \r でファイルを即時実行
 Bundle 'quickrun.vim'
+  if(!exists("g:quickrun_config"))
+    let g:quickrun_config = {}
+  endif
+  let g:quickrun_config.html = {'command' : 'w3m'}
 
 " :Ref xxx keyword でマニュアル検索
 Bundle 'ref.vim'
