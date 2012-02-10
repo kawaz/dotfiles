@@ -13,7 +13,7 @@ if [ ! -d "$src/.git" ]; then
 fi
 cd "$src" || exit 1
 git pull
-sudo yum install -y curl-devel expat-devel perl-ExtUtils-MakeMaker gettext
+sudo yum install -y curl-devel expat-devel perl-ExtUtils-MakeMaker gettext autoconf
 make configure && ./configure --prefix="$dest" && make && make install || exit 1
 
 mkdir -p ~/.profile.d || exit 1
