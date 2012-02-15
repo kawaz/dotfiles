@@ -15,10 +15,12 @@ export PAGER="less -R"
 export EDITOR=vim
 export PS1='`[[ "$?" -eq 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]"`[`date +%d%a%T` \u@\h \W]\$\[\e[m\] '
 
-if [ -d ~/.profile.d -a -n "`find ~/.profile.d -maxdepth 1 -type f -name \*.sh`" ]; then
-  for f in ~/.profile.d/*.sh; do
-    . "$f" || echo -e "\e[1;35m↑This error is in $f\e[1;0m"
-  done
+if [ -d ~/.profile.d ]; then
+  if [ -n "`find ~/.profile.d -maxdepth 1 -type f -name \*.sh`" ]; then
+    for f in ~/.profile.d/*.sh; do
+      . "$f" || echo -e "\e[1;35m↑This error is in $f\e[1;0m"
+    done
+  fi
 fi
 
 if [ -s ~/.nvm/nvm.sh ]; then
