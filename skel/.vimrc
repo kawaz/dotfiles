@@ -100,6 +100,14 @@ if !(v:version < 702)
     let g:AutoComplPop_IgnoreCaseOption = 1
 endif
 
+"Bundle 'wombat256.vim'
+Bundle 'desert256.vim'
+
+" VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
+Bundle 'https://github.com/mattn/vdbi-vim.git'
+  " depends on
+  Bundle 'https://github.com/mattn/webapi-vim.git'
+
 "-----------------------------------------------------------------------------
 " 文字コード関連
 "
@@ -278,7 +286,4 @@ map <kMinus> <C-W>-
 "インデント操作後も選択範囲を保つ
 vnoremap > >gv
 vnoremap < <gv
-
-set list
-set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
