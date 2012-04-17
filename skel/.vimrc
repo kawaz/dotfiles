@@ -108,6 +108,10 @@ Bundle 'https://github.com/mattn/vdbi-vim.git'
   " depends on
   Bundle 'https://github.com/mattn/webapi-vim.git'
 
+" :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
+Bundle 'git://github.com/mattn/benchvimrc-vim.git'
+
+
 "-----------------------------------------------------------------------------
 " 文字コード関連
 "
@@ -210,6 +214,21 @@ inoremap <expr> <CR> pumvisible() ? "\<C-E>\<CR>" : "\<CR>"
 inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
 "補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
 inoremap <expr> <ESC> pumvisible() ? "\<C-E>\<ESC>" : "\<ESC>"
+"挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
+let &t_SI .= "\e[?7727h"
+let &t_EI .= "\e[?7727l"
+inoremap <special> <Esc>O[ <Esc>
+"クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
 
 "-----------------------------------------------------------------------------
 " 検索関連
