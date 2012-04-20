@@ -192,22 +192,13 @@ augroup END
 set nocompatible
 "バックスペースで改行やインデントを削除出来るようにする
 set backspace=indent,eol,start
-"閉じ括弧や閉じクオートを自動補完(autoindent有効時のみ)
-inoremap <expr> { &ai==1 ? "{}\<LEFT>" : "{"
-inoremap <expr> [ &ai==1 ? "[]\<LEFT>" : "["
-inoremap <expr> ( &ai==1 ? "()\<LEFT>" : "("
-inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
-inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
-inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
-"オートインデントを<INSERT>でトグルする
-nnoremap <expr> <INSERT> ToggleAutoIndent()
-function! ToggleAutoIndent()
-  if &autoindent
-    set noautoindent
-  else
-    set autoindent
-  endif
-endfunction
+""閉じ括弧や閉じクオートを自動補完(autoindent有効時のみ)
+"inoremap <expr> { &ai==1 ? "{}\<LEFT>" : "{"
+"inoremap <expr> [ &ai==1 ? "[]\<LEFT>" : "["
+"inoremap <expr> ( &ai==1 ? "()\<LEFT>" : "("
+"inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
+"inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
+"inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
 "補完ウィンドウ表示中、Enterで補完キャンセル＆改行する
 inoremap <expr> <CR> pumvisible() ? "\<C-E>\<CR>" : "\<CR>"
 "補完ウィンドウ表示中、Tabで補完決定にする
@@ -249,6 +240,8 @@ set incsearch
 if has("syntax")
 	syntax on
 endif
+"編集のままバッファ切り替えができるようにする
+set hidden
 "行番号を表示しない
 set nonumber
 "カーソル行の強調表示
