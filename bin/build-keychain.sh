@@ -19,4 +19,4 @@ mkdir -p "$dest/man/man1"
 cp -ap "$src/keychain" "$dest/bin/"
 cp -ap "$src/keychain.1" "$dest/man/man1/"
 mkdir -p ~/.profile.d || exit 1
-echo "export PATH=\"$dest/bin:\$PATH\"" > ~/.profile.d/dotfiles-keychain.sh
+echo "export PATH=\"$dest/bin:\$PATH\"" > ~/.profile.d/10-dotfiles-keychain.sh

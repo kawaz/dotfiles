@@ -1,6 +1,11 @@
 skel/.vim/bundle/*
-!skel/.vim/bundle/vundle
 skel/.vim/dict/
 skel/.vim/phpmanual-cache/
 skel/.vim/tags/
+!skel/.vim/bundle/vundle
+
 env
+
+skel/.profile.d/10-dotfiles-git.sh
+skel/.profile.d/10-dotfiles-keychain.sh
+

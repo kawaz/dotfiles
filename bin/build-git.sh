@@ -17,4 +17,4 @@ sudo yum install -y curl-devel expat-devel perl-ExtUtils-MakeMaker gettext autoc
 make configure && ./configure --prefix="$dest" && make && make install || exit 1
 
 mkdir -p ~/.profile.d || exit 1
-echo "export PATH=\"$dest/bin:\$PATH\"" > ~/.profile.d/dotfiles-git.sh
+echo "export PATH=\"$dest/bin:\$PATH\"" > ~/.profile.d/10-dotfiles-git.sh
