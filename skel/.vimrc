@@ -210,7 +210,7 @@ let &t_SI .= "\e[?7727h"
 let &t_EI .= "\e[?7727l"
 inoremap <special> <Esc>O[ <Esc>
 "クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
-if &term =~ "xterm"
+if &term =~ '\(xterm\|screen-256color\)'
     let &t_SI .= "\e[?2004h"
     let &t_EI .= "\e[?2004l"
     let &pastetoggle = "\e[201~"
@@ -299,3 +299,28 @@ map <kMinus> <C-W>-
 vnoremap > >gv
 vnoremap < <gv
 
+
+
+" インデントが同じかそれより深い範囲を選択する
+function! VisualCurrentIndentBlock()
+    let current_indent = indent('.')
+    let current_line   = line('.')
+    let current_col    = col('.')
+    let last_line      = line('$')
+
+    let start_line = current_line
+    let end_line = current_line
+    while start_line != 1 && ( current_indent <= indent(start_line - 1) || getline(start_line - 1) =~ '^\s*$' )
+        let start_line = start_line - 1
+    endwhile
+    while end_line != last_line && ( current_indent <= indent(end_line + 1) || getline(end_line + 1) =~ '^\s*$' )
+        let end_line = end_line + 1
+    endwhile
+
+    call cursor(start_line, current_col)
+    normal V
+    call cursor(end_line, current_col)
+endfunction
+
+nnoremap gi :call VisualCurrentIndentBlock()<CR>
+onoremap gi :normal gi<CR>
