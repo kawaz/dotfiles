@@ -6,6 +6,5 @@ skel/.vim/tags/
 
 env
 
-skel/.profile.d/10-dotfiles-git.sh
-skel/.profile.d/10-dotfiles-keychain.sh
+skel/.profile.d/10-dotfiles-*.sh
 
