@@ -2,7 +2,7 @@ skel/.vim/bundle/*
 skel/.vim/dict/
 skel/.vim/phpmanual-cache/
 skel/.vim/tags/
-!skel/.vim/bundle/vundle
+!skel/.vim/bundle/neobundle.vim
 
 env
 
