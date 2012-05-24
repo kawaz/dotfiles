@@ -7,9 +7,6 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
-"" required!
-"NeoBundle 'gmarik/vundle'
-
 " ファイルタイプ関連
 NeoBundle 'jade.vim'
 NeoBundle 'coffee.vim'
@@ -21,6 +18,17 @@ NeoBundle 'phpfolding.vim'
 
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
+
+" Pythonインターフェースに依存するのでチェック
+if has('python')
+  " バイナリ編集が出来るプラグイン
+  " http://d.hatena.ne.jp/alwei/20120220/1329756198
+  NeoBundle 'https://github.com/Shougo/vinarise'
+endif
+
+" なんか補完の凄いやつ
+NeoBundle 'https://github.com/Shougo/neocomplcache.git'
+  let g:neocomplcache_enable_at_startup = 1
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
@@ -88,25 +96,7 @@ NeoBundle 'ref.vim'
 NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
-" C-pとかしなくても勝手に補完が動くようになる
-" AutoComplPopは古いvimで動かないのでifで囲む"
-if !(v:version < 702)
-  NeoBundle 'AutoComplPop'
-    " 言語ごとの保管辞書を読み込む
-    autocmd FileType * let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i'
-    autocmd FileType php let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/php.dict'
-    autocmd FileType perl let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/perl.dict'
-    autocmd FileType ruby let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/ruby.dict'
-    autocmd FileType javascript let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/javascript.dict'
-    autocmd FileType erlang let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i,k~/.vim/dict/erlang.dict'
-    " PHPの辞書とtagsを読み込む
-    autocmd FileType php :set dictionary=~/.vim/dict/php.dict
-    autocmd FileType php :set tags+=~/.vim/tags/pear.tags
-    " 大文字小文字を無視して自動補完
-    let g:AutoComplPop_IgnoreCaseOption = 1
-endif
-
-"NeoBundle 'wombat256.vim'
+" カラースキーマ
 NeoBundle 'desert256.vim'
 
 " VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH

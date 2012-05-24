@@ -12,7 +12,7 @@ if [ ! -d "$src/.svn" ]; then
 fi
 cd "$src" || exit 1
 svn up || exit 1
-./configure --prefix="$dest" --enable-multibyte --with-features=big && make && make install || exit 1
+./configure --prefix="$dest" --enable-multibyte --enable-pythoninterp --with-features=big && make && make install || exit 1
 
 mkdir -p ~/.profile.d || exit 1
 echo "export PATH=\"$dest/bin:\$PATH\"" > ~/.profile.d/10-dotfiles-vim.sh
