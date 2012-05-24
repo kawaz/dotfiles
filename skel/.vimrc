@@ -26,10 +26,27 @@ if has('python')
   NeoBundle 'https://github.com/Shougo/vinarise'
 endif
 
-" なんか補完の凄いやつ
+" 補完の凄いやつ
+" 設定の参考 http://code-life.net/?p=2308
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
+  set completeopt=menuone
+  " 起動時に有効化
   let g:neocomplcache_enable_at_startup = 1
-
+  " シンタックスファイル中で、補完の対象となるキーワードの最小長さを制御
+  let g:neocomplcache_min_syntax_length = 3
+  " 大文字が入力されるまで大文字小文字の区別を無視する
+  let g:neocomplcache_enable_smart_case = 1
+  " 補完候補を出すときに、自動的に一番上の候補を選択する
+  let g:neocomplcache_enable_auto_select = 1
+  " 例えば p_h と入力したとき public_html とマッチするようになる
+  let g:neocomplcache_enable_underbar_completion = 1
+  " ディクショナリ定義
+  let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'php' : $HOME . '/.vim/dict/php.dict',
+    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
+    \ }
+                
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
   NeoBundle 'unite.vim'
@@ -195,12 +212,14 @@ set backspace=indent,eol,start
 "inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
 "inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
 "inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
+
 "補完ウィンドウ表示中、Enterで補完キャンセル＆改行する
 inoremap <expr> <CR> pumvisible() ? "\<C-E>\<CR>" : "\<CR>"
 "補完ウィンドウ表示中、Tabで補完決定にする
 inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
 "補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
 inoremap <expr> <ESC> pumvisible() ? "\<C-E>\<ESC>" : "\<ESC>"
+
 "挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
 let &t_SI .= "\e[?7727h"
 let &t_EI .= "\e[?7727l"
