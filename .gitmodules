@@ -1,4 +1,5 @@
-[submodule "skel/.vim/bundle/vundle"]
-	path = skel/.vim/bundle/vundle
-	url = http://github.com/gmarik/vundle.git
-	ignore = untracked
+# submoduleの削除手順
+# 1: .gitmodules から削除したいモジュール行を削除
+# 2: .git/config から削除したいモジュール行を削除
+# 3: git rm --cached -r path/to/submodule を実行
+

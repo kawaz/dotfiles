@@ -1,27 +1,30 @@
-" プラグイン http://vim-scripts.org/vim/scripts.html 
+" https://github.com/Shougo/neobundle.vim
 set nocompatible               " be iMproved
 filetype off                   " required!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+filetype plugin indent off     " required!
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  call neobundle#rc(expand('~/.vim/bundle/'))
+endif
 
-" required!
-Bundle 'gmarik/vundle'
+"" required!
+"NeoBundle 'gmarik/vundle'
 
 " ファイルタイプ関連
-Bundle 'jade.vim'
-Bundle 'coffee.vim'
-Bundle 'vim-coffee-script'
-Bundle 'Markdown'
+NeoBundle 'jade.vim'
+NeoBundle 'coffee.vim'
+NeoBundle 'vim-coffee-script'
+NeoBundle 'Markdown'
 
 " フォルディング系
-Bundle 'phpfolding.vim'
+NeoBundle 'phpfolding.vim'
 
 " 複数ファイル名をタブ表示
-Bundle 'TabBar'
+NeoBundle 'TabBar'
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
-  Bundle 'unite.vim'
+  NeoBundle 'unite.vim'
     "以下の設定は http://www.karakaram.com/vim/unite/#vimrc を参考にした
     "unite prefix key.
     nnoremap [unite] <Nop>
@@ -68,26 +71,27 @@ if $SUDO_USER == '' && !(v:version < 702)
 endif
 
 " \r でファイルを即時実行
-Bundle 'quickrun.vim'
+NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
     let g:quickrun_config = {}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
+
 " ファイル保存時にエラー行があればハイライトする
-Bundle 'https://github.com/scrooloose/syntastic.git'
+NeoBundle 'https://github.com/scrooloose/syntastic.git'
 
 " :Ref xxx keyword でマニュアル検索
-Bundle 'ref.vim'
+NeoBundle 'ref.vim'
   let g:ref_phpmanual_path = $HOME . '/.vim/phpmanual-cache/php-chunked-xhtml'
 
 " tagsの凄い奴
-Bundle 'Tagbar'
+NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
 " C-pとかしなくても勝手に補完が動くようになる
 " AutoComplPopは古いvimで動かないのでifで囲む"
 if !(v:version < 702)
-  Bundle 'AutoComplPop'
+  NeoBundle 'AutoComplPop'
     " 言語ごとの保管辞書を読み込む
     autocmd FileType * let g:AutoComplPop_CompleteOption = '.,w,b,u,t,i'
     autocmd FileType php let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k~/.vim/dict/php.dict'
@@ -102,16 +106,16 @@ if !(v:version < 702)
     let g:AutoComplPop_IgnoreCaseOption = 1
 endif
 
-"Bundle 'wombat256.vim'
-Bundle 'desert256.vim'
+"NeoBundle 'wombat256.vim'
+NeoBundle 'desert256.vim'
 
 " VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
-Bundle 'https://github.com/mattn/vdbi-vim.git'
+NeoBundle 'https://github.com/mattn/vdbi-vim.git'
   " depends on
-  Bundle 'https://github.com/mattn/webapi-vim.git'
+  NeoBundle 'https://github.com/mattn/webapi-vim.git'
 
 " :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
-Bundle 'git://github.com/mattn/benchvimrc-vim.git'
+NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 
 
 "-----------------------------------------------------------------------------
