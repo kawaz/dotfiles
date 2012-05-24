@@ -73,6 +73,8 @@ Bundle 'quickrun.vim'
     let g:quickrun_config = {}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
+" ファイル保存時にエラー行があればハイライトする
+Bundle 'https://github.com/scrooloose/syntastic.git'
 
 " :Ref xxx keyword でマニュアル検索
 Bundle 'ref.vim'
