@@ -1,6 +1,6 @@
 # submoduleの削除手順
-# 1: .gitmodules から削除したいモジュール行を削除
-# 2: .git/config から削除したいモジュール行を削除
+# 1: .gitmodules から削除したいサブモジュール設定を削除
+# 2: .git/config から削除したいサブモジュール設定を削除
 # 3: git rm --cached -r path/to/submodule を実行
 
 [submodule "skel/.vim/bundle/neobundle.vim"]
