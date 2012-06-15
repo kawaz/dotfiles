@@ -102,6 +102,7 @@ NeoBundle 'quickrun.vim'
     let g:quickrun_config = {}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
+  let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
