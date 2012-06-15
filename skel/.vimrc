@@ -264,7 +264,7 @@ set nonumber
 "カーソル行の強調表示
 set cursorline
 "タブの左側にカーソル表示
-set listchars=tab:\ \ 
+set listchars=eol:¬,tab:▸\ ,trail:<,
 set list
 "タブ幅を設定する
 set softtabstop=2
