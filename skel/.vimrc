@@ -123,6 +123,9 @@ NeoBundle 'https://github.com/mattn/vdbi-vim.git'
   " depends on
   NeoBundle 'https://github.com/mattn/webapi-vim.git'
 
+" HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+
 " :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
 NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 
