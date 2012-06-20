@@ -47,7 +47,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     \ 'php' : $HOME . '/.vim/dict/php.dict',
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
-                
+
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
   NeoBundle 'unite.vim'
@@ -263,9 +263,22 @@ set hidden
 set nonumber
 "カーソル行の強調表示
 set cursorline
-"タブの左側にカーソル表示
-set listchars=eol:¬,tab:▸\ ,trail:<,
+"非表示文字をハイライト
+scriptencoding utf-8
+function! HilightUnnecessaryWhiteSpace()
+  " on ColorScheme
+  highlight TabString ctermbg=red guibg=red
+  highlight TrailingSpaces cterm=underline ctermbg=red guibg=red
+  highlight ZenkakuSpace cterm=underline ctermbg=red guibg=red
+  " on VimEnter,WinEnter
+  call matchadd("TabString", '\t')
+  call matchadd("TrailingSpaces", '\s\+$')
+  call matchadd("ZenkakuSpace", '　')
+endfunction
+autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
+"タブとかを見える化
 set list
+set listchars=tab:\ \ ,
 "タブ幅を設定する
 set softtabstop=2
 set shiftwidth=2
