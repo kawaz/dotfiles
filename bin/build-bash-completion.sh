@@ -19,6 +19,8 @@ if [ $bmajor -lt 4 ] || [ $bmajor -eq 4 -a $bminor -lt 1 ]; then
     echo "BASH_COMPLETION=\"$dest/etc/bash_completion\""
     echo "BASH_COMPLETION_DIR=\"$dest/etc/bash_completion.d\""
     echo "BASH_COMPLETION_COMPAT_DIR=\"$dest/etc/bash_completion.d\""
-    echo ". \"$dest/etc/bash_completion\""
+    echo "if [ -r \"$dest/etc/bash_completion\" ]; then"
+    echo "  . \"$dest/etc/bash_completion\""
+    echo "fi"
   ) > ~/.profile.d/10-dotfiles-bash-completion.sh
 fi
