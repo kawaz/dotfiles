@@ -10,6 +10,10 @@ for TERM in xterm-256color screen-256color screen xterm vt100; do
   fi
 done
 
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 alias du0='du --max-depth=1'
 alias du1='du --max-depth=1'
 
