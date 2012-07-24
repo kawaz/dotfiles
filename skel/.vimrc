@@ -99,10 +99,13 @@ endif
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
-    let g:quickrun_config = {}
+    let g:quickrun_config = {'*':{'split':''}}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
   let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
+  " 横分割時は下へ､ 縦分割時は右へ新しいウィンドウが開くようにする
+  set splitbelow
+  set splitright
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
