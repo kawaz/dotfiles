@@ -24,3 +24,14 @@ alias dstat-net='dstat -Tclnd'
 alias dstat-disk='dstat -Tcldr'
 
 alias last-itumono='last -adixFw'
+
+# crontab -r を封印する
+function crontab() {
+  for opt in "$@"; do
+    if [ "$opt" == "-r" ]; then
+      echo '-r is sealed!'
+      return 1
+    fi
+  done
+  command crontab "$@"
+}
