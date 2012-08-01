@@ -27,6 +27,7 @@ alias last-itumono='last -adixFw'
 
 # crontab -r を封印する
 function crontab() {
+  local opt
   for opt in "$@"; do
     if [ "$opt" == "-r" ]; then
       echo '-r is sealed!'
