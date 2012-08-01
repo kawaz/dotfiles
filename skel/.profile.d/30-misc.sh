@@ -25,6 +25,15 @@ alias dstat-disk='dstat -Tcldr'
 
 alias last-itumono='last -adixFw'
 
+# cd file でそのfileのあるディレクトリに移動する
+function cd() {
+  if [ -e "$1" -a ! -d "$1" ]; then
+    builtin cd "`dirname "$1"`"
+  else
+    builtin cd "$@"
+  fi
+}
+
 # crontab -r を封印する
 function crontab() {
   local opt
