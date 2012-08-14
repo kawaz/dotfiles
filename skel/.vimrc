@@ -132,6 +132,9 @@ NeoBundle 'git://github.com/mattn/zencoding-vim.git'
 " :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
 NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 
+" ファイル選択が捗る http://bit.ly/NuXA5u
+NeoBundle 'https://github.com/kien/ctrlp.vim'
+  let g:ctrlp_use_migemo = 1
 
 "-----------------------------------------------------------------------------
 " 文字コード関連
