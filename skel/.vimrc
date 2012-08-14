@@ -136,6 +136,9 @@ NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 NeoBundle 'https://github.com/kien/ctrlp.vim'
   let g:ctrlp_use_migemo = 1
 
+" ackで検索が捗る http://bit.ly/PfpjdT
+NeoBundle 'https://github.com/mileszs/ack.vim'
+
 "-----------------------------------------------------------------------------
 " 文字コード関連
 "
