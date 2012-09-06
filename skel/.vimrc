@@ -119,7 +119,22 @@ NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
 " カラースキーマ
-NeoBundle 'desert256.vim'
+NeoBundle 'altercation/vim-colors-solarized'
+  syntax enable
+  set background=dark
+  set t_Co=16
+  let g:solarized_termcolors=16
+  let g:solarized_termtrans=0
+  let g:solarized_degrade=0
+  let g:solarized_bold=1
+  let g:solarized_underline=1
+  let g:solarized_italic=1
+  let g:solarized_contrast="low" "normal high low
+  let g:solarized_visibility="normal" "normal high low
+  colorscheme solarized
+  " <F5>でbackgroundのdark/lightを切替える
+  call togglebg#map("<F5>")
+
 
 " VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
 NeoBundle 'https://github.com/mattn/vdbi-vim.git'
