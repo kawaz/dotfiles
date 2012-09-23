@@ -119,21 +119,8 @@ NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
 " カラースキーマ
-NeoBundle 'altercation/vim-colors-solarized'
-  syntax enable
-  set background=dark
-  set t_Co=16
-  let g:solarized_termcolors=16
-  let g:solarized_termtrans=0
-  let g:solarized_degrade=0
-  let g:solarized_bold=1
-  let g:solarized_underline=1
-  let g:solarized_italic=1
-  let g:solarized_contrast="low" "normal high low
-  let g:solarized_visibility="normal" "normal high low
-  colorscheme solarized
-  " <F5>でbackgroundのdark/lightを切替える
-  call togglebg#map("<F5>")
+NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+  colorscheme Tomorrow-Night
 
 
 " VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
@@ -158,59 +145,59 @@ NeoBundle 'https://github.com/mileszs/ack.vim'
 " 文字コード関連
 "
 if &encoding !=# 'utf-8'
-	set encoding=japan
-	set fileencoding=japan
+  set encoding=japan
+  set fileencoding=japan
 endif
 if has('iconv')
-	let s:enc_euc = 'euc-jp'
-	let s:enc_jis = 'iso-2022-jp'
-	" iconvがeucJP-msに対応しているかをチェック
-	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'eucjp-ms'
-		let s:enc_jis = 'iso-2022-jp-3'
-	" iconvがJISX0213に対応しているかをチェック
-	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'euc-jisx0213'
-		let s:enc_jis = 'iso-2022-jp-3'
-	endif
-	" fileencodingsを構築
-	if &encoding ==# 'utf-8'
-		let s:fileencodings_default = &fileencodings
-		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-		let &fileencodings = 'utf-8,'. &fileencodings .','. s:fileencodings_default
-		unlet s:fileencodings_default
-	else
-		let &fileencodings = &fileencodings .','. s:enc_jis
-		set fileencodings+=utf-8,ucs-2le,ucs-2
-		if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-			set fileencodings+=cp932
-			set fileencodings-=euc-jp
-			set fileencodings-=euc-jisx0213
-			set fileencodings-=eucjp-ms
-			let &encoding = s:enc_euc
-			let &fileencoding = s:enc_euc
-		else
-			let &fileencodings = &fileencodings .','. s:enc_euc
-		endif
-	endif
-	" 定数を処分
-	unlet s:enc_euc
-	unlet s:enc_jis
+  let s:enc_euc = 'euc-jp'
+  let s:enc_jis = 'iso-2022-jp'
+  " iconvがeucJP-msに対応しているかをチェック
+  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'eucjp-ms'
+    let s:enc_jis = 'iso-2022-jp-3'
+  " iconvがJISX0213に対応しているかをチェック
+  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'euc-jisx0213'
+    let s:enc_jis = 'iso-2022-jp-3'
+  endif
+  " fileencodingsを構築
+  if &encoding ==# 'utf-8'
+    let s:fileencodings_default = &fileencodings
+    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+    let &fileencodings = 'utf-8,'. &fileencodings .','. s:fileencodings_default
+    unlet s:fileencodings_default
+  else
+    let &fileencodings = &fileencodings .','. s:enc_jis
+    set fileencodings+=utf-8,ucs-2le,ucs-2
+    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+      set fileencodings+=cp932
+      set fileencodings-=euc-jp
+      set fileencodings-=euc-jisx0213
+      set fileencodings-=eucjp-ms
+      let &encoding = s:enc_euc
+      let &fileencoding = s:enc_euc
+    else
+      let &fileencodings = &fileencodings .','. s:enc_euc
+    endif
+  endif
+  " 定数を処分
+  unlet s:enc_euc
+  unlet s:enc_jis
 endif
 " 日本語を含まない場合は fileencoding に encoding を使うようにする
 if has('autocmd')
-	function! AU_ReCheck_FENC()
-		if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-			let &fileencoding=&encoding
-		endif
-	endfunction
-	autocmd BufReadPost * call AU_ReCheck_FENC()
+  function! AU_ReCheck_FENC()
+    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+      let &fileencoding=&encoding
+    endif
+  endfunction
+  autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
 " 改行コードの自動認識
 set fileformats=unix,dos,mac
 " □とか○の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
-	set ambiwidth=double
+  set ambiwidth=double
 endif
 
 "-----------------------------------------------------------------------------
@@ -222,13 +209,13 @@ set autoindent
 autocmd FileType * setlocal formatoptions-=ro
 "バイナリ編集(xxd)モード（vim -b での起動、もしくは *.bin で発動します）
 augroup BinaryXXD
-	autocmd!
-	autocmd BufReadPre  *.bin let &binary =1
-	autocmd BufReadPost * if &binary | silent %!xxd -g 1
-	autocmd BufReadPost * set ft=xxd | endif
-	autocmd BufWritePre * if &binary | %!xxd -r | endif
-	autocmd BufWritePost * if &binary | silent %!xxd -g 1
-	autocmd BufWritePost * set nomod | endif
+  autocmd!
+  autocmd BufReadPre  *.bin let &binary =1
+  autocmd BufReadPost * if &binary | silent %!xxd -g 1
+  autocmd BufReadPost * set ft=xxd | endif
+  autocmd BufWritePre * if &binary | %!xxd -r | endif
+  autocmd BufWritePost * if &binary | silent %!xxd -g 1
+  autocmd BufWritePost * set nomod | endif
 augroup END
 "環境によりカーソルキーがABCDになってしまう問題対応
 set nocompatible
@@ -255,14 +242,14 @@ let &t_EI .= "\e[?7727l"
 inoremap <special> <Esc>O[ <Esc>
 "クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
 if &term =~ '\(xterm\|screen-256color\)'
-    let &t_SI .= "\e[?2004h"
-    let &t_EI .= "\e[?2004l"
-    let &pastetoggle = "\e[201~"
-    function XTermPasteBegin(ret)
-        set paste
-        return a:ret
-    endfunction
-    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+  let &t_SI .= "\e[?2004h"
+  let &t_EI .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
+  function XTermPasteBegin(ret)
+    set paste
+    return a:ret
+  endfunction
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
 "-----------------------------------------------------------------------------
@@ -282,7 +269,7 @@ set incsearch
 "
 "シンタックスハイライトを有効にする
 if has("syntax")
-	syntax on
+  syntax on
 endif
 "編集のままバッファ切り替えができるようにする
 set hidden
@@ -327,11 +314,11 @@ set statusline=%<%f\ %m%=\ %{&ai?'[>]':''}%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc)
 "
 " マウスモード有効
 if exists('&mouse')
-	set mouse=a
+  set mouse=a
 endif
 " screen対応
 if &term == "screen"
-	set ttymouse=xterm2
+  set ttymouse=xterm2
 endif
 
 "-----------------------------------------------------------------------------
@@ -360,23 +347,23 @@ vnoremap < <gv
 
 " インデントが同じかそれより深い範囲を選択する
 function! VisualCurrentIndentBlock()
-    let current_indent = indent('.')
-    let current_line   = line('.')
-    let current_col    = col('.')
-    let last_line      = line('$')
+  let current_indent = indent('.')
+  let current_line   = line('.')
+  let current_col  = col('.')
+  let last_line    = line('$')
 
-    let start_line = current_line
-    let end_line = current_line
-    while start_line != 1 && ( current_indent <= indent(start_line - 1) || getline(start_line - 1) =~ '^\s*$' )
-        let start_line = start_line - 1
-    endwhile
-    while end_line != last_line && ( current_indent <= indent(end_line + 1) || getline(end_line + 1) =~ '^\s*$' )
-        let end_line = end_line + 1
-    endwhile
+  let start_line = current_line
+  let end_line = current_line
+  while start_line != 1 && ( current_indent <= indent(start_line - 1) || getline(start_line - 1) =~ '^\s*$' )
+    let start_line = start_line - 1
+  endwhile
+  while end_line != last_line && ( current_indent <= indent(end_line + 1) || getline(end_line + 1) =~ '^\s*$' )
+    let end_line = end_line + 1
+  endwhile
 
-    call cursor(start_line, current_col)
-    normal V
-    call cursor(end_line, current_col)
+  call cursor(start_line, current_col)
+  normal V
+  call cursor(end_line, current_col)
 endfunction
 
 nnoremap gi :call VisualCurrentIndentBlock()<CR>
