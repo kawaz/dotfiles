@@ -39,6 +39,11 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   let g:neocomplcache_enable_smart_case = 1
   " 補完候補を出すときに、自動的に一番上の候補を選択する
   let g:neocomplcache_enable_auto_select = 1
+  " 日本語をキャッシュしない
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
   " 例えば p_h と入力したとき public_html とマッチするようになる
   let g:neocomplcache_enable_underbar_completion = 1
   " ディクショナリ定義
@@ -47,6 +52,15 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     \ 'php' : $HOME . '/.vim/dict/php.dict',
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
+  " カーソル移動時にポップアップが出ないようにする
+  inoremap <expr> <Up> pumvisible() ? "\<Up>" : neocomplcache#close_popup()."\<Up>"
+  inoremap <expr> <Down> pumvisible() ? "\<Down>" : neocomplcache#close_popup()."\<Down>"
+  inoremap <expr> <Left> pumvisible() ? "\<Left>" : neocomplcache#close_popup()."\<Left>"
+  inoremap <expr> <Right> pumvisible() ? "\<Right>" : neocomplcache#close_popup()."\<Right>"
+  "補完ウィンドウ表示中、Tabで補完決定にする
+  inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
+  "補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
+  inoremap <expr> <ESC> pumvisible() ? "\<C-e>\<ESC>" : "\<ESC>"
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
@@ -228,13 +242,6 @@ set backspace=indent,eol,start
 "inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
 "inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
 "inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
-
-"補完ウィンドウ表示中、Enterで補完キャンセル＆改行する
-inoremap <expr> <CR> pumvisible() ? "\<C-E>\<CR>" : "\<CR>"
-"補完ウィンドウ表示中、Tabで補完決定にする
-inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
-"補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
-inoremap <expr> <ESC> pumvisible() ? "\<C-E>\<ESC>" : "\<ESC>"
 
 "挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
 let &t_SI .= "\e[?7727h"
