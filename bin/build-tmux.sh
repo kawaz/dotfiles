@@ -1,6 +1,6 @@
 #!/bin/sh
-bin="`dirname "$0"`"
-env="$bin/../env"
+base="`dirname "$0"`/.."; base="`cd "$base";pwd`"
+env="$base/env"
 
 mkdir -p "$env" && cd "$env" || exit 1
 env="`pwd`"
@@ -12,6 +12,10 @@ if [ ! -d "$src/.svn" ]; then
 fi
 cd "$src" || exit 1
 svn up || exit 1
+
+# 罫線パッチ http://d.hatena.ne.jp/emonkak/20110521/1305970697
+patch -p1 < "$base/bin/build-tmux.sh.border_patch"
+
 sudo yum install -y automake libevent-devel ncurses-devel || exit 1
 sh autogen.sh || exit 1
 ./configure --prefix="$dest" && make && make install || exit 1
