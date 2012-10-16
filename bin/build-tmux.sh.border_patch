@@ -1,6 +1,6 @@
-diff -cr tmux-1.6/tty-acs.c tmux-1.6-custom/tty-acs.c
-*** tmux-1.6/tty-acs.c	2012-09-24 17:03:57.888021506 +0900
---- tmux-1.6-custom/tty-acs.c	2012-09-25 12:44:07.476023577 +0900
+diff -cr tmux.original/tty-acs.c tmux/tty-acs.c
+*** tmux.original/tty-acs.c	2012-10-16 12:56:52.000000000 +0900
+--- tmux/tty-acs.c	2012-10-16 12:57:23.000000000 +0900
 ***************
 *** 81,87 ****
   	struct tty_acs_entry *entry;
@@ -18,23 +18,23 @@ diff -cr tmux-1.6/tty-acs.c tmux-1.6-custom/tty-acs.c
   		if (tty->term->acs[ch][0] == '\0')
   			return (NULL);
   		return (&tty->term->acs[ch][0]);
-diff -cr tmux-1.6/tty.c tmux-1.6-custom/tty.c
-*** tmux-1.6/tty.c	2012-09-24 17:03:57.876021521 +0900
---- tmux-1.6-custom/tty.c	2012-09-25 12:43:36.382525469 +0900
+diff -cr tmux.original/tty.c tmux/tty.c
+*** tmux.original/tty.c	2012-10-16 12:56:52.000000000 +0900
+--- tmux/tty.c	2012-10-16 12:57:47.000000000 +0900
 ***************
-*** 50,56 ****
+*** 52,58 ****
   	    const struct grid_cell *, const struct grid_utf8 *);
   
   #define tty_use_acs(tty) \
-! 	(tty_term_has(tty->term, TTYC_ACSC) && !((tty)->flags & TTY_UTF8))
+! 	(tty_term_has((tty)->term, TTYC_ACSC) && !((tty)->flags & TTY_UTF8))
   
-  void
-  tty_init(struct tty *tty, int fd, char *term)
---- 50,56 ----
+  #define tty_pane_full_width(tty, ctx) \
+  	((ctx)->xoff == 0 && screen_size_x((ctx)->wp->screen) >= (tty)->sx)
+--- 52,58 ----
   	    const struct grid_cell *, const struct grid_utf8 *);
   
   #define tty_use_acs(tty) \
-! 	(tty_term_has(tty->term, TTYC_ACSC))
+! 	(tty_term_has((tty)->term, TTYC_ACSC))
   
-  void
-  tty_init(struct tty *tty, int fd, char *term)
+  #define tty_pane_full_width(tty, ctx) \
+  	((ctx)->xoff == 0 && screen_size_x((ctx)->wp->screen) >= (tty)->sx)
