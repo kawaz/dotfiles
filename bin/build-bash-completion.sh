@@ -6,7 +6,7 @@ mkdir -p "$env" && cd "$env" || exit 1
 env="`pwd`"
 dest="$env/dest/bash-completion"
 profile_d="$env/profile.d"
-mkdir -p "profile_d"
+mkdir -p "$profile_d"
 
 # for Mac
 if uname | grep -qi darwin; then
