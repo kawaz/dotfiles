@@ -13,6 +13,7 @@ NeoBundle 'coffee.vim'
 NeoBundle 'vim-coffee-script'
 NeoBundle 'Markdown'
 NeoBundle 'jsx/jsx.vim'
+NeoBundle 'johnhamelink/blade.vim'
 
 " フォルディング系
 NeoBundle 'phpfolding.vim'
