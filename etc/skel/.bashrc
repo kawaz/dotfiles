@@ -6,7 +6,15 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # include settings
-for f in "${DOTFILES_HOME-$HOME/.dotfiles}/etc/profile.d/"*.sh ~/.profile.d/*.sh; do
+files=(`
+  for f in "${DOTFILES_HOME-$HOME/.dotfiles}"/{etc,env}/profile.d/*.sh ~/.profile.d/*.sh; do
+    echo "${f##*/} $f"
+  done | sort | while read dummy f; do
+    echo "$f"
+  done
+`)
+for f in "${files[@]}"; do
+  echo "$f"
   if [ -f "$f" ]; then
     . "$f" || echo -e "\e[1;35m↑This error is in $f\e[1;0m"
   fi
