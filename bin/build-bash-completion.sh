@@ -6,6 +6,18 @@ mkdir -p "$env" && cd "$env" || exit 1
 env="`pwd`"
 dest="$env/dest/bash-completion"
 profile_d="$env/profile.d"
+mkdir -p "profile_d"
+
+# for Mac
+if uname | grep -qi darwin; then
+  brew install bash-completion
+  ( echo '#!/bin/sh'
+    echo 'if [ -r /usr/local/etc/bash_completion ]; then'
+    echo '  . /usr/local/etc/bash_completion'
+    echo 'fi'
+  ) > "$profile_d"/10-bash-completion.sh
+  exit
+fi
 
 bash=${BASH_VERSION%.*}; bmajor=${bash%.*}; bminor=${bash#*.}
 if [ $bmajor -lt 4 ] || [ $bmajor -eq 4 -a $bminor -lt 1 ]; then
@@ -23,5 +35,5 @@ if [ $bmajor -lt 4 ] || [ $bmajor -eq 4 -a $bminor -lt 1 ]; then
     echo "if [ -r \"$dest/etc/bash_completion\" ]; then"
     echo "  . \"$dest/etc/bash_completion\""
     echo "fi"
-  ) > "$profile_d"/10-dotfiles-bash-completion.sh
+  ) > "$profile_d"/10-bash-completion.sh
 fi
