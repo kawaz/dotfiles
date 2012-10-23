@@ -8,7 +8,7 @@ mkdir -p "$env" && cd "$env" || exit 1
 src="$env/src/cmigemo-default-win32"
 mkdir -p "$src" && cd "$src" || exit 1
 
-dest="$base/skel/.vim/dict/migemo-dict"
+dest="$base/etc/skel/.vim/dict/migemo-dict"
 
 # ダウンロード途中で中断されたときにゴミを削除
 function on_abort {

@@ -1,8 +1,8 @@
 #!/bin/sh
-cd "`dirname "$0"`"/../skel || exit 1
+cd "`dirname "$0"`"/..; base="`pwd`"
 backupdir="$HOME/dotfiles-backup-`date +%Y%m%dT%H%M%S`"
 
-find "`pwd`" -mindepth 1 -maxdepth 1 -name .\* ! -name .\*.swp |
+find "$base/etc/skel" -mindepth 1 -maxdepth 1 -name .\* ! -name .\*.swp |
 while read f; do
   link="$HOME/${f##*/}"
   # 既存の実ファイルが存在したらリネームしてとっておく(symlinkは上書きするので放置)

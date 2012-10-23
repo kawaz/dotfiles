@@ -3,6 +3,6 @@
 # 2: .git/config から削除したいサブモジュール設定を削除
 # 3: git rm --cached -r path/to/submodule を実行
 
-[submodule "skel/.vim/bundle/neobundle.vim"]
-	path = skel/.vim/bundle/neobundle.vim
+[submodule "etc/skel/.vim/bundle/neobundle.vim"]
+	path = etc/skel/.vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim

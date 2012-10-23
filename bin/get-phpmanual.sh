@@ -1,5 +1,5 @@
 #!/bin/sh
-cd "`dirname "$0"`"/../skel || exit 1
+cd "`dirname "$0"`"/../etc/skel || exit 1
 if [ -d .vim/phpmanual-cache ]; then
   exit;
 fi
