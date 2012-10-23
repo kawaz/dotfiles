@@ -133,6 +133,9 @@ NeoBundle 'ref.vim'
 NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
 
+" gist 編集 http://bit.ly/S1unmW
+NeoBundle 'mattn/gist-vim'
+
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
   colorscheme Tomorrow-Night
