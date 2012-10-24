@@ -9,12 +9,18 @@ dest="$env/dest/git"
 prodile_d="$env/profile.d"
 mkdir -p "$src" "$dest" "$prodile_d" || exit 1
 
+requires="expat-devel perl-ExtUtils-MakeMaker gettext autoconf"
+if ! rpm -q $requires >/dev/null 2>&1; then
+  echo "yum install $requires"
+  exit 1
+fi
+
 if [ ! -d "$src/.git" ]; then
   git clone git://github.com/gitster/git.git "$src" || exit 1
 fi
 cd "$src" || exit 1
 git pull --rebase
-sudo yum install -y curl-devel expat-devel perl-ExtUtils-MakeMaker gettext autoconf
+
 make configure && ./configure --prefix="$dest" && make && make install || exit 1
 
 ( echo "export PATH=\"$dest/bin:\$PATH\""

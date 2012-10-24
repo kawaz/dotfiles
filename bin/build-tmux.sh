@@ -32,10 +32,10 @@ if rpm -q libevent-devel-1.\* >/dev/null 2>&1; then
   ) || exit 1
   export CPPFLAGS="-I$env/dest/libevent2/include"
   export LDFLAGS="-L$env/dest/libevent2/lib"
-  echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$env/dest/libevent2/lib\"" > "$profile_d"/10-dotfiles-tmux-libevent2.sh
+  echo "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$env/dest/libevent2/lib\"" > "$profile_d"/10-tmux-libevent2.sh
 fi
 
 sh autogen.sh || exit 1
-./configure --prefix="$dest" && make && make install || exit 1
+./configure --prefix="$dest" && make && make install
 
-echo "export PATH=\"$dest/bin:\$PATH\"" > "$profile_d"/10-dotfiles-tmux.sh
+echo "export PATH=\"$dest/bin:\$PATH\"" > "$profile_d"/10-tmux.sh
