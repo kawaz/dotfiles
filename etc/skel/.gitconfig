@@ -14,3 +14,5 @@
   editor = vim
   paget = "less -R"
   excludesfile = ~/.gitignore
+[push]
+	default = upstream
