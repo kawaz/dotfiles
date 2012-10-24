@@ -6,8 +6,8 @@ mkdir -p "$env" && cd "$env" || exit 1
 env="`pwd`"
 src="$env/src/git"
 dest="$env/dest/git"
-prodile_d="$env/profile.d"
-mkdir -p "$src" "$dest" "$prodile_d" || exit 1
+profile_d="$env/profile.d"
+mkdir -p "$src" "$dest" "$profile_d" || exit 1
 
 requires="expat-devel perl-ExtUtils-MakeMaker gettext autoconf zlib-devel libcurl-devel"
 if ! rpm -q $requires; then
@@ -27,4 +27,4 @@ make configure && ./configure --prefix="$dest" && make && make install || exit 1
   echo "if [ -r \"$src/contrib/completion/git-completion.bash\" ]; then "
   echo "  . \"$src/contrib/completion/git-completion.bash\""
   echo "fi"
-) > "$prodile_d"/10-git.sh
+) > "$profile_d"/10-git.sh
