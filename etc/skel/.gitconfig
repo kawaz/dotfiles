@@ -1,6 +1,6 @@
 [user]
-	name = Yoshiaki Kawazu
-	email = kawazzz@gmail.com
+  name = Yoshiaki Kawazu
+  email = kawazzz@gmail.com
 [color]
   ui = auto
 [log]
@@ -15,4 +15,4 @@
   paget = "less -R"
   excludesfile = ~/.gitignore
 [push]
-	default = upstream
+  default = tracking
