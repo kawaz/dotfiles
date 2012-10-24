@@ -9,8 +9,8 @@ dest="$env/dest/git"
 prodile_d="$env/profile.d"
 mkdir -p "$src" "$dest" "$prodile_d" || exit 1
 
-requires="expat-devel perl-ExtUtils-MakeMaker gettext autoconf zlib-devel"
-if ! rpm -q $requires >/dev/null; then
+requires="expat-devel perl-ExtUtils-MakeMaker gettext autoconf zlib-devel libcurl-devel"
+if ! rpm -q $requires; then
   echo "yum install $requires"
   exit 1
 fi
