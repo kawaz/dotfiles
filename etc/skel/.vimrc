@@ -16,7 +16,10 @@ NeoBundle 'jsx/jsx.vim'
 NeoBundle 'johnhamelink/blade.vim'
 
 " フォルディング系
-NeoBundle 'phpfolding.vim'
+"NeoBundle 'phpfolding.vim'
+
+" %S/// でpreg正規表現を使えるように
+NeoBundle 'othree/eregex.vim'
 
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
