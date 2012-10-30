@@ -1,9 +1,3 @@
-etc/skel/.vim/bundle/*
-etc/skel/.vim/dict/
-etc/skel/.vim/phpmanual-cache/
-etc/skel/.vim/tags/
-!etc/skel/.vim/bundle/neobundle.vim
-
 env
-
-etc/skel/.profile.d/*-dotfiles-*.sh
+env/dot-vim/bundle/neobundle.vim
+etc/skel/.vim
