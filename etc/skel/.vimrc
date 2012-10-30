@@ -162,6 +162,14 @@ NeoBundle 'https://github.com/kien/ctrlp.vim'
 " ackで検索が捗る http://bit.ly/PfpjdT
 NeoBundle 'https://github.com/mileszs/ack.vim'
 
+
+" NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
+if neobundle#exists_not_installed_bundles()
+  echomsg 'Not installed bundles : ' . string(neobundle#get_not_installed_bundle_names())
+  "echomsg 'Please execute ":NeoBundleInstall" command.'
+  NeoBundleInstall
+endif
+
 "-----------------------------------------------------------------------------
 " 文字コード関連
 "
