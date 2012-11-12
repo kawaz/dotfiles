@@ -5,7 +5,9 @@ src="$DOTFILES_DIR/env/src/git"
 dest="$DOTFILES_DIR/env/dest/git"
 
 # 必要パッケージのチェック
-has_rpm_packages expat-devel perl-ExtUtils-MakeMaker gettext autoconf zlib-devel libcurl-devel
+has_perl_modules ExtUtils::MakeMaker || exit 1
+has_rpm_packages expat-devel gettext autoconf zlib-devel || exit 1
+has_rpm_packages libcurl-devel || has_rpm_packages curl-devel || exit 1
 
 # get sources
 if [ ! -d "$src/.git" ]; then

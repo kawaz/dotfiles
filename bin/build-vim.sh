@@ -5,7 +5,7 @@ src="$DOTFILES_DIR/env/src/vim"
 dest="$DOTFILES_DIR/env/dest/vim"
 
 # 必要パッケージのチェック
-has_rpm_packages mercurial
+has_rpm_packages mercurial || exit 1
 mkdir -p "$src"
 hg clone "https://vim.googlecode.com/hg/" "$src"
 

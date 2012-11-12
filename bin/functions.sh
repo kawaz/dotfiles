@@ -49,6 +49,20 @@ function has_rpm_packages() {
   if ! rpm -q "$@" >/dev/null 2>&1; then
     echo "必要なパッケージが足りません、以下を実行してください"
     echo "sudo yum install $*"
-    exit 1
+    return 1
+  fi
+}
+
+# Perlモジュールチェック
+function has_perl_modules() {
+  local needs=()
+  for m in "$@"; do
+    perl -M"$m" -e '' && continue
+    needs+=("$m")
+  done
+  if [ ${#needs[@]} -gt 0 ]; then
+    echo "必要なPerlモジュールが足りません"
+    echo "${needs[*]}"
+    return 1
   fi
 }
