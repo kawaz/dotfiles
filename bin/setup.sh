@@ -40,9 +40,17 @@ while read src; do
   if [ -e "$dest" -a ! "$src" -ef "$dest" ]; then
     mkdir -p "$backupdir"
     mv "$dest" "$backupdir/${src##*/}"
-    ln -s "$src" "$dest"
   fi
+  # シンボリックリンクを作る
+  ln -sfn "$src" "$dest"
 done
 if [ -d "$backupdir" ]; then
   echo -e "既存のドットファイルは \x1b[36m${backupdir}\x1b[0m に移動されました"
+fi
+
+# vim のバージョンチェック
+vim_version="$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)"
+if [ "$((echo $vim_version; echo 7.1) | sort -k1,1n -k2,2n | head -n 1)" != "7.1" ]; then
+  echo "~/.vimrcはvim7.1以上が必要なので以下を実行してください"
+  echo "sh '$DOTFILES_DIR/bin/build-vim.sh'"
 fi

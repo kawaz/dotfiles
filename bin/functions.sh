@@ -47,7 +47,8 @@ function is_mac() {
 # 必要なrpmが入ってるかどうかチェックする
 function has_rpm_packages() {
   if ! rpm -q "$@" >/dev/null 2>&1; then
-    echo "sudo yum install $requires"
+    echo "必要なパッケージが足りません、以下を実行してください"
+    echo "sudo yum install $*"
     exit 1
   fi
 }
