@@ -1,11 +1,10 @@
 " https://github.com/Shougo/neobundle.vim
 set nocompatible               " be iMproved
 filetype off                   " required!
-filetype plugin indent off     " required!
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle/'))
 endif
+call neobundle#rc(expand('~/.vim/bundle/'))
 
 " ファイルタイプ関連
 NeoBundle 'jade.vim'
@@ -24,9 +23,9 @@ NeoBundle 'othree/eregex.vim'
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
 
-" Pythonインターフェースに依存するのでチェック
+" バイナリ編集が出来るプラグイン
 if has('python')
-  " バイナリ編集が出来るプラグイン
+  " Pythonインターフェースに依存するのでチェックが必要
   " http://d.hatena.ne.jp/alwei/20120220/1329756198
   NeoBundle 'https://github.com/Shougo/vinarise'
 endif
@@ -130,7 +129,7 @@ NeoBundle 'https://github.com/scrooloose/syntastic.git'
 
 " :Ref xxx keyword でマニュアル検索
 NeoBundle 'ref.vim'
-  let g:ref_phpmanual_path = $HOME . '/.vim/phpmanual-cache/php-chunked-xhtml'
+  let g:ref_phpmanual_path = $HOME . '/.vim/php_manual/php-chunked-xhtml'
 
 " tagsの凄い奴
 NeoBundle 'Tagbar'
@@ -163,6 +162,7 @@ NeoBundle 'https://github.com/kien/ctrlp.vim'
 NeoBundle 'https://github.com/mileszs/ack.vim'
 
 
+filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
 if neobundle#exists_not_installed_bundles()
   echomsg 'Not installed bundles : ' . string(neobundle#get_not_installed_bundle_names())
