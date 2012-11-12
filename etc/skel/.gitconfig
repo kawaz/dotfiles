@@ -15,4 +15,5 @@
   paget = "less -R"
   excludesfile = ~/.gitignore
 [push]
+  # upstream or tracking http://bit.ly/SZxexh
   default = tracking
