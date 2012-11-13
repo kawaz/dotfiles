@@ -39,6 +39,14 @@ function make_profile_script() {
   cat > "$DOTFILES_DIR/env/dest/profile.d/$fname"
 }
 
+# 自動 source されるスクリプトを読み込む
+function load_profile_script() {
+  local fname="$1"; shift
+  if [ -f "$DOTFILES_DIR/env/dest/profile.d/$fname" ]; then
+    . "$DOTFILES_DIR/env/dest/profile.d/$fname"
+  fi
+}
+
 # Macチェック
 function is_mac() {
   uname | grep -qi darwin
