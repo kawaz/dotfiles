@@ -3,6 +3,8 @@ export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
 export EDITOR="vim"
 export PS1='`[[ "$?" -eq 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]"`[`date +%d%a%T` \u@\h \W]\$\[\e[m\] '
+
+# 環境に無いTERMを使うと面倒な事になるのでチェックしてから使う
 for TERM in xterm-256color screen-256color screen xterm vt100; do
   if [ -f /usr/*/terminfo/*/"$TERM" ]; then
     export TERM
