@@ -5,6 +5,11 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
+# DOTFILES_DIRの設定があれば読み込む
+if [ -f "$HOME/.dotfilesrc" ]; then
+  . "$HOME/.dotfilesrc"
+fi
+
 # include settings (ファイル名順に読み込む)
 for f in $(
   for f in "${DOTFILES_DIR:-$HOME/.dotfiles}"/{etc,env/dest}/profile.d/*.sh ~/.profile.d/*.sh; do
