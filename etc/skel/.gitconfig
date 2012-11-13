@@ -17,3 +17,5 @@
 [push]
   # upstream or tracking http://bit.ly/SZxexh
   default = tracking
+[github]
+  user = kawaz
