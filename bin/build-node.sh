@@ -2,8 +2,8 @@
 . "`dirname -- "$0"`"/functions.sh || exit
 
 # install nvm
-git clone git://github.com/creationix/nvm.git ~/nvm
-( cd ~/nvm && git pull --rebase )
+git clone git://github.com/creationix/nvm.git ~/.nvm
+( cd ~/.nvm && git pull --rebase )
 . ~/.nvm/nvm.sh
 
 # install stable node
