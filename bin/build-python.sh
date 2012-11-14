@@ -1,7 +1,10 @@
 #!/bin/sh
 . "`dirname -- "$0"`"/functions.sh || exit
 
-version="${1:-3.3.0}"
+version="$1"
+if [ "$version" == "" ]; then
+  version=$(curl http://python.org/ftp/python/|egrep -o '[0-9]+\.[0-9]+\.[0-9]+'|sort -t. -k1,1n -k2,2n -k3,3n|tail -n1)
+fi
 
 # install pythonz
 curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
