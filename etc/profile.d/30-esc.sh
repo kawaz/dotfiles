@@ -51,5 +51,5 @@ function echo_cursor_down()  { echo -en "\x1b[$1B"; }
 function echo_cursor_right() { echo -en "\x1b[$1C"; }
 function echo_cursor_left()  { echo -en "\x1b[$1D"; }
 function echo_cursor_goto()  { echo -en "\x1b[${1:-1};${2:-1}H"; }
-#function echo_clear_screen() { echo -en "\x1b[2"; }
+function echo_clear_screen() { echo -en "\x1b[2J"; }
 #function echo_kill_line() { echo -en "\x1b[K"; }
