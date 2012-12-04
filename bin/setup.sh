@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
 # setup vim (etc/skel/.vimを作るのでドットファイルのシンボリックリンク作成前に実行する)

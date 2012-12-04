@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
 dest="$DOTFILES_DIR/env/dest/bash-completion"

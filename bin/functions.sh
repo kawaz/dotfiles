@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # bashとshの違いを吸収 http://bit.ly/S2LWDQ
 set +o posix
