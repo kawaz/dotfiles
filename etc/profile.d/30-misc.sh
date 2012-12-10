@@ -23,12 +23,6 @@ alias egrep='egrep --color'
 alias du0='du --max-depth=1'
 alias du1='du --max-depth=1'
 
-alias dstat-full='dstat -Tclmdrn'
-alias dstat-mem='dstat -Tclm'
-alias dstat-cpu='dstat -Tclr'
-alias dstat-net='dstat -Tclnd'
-alias dstat-disk='dstat -Tcldr'
-
 alias last-itumono='last -adixFw'
 
 # cd file でそのfileのあるディレクトリに移動する
@@ -51,3 +45,9 @@ function crontab() {
   done
   command crontab "$@"
 }
+
+# history関連
+HISTTIMEFORMAT='%Y-%m-%dT%T%z '
+HISTSIZE=30000
+HISTIGNORE=""
+
