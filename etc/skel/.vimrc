@@ -64,6 +64,8 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
   "補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
   inoremap <expr> <ESC> pumvisible() ? "\<C-e>\<ESC>" : "\<ESC>"
+  "補完ウィンドウ表示中、Enterで補完キャンセル＆改行
+  inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<CR>" : "\<CR>"
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
