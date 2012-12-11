@@ -1,9 +1,11 @@
 if [ "`type -t __git_ps1`" == "function" ]; then
   function __dotfiles_git_ps1() {
+    local ret=$? # 元のexitコードを保存
     local git_ps1="$(__git_ps1)"
     if [ "$git_ps1" != "" ]; then
       echo "${git_ps1# } "
     fi
+    return $ret
   }
   export PS1="\$(__dotfiles_git_ps1)$PS1"
   GIT_PS1_SHOWUPSTREAM=1
