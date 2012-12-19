@@ -2,7 +2,7 @@
 とりあえず以下を実行しておけば大体環境が整う。
 
     git clone https://github.com/kawaz/dotfiles.git ~/.dotfiles
-    ~/.dorfiles/bin/setup.sh
+    ~/.dotfiles/bin/setup.sh
 
 + 欲しいパッケージをインストールする権限が無いときや環境が古く最新バージョンを使いたかったりしたときは必要に応じて```bin/build-*.sh```を実行する。
 + ```bin/setup.sh```実行後に初めてvimを起動すると勝手に```NeoBundleInstall```が始まるようになってるので面食らうかもしれないが最初だけなので我慢。
