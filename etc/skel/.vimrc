@@ -41,7 +41,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " 大文字が入力されるまで大文字小文字の区別を無視する
   let g:neocomplcache_enable_smart_case = 1
   " 補完候補を出すときに、自動的に一番上の候補を選択する
-  let g:neocomplcache_enable_auto_select = 1
+  "let g:neocomplcache_enable_auto_select = 1
   " 日本語をキャッシュしない
   if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
