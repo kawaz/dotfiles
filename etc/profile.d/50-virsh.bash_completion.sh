@@ -19,6 +19,9 @@
 # It is far from complete nor suitably tested to submit upstream to either the
 # bash-completion or libvirt projects. -- tmz, 2011/01/26
 
+# virshの存在チェック
+which virsh >/dev/null 2>&1 || return 0
+
 __virsh_connect="-c qemu:///system --readonly"
 __virsh_options="$( virsh -h | awk '/^ +-/ { print $3 }' )"
 __virsh_commands="$( virsh $__virsh_connect help 2>/dev/null | awk '/^ +/ { print $1 }' )"
