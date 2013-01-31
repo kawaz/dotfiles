@@ -169,6 +169,14 @@ NeoBundle 'https://github.com/kien/ctrlp.vim'
 " ackで検索が捗る http://bit.ly/PfpjdT
 NeoBundle 'https://github.com/mileszs/ack.vim'
 
+" レインボーカラー検索 http://daisuzu.hatenablog.com/entry/2012/12/10/001228
+NeoBundle 'daisuzu/rainbowcyclone.vim'
+  nmap c/ <Plug>(rc_search_forward)
+  nmap c? <Plug>(rc_search_backward)
+  nmap c* <Plug>(rc_search_forward_with_cursor)
+  nmap c# <Plug>(rc_search_backward_with_cursor)
+  nmap cn <Plug>(rc_search_forward_with_last_pattern)
+  nmap cN <Plug>(rc_search_backward_with_last_pattern)
 
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
