@@ -148,8 +148,6 @@ NeoBundle 'mattn/gist-vim'
 
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-  colorscheme Tomorrow-Night
-
 
 " VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
 NeoBundle 'https://github.com/mattn/vdbi-vim.git'
@@ -185,6 +183,9 @@ if neobundle#exists_not_installed_bundles()
   "echomsg 'Please execute ":NeoBundleInstall" command.'
   NeoBundleInstall
 endif
+
+" カラースキーマの設定はNeoBundleInstallの後に行う
+colorscheme Tomorrow-Night
 
 "-----------------------------------------------------------------------------
 " 文字コード関連
