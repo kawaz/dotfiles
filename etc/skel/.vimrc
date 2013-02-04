@@ -386,9 +386,17 @@ map <F3> <ESC>:bn<CR>
 map <F4> <ESC>:bw<CR>
 "表示行単位で行移動する
 nnoremap j gj
+onoremap j gj
+xnoremap j gj
 nnoremap k gk
+onoremap k gk
+xnoremap k gk
 nnoremap <Down> gj
+onoremap <Down> gj
+xnoremap <Down> gj
 nnoremap <Up> gk
+onoremap <Up> gk
+xnoremap <Up> gk
 "フレームサイズを怠惰に変更する
 map <kPlus> <C-W>+
 map <kMinus> <C-W>-
