@@ -9,7 +9,7 @@ if [ ! -d "$DOTFILES_DIR" ]; then
 fi
 
 # 終了時に一時ディレクトリを削除する
-declare -a DOTFILES_TMPDIR
+declare -a DOTFILES_TMPDIR=()
 function clean_tmpdir() {
   for d in "${DOTFILES_TMPDIR[@]}"; do
     if [ -d "$d" ]; then
