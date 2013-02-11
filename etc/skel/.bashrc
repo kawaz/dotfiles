@@ -12,7 +12,7 @@ fi
 
 # include settings (ファイル名順に読み込む)
 for f in $(
-  for f in "${DOTFILES_DIR:-$HOME/.dotfiles}"/{etc,env/dest}/profile.d/*.sh ~/.profile.d/*.sh; do
+  for f in "${DOTFILES_DIR:-$HOME/.dotfiles}"/{etc,.env/dest}/profile.d/*.sh ~/.profile.d/*.sh; do
     echo "${f##*/} $f"
   done | sort | while read dummy f; do
     if [ -f "$f" ]; then
