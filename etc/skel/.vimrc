@@ -22,7 +22,6 @@ NeoBundle 'othree/eregex.vim'
 
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
-
 " バイナリ編集が出来るプラグイン
 if has('python')
   " Pythonインターフェースに依存するのでチェックが必要
@@ -31,24 +30,67 @@ if has('python')
 endif
 
 " 補完の凄いやつ
-" 設定の参考 http://code-life.net/?p=2308
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   set completeopt=menuone
   " 起動時に有効化
   let g:neocomplcache_enable_at_startup = 1
+  " 補完候補を出すときに、自動的に一番上の候補を選択させしない
+  let g:neocomplcache_enable_auto_select = 0
   " シンタックスファイル中で、補完の対象となるキーワードの最小長さを制御
   let g:neocomplcache_min_syntax_length = 3
   " 大文字が入力されるまで大文字小文字の区別を無視する
   let g:neocomplcache_enable_smart_case = 1
-  " 補完候補を出すときに、自動的に一番上の候補を選択する
-  let g:neocomplcache_enable_auto_select = 0
+  " 補完候補検索時に大文字・小文字を無視する
+  let g:neocomplcache_enable_ignore_case = 1
+  " 大文字小文字を区切りとしたあいまい検索を行う（DTがDateTimeにマッチする）
+  let g:neocomplcache_enable_camel_case_completion = 1
+  " アンダーバー区切りのあいまい検索を行う（p_hがpublic_htmlにマッチする）
+  let g:neocomplcache_enable_underbar_completion = 1
+  " vim標準のキーワード補完を置き換える
+  inoremap <expr><C-n> neocomplcache#start_manual_complete()
+  inoremap <expr><C-p> neocomplcache#start_manual_complete()
+  " カーソル移動時にポップアップが出ないようにする
+  inoremap <expr><Up> pumvisible() ? "\<Up>" : neocomplcache#close_popup()."\<Up>"
+  inoremap <expr><Down> pumvisible() ? "\<Down>" : neocomplcache#close_popup()."\<Down>"
+  inoremap <expr><Left> pumvisible() ? "\<Left>" : neocomplcache#close_popup()."\<Left>"
+  inoremap <expr><Right> pumvisible() ? "\<Right>" : neocomplcache#close_popup()."\<Right>"
+  " C-h, BSで補完ウィンドウを確実に閉じる
+  inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplcache#smart_close_popup()."\<BS>"
+  " Tabで補完候補の選択を行う
+  inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
+  inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+  " C-kでスニペット展開orジャンプ
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  " 改行で補完ウィンドウを閉じる
+  inoremap <expr><CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+  " スニペット補完が出来るようにする
+  NeoBundle 'Shougo/neosnippet.git'
+    " スニペット集
+    NeoBundle 'honza/snipmate-snippets.git'
+    let g:neosnippet#snippets_directory='~/.vim/snipmate-snippets/snippets'
+    " 自作スニペット置き場
+    let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
+    " For snippet_complete marker.
+    if has('conceal')
+      set conceallevel=2 concealcursor=i
+    endif
+  " オムニ補完設定
+  augroup SetOmniCompletionSetting
+    autocmd!
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType ctp setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType twig setlocal omnifunc=htmlcomplete#CompleteTags
+    "autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+  augroup END
   " 日本語をキャッシュしない
   if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
   endif
   let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-  " 例えば p_h と入力したとき public_html とマッチするようになる
-  let g:neocomplcache_enable_underbar_completion = 1
   " 関数を補完するための区切り文字パターン
   if !exists('g:neocomplcache_delimiter_patterns')
     let g:neocomplcache_delimiter_patterns = {}
@@ -65,19 +107,6 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     \ 'php' : $HOME . '/.vim/dict/php.dict',
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
-  " カーソル移動時にポップアップが出ないようにする
-  inoremap <expr> <Up> pumvisible() ? "\<Up>" : neocomplcache#close_popup()."\<Up>"
-  inoremap <expr> <Down> pumvisible() ? "\<Down>" : neocomplcache#close_popup()."\<Down>"
-  inoremap <expr> <Left> pumvisible() ? "\<Left>" : neocomplcache#close_popup()."\<Left>"
-  inoremap <expr> <Right> pumvisible() ? "\<Right>" : neocomplcache#close_popup()."\<Right>"
-  "C-h, BSで補完ウィンドウを確実に閉じる
-  inoremap <expr> <C-h> neocomplcache#smart_close_popup()."\<C-h>"
-  inoremap <expr> <BS> neocomplcache#smart_close_popup()."\<BS>"
-  "TABで補完候補の選択を行う
-  inoremap <expr> <TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-  inoremap <expr> <S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-  "改行で補完ウィンドウを閉じる
-  inoremap <expr> <CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
