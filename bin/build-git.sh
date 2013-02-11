@@ -1,8 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-src="$DOTFILES_DIR/env/src/git"
-dest="$DOTFILES_DIR/env/dest/git"
+src="$DOTFILES_SRC/git"
+dest="$DOTFILES_DEST/git"
 
 # 必要パッケージのチェック
 has_perl_modules ExtUtils::MakeMaker || exit 1

@@ -1,8 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-src="$DOTFILES_DIR/env/src/vim"
-dest="$DOTFILES_DIR/env/dest/vim"
+src="$DOTFILES_SRC/vim"
+dest="$DOTFILES_DEST/vim"
 
 # 必要パッケージのチェック
 has_rpm_packages mercurial || exit 1

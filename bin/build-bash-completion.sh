@@ -1,7 +1,7 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-dest="$DOTFILES_DIR/env/dest/bash-completion"
+dest="$DOTFILES_DEST/bash-completion"
 
 # for Mac
 if is_mac; then

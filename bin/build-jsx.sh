@@ -1,8 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-src="$DOTFILES_DIR/env/src/jsx"
-dest="$DOTFILES_DIR/env/dest/jsx"
+src="$DOTFILES_SRC/jsx"
+dest="$DOTFILES_DEST/jsx"
 
 # get sources
 if [ ! -d "$src/.git" ]; then

@@ -1,8 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-src="$DOTFILES_DIR/env/src/tmux"
-dest="$DOTFILES_DIR/env/dest/tmux"
+src="$DOTFILES_SRC/tmux"
+dest="$DOTFILES_DEST/tmux"
 
 # 必要パッケージのチェック
 has_rpm_packages automake libevent-devel ncurses-devel || exit 1
@@ -17,8 +17,8 @@ patch -p1 < "$DOTFILES_DIR/bin/build-tmux.sh.border_patch"
 
 # libevent2が必要なので1.xしか無い場合はソースで入れる
 if rpm -q libevent-devel-1.\* >/dev/null 2>&1; then
-  src2="$DOTFILES_DIR/env/src/libevent2"
-  dest2="$DOTFILES_DIR/env/dest/libevent2"
+  src2="$DOTFILES_SRC/libevent2"
+  dest2="$DOTFILES_DEST/libevent2"
   mkdir -p "$src2" && cd "$src2" || exit 1
   curl -L https://github.com/downloads/libevent/libevent/libevent-2.0.20-stable.tar.gz | tar xz
   cd libevent-2.0.20-stable || exit 1

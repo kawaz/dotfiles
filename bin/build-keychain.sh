@@ -1,8 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-src="$DOTFILES_DIR/env/src/keychain"
-dest="$DOTFILES_DIR/env/dest/keychain"
+src="$DOTFILES_SRC/keychain"
+dest="$DOTFILES_DEST/keychain"
 
 # get sources
 if [ ! -d "$src/.git" ]; then
