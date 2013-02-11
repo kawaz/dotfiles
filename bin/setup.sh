@@ -35,7 +35,10 @@ fi
 
 # HOMEのドットファイルを置き換える
 backupdir="$HOME/dotfiles-backup-`date +%Y%m%dT%H%M%S`"
-find "$DOTFILES_DIR/etc/skel" -mindepth 1 -maxdepth 1 -name .\* ! -name .\*.swp |
+echo "export DOTFILES_DIR=\"$DOTFILES_DIR\"" > "$DOTFILES_DIR/env/dest/.dotfilesrc"
+( echo "$DOTFILES_DIR/env/dest/.dotfilesrc"
+  find "$DOTFILES_DIR/etc/skel" -mindepth 1 -maxdepth 1 -name .\* ! -name .\*.swp
+) |
 while read src; do
   dest="$HOME/${src##*/}"
   # 既存の実ファイルが存在したらリネームしてとっておく(srcとdestの実体が同じ場合はスキップ)
@@ -49,6 +52,14 @@ done
 if [ -d "$backupdir" ]; then
   echo -e "既存のドットファイルは \x1b[36m${backupdir}\x1b[0m に移動されました"
 fi
+
+# 環境に合わせたtmuxの追加設定を配備
+if is_mac; then
+  ln -sfn "$DOTFILES_DIR/etc/tmux-mac.conf" "$DOTFILES_DIR/env/dest/tmux-platform.conf"
+else
+  ln -sfn "$DOTFILES_DIR/etc/tmux-default.conf" "$DOTFILES_DIR/env/dest/tmux-platform.conf"
+fi
+
 
 # vim のバージョンチェック
 vim_version="$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)"
