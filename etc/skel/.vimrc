@@ -49,6 +49,16 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
   " 例えば p_h と入力したとき public_html とマッチするようになる
   let g:neocomplcache_enable_underbar_completion = 1
+  " 関数を補完するための区切り文字パターン
+  if !exists('g:neocomplcache_delimiter_patterns')
+    let g:neocomplcache_delimiter_patterns = {}
+  endif
+  let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+  "タグ補完の呼び出しパターン
+  if !exists('g:neocomplcache_member_prefix_patterns')
+    let g:neocomplcache_member_prefix_patterns = {}
+  endif
+  let g:neocomplcache_member_prefix_patterns['php'] = '->\|::'
   " ディクショナリ定義
   let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
@@ -376,9 +386,17 @@ map <F3> <ESC>:bn<CR>
 map <F4> <ESC>:bw<CR>
 "表示行単位で行移動する
 nnoremap j gj
+onoremap j gj
+xnoremap j gj
 nnoremap k gk
+onoremap k gk
+xnoremap k gk
 nnoremap <Down> gj
+onoremap <Down> gj
+xnoremap <Down> gj
 nnoremap <Up> gk
+onoremap <Up> gk
+xnoremap <Up> gk
 "フレームサイズを怠惰に変更する
 map <kPlus> <C-W>+
 map <kMinus> <C-W>-
