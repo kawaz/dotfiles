@@ -41,7 +41,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " 大文字が入力されるまで大文字小文字の区別を無視する
   let g:neocomplcache_enable_smart_case = 1
   " 補完候補を出すときに、自動的に一番上の候補を選択する
-  "let g:neocomplcache_enable_auto_select = 1
+  let g:neocomplcache_enable_auto_select = 0
   " 日本語をキャッシュしない
   if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
@@ -70,12 +70,14 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   inoremap <expr> <Down> pumvisible() ? "\<Down>" : neocomplcache#close_popup()."\<Down>"
   inoremap <expr> <Left> pumvisible() ? "\<Left>" : neocomplcache#close_popup()."\<Left>"
   inoremap <expr> <Right> pumvisible() ? "\<Right>" : neocomplcache#close_popup()."\<Right>"
-  "補完ウィンドウ表示中、Tabで補完決定にする
-  inoremap <expr> <TAB> pumvisible() ? "\<C-Y>" : "\<TAB>"
-  "補完ウィンドウ表示中、ESCで補完キャンセル＆ノーマルモードにする
-  inoremap <expr> <ESC> pumvisible() ? "\<C-e>\<ESC>" : "\<ESC>"
-  "補完ウィンドウ表示中、Enterで補完キャンセル＆改行
-  inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<CR>" : "\<CR>"
+  "C-h, BSで補完ウィンドウを確実に閉じる
+  inoremap <expr> <C-h> neocomplcache#smart_close_popup()."\<C-h>"
+  inoremap <expr> <BS> neocomplcache#smart_close_popup()."\<BS>"
+  "TABで補完候補の選択を行う
+  inoremap <expr> <TAB> pumvisible() ? "\<Down>" : "\<TAB>"
+  inoremap <expr> <S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
+  "改行で補完ウィンドウを閉じる
+  inoremap <expr> <CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
 
 "uniteはsudo vimや古いvimで使えないのでifで囲む
 if $SUDO_USER == '' && !(v:version < 702)
@@ -284,6 +286,9 @@ set backspace=indent,eol,start
 "inoremap <expr> " &ai==1 ? "\"\"\<LEFT>" : '"'
 "inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
 "inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
+
+" カーソル位置を画面中央に保つ
+set scrolloff=1000
 
 "挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
 let &t_SI .= "\e[?7727h"
