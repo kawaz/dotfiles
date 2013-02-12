@@ -2,7 +2,13 @@
 export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
 export EDITOR="vim"
-export PS1='`[[ "$?" -eq 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]"`[`date +%d%a%T` \u@\h \W]\$\[\e[m\] '
+
+# プロンプトの設定
+export PS1='$(r=$?;x="$(__git_ps1 2>/dev/null) ";echo "${x## }";exit $r)$([[ $? == 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]")[$(date +%d%a%T) \u@\h \W]\$\[\e[m\] '
+GIT_PS1_SHOWUPSTREAM=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWDIRTYSTATE=1
 
 # 環境に無いTERMを使うと面倒な事になるのでチェックしてから使う
 for TERM in xterm-256color screen-256color screen xterm vt100; do
