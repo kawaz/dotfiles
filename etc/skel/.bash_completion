@@ -1,0 +1,8 @@
+#!/bin/bash
+[[ -z "$PS1" ]] && return
+
+for f in "${DOTFILES_DIR:-$HOME/.dotfiles}"/{etc,.env/dest}/bash_completion.d/*.sh ~/.bash_completion.d/*.sh; do
+  if [[ -f "$f" ]]; then
+    . "$f"
+  fi
+done

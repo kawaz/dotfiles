@@ -2,6 +2,7 @@
 
 # 分岐を列挙するのは不毛なので tmux list-commands をパースする感じで作ってみた
 # 手探りで作った奴だがとりあえず必要十分な感じになった気がする
+# Author: Yoshiaki Kawazu ( http://twitter.com/kawaz )
 
 function _tmux_list_commands() {
   # tmux起動済み
