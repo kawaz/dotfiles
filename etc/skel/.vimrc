@@ -316,8 +316,8 @@ set backspace=indent,eol,start
 "inoremap <expr> ' &ai==1 ? "''\<LEFT>" : "'"
 "inoremap <expr> ` &ai==1 ? "``\<LEFT>" : "`"
 
-" カーソル位置を画面中央に保つ
-set scrolloff=1000
+" カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
+set scrolloff=10
 
 "挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
 let &t_SI .= "\e[?7727h"
