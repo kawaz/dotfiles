@@ -32,6 +32,10 @@
     |   |-- functions.sh (共通処理用の小物スクリプト、sourceで読み込んで使う)
     |   `-- setup.sh     (git clone後に実行するべきスクリプト、コレ一発で大体環境が整う)
     |-- etc
+    |   |-- bash_completion.d (~/.bash_completionから読み込まれるbashの補完スクリプト)
+    |   |   |-- npm.sh
+    |   |   |-- tmux.sh
+    |   |   `-- virsh.sh
     |   |-- profile.d    (.bashrcから読み込まれる初期化スクリプト置き場、何となく用途別に分割してる)
     |   |   |-- 20-keychain.sh
     |   |   |-- 20-nvm.sh
@@ -49,8 +53,10 @@
     |       |-- .tmux.conf
     |       |-- .vim -> ../../env/dest/dot-vim/ (bin/setup.shによって作られるシンボリックリンク)
     |       `-- .vimrc
-    `-- env (bin/setup.shによって作成される、追加DL物や環境毎の設定が置かれる場所)
+    `-- .env (bin/setup.shによって作成される、追加DL物や環境毎の設定が置かれる場所)
         |-- dest (環境毎の色々な実体置き場)
+        |   |-- .dotfilesrc (bin/setup.shによって作られる、.bashrcから読み込まれDOTFILES_FIRを設定する)
+        |   |-- tmux-platform.conf (bin/setup.shによって環境に合わせたetc/tmux-*.confへ向けたシンボリックリンク)
         |   |-- dot-vim (~/.vimの最終リンク先、.gitignoreを綺麗に保つためにこの場所で管理してる)
         |   |   |-- bundle
         |   |   |   `-- (many dict)
