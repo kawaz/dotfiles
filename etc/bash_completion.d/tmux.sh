@@ -62,6 +62,9 @@ function _tmux() {
             [[ "$COMP_TYPE" == "63" ]] && { echo; tmux list-session; }
             targets=($( tmux list-session | sed 's/:.*//' ))
             ;;
+          key-table)
+            targets=(vi-edit emacs-edit vi-choice emacs-choice vi-copy emacs-copy)
+            ;;
         esac
       fi
     done
