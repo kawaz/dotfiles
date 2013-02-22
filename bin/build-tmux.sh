@@ -1,6 +1,9 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
+# MacはMac用のスクリプトを使う
+is_mac && exec bash "$DOTFILES_DIR/bin/build-mac-tmux.sh"
+
 src="$DOTFILES_SRC/tmux"
 dest="$DOTFILES_DEST/tmux"
 
