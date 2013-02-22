@@ -9,7 +9,8 @@ function _tmux_list_commands() {
   tmux list-commands 2>/dev/null && return
   # tmux未起動
   echo "attach-session new-session start-server" | perl -pe's/ /\n/g'
-  tmux --help 2>&1 | perl -pe's/\n/ /' | perl -pe's/.*tmux //' | _tmux_parse_opts
+  # --help的なオプションが無いのでありえないオプション時のエラーからusageを取得する
+  tmux -. 2>&1 | perl -pe's/\n/ /' | perl -pe's/.*tmux //' | _tmux_parse_opts
 }
 
 function _tmux_parse_opts() {
