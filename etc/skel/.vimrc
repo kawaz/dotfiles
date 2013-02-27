@@ -6,6 +6,11 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+" Mac判定
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+
 " ファイルタイプ関連
 NeoBundle 'jade.vim'
 NeoBundle 'coffee.vim'
@@ -437,8 +442,11 @@ map <kMinus> <C-W>-
 "インデント操作後も選択範囲を保つ
 vnoremap > >gv
 vnoremap < <gv
-
-
+" Macのクリップボードにコピーする
+if s:is_mac
+  vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
+  nmap <C-c> :call system("pbcopy", getreg("\""))<CR>
+endif
 
 " インデントが同じかそれより深い範囲を選択する
 function! VisualCurrentIndentBlock()
