@@ -174,6 +174,9 @@ NeoBundle 'quickrun.vim'
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
   let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
+  if s:is_mac
+    let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
+  endif
   " 横分割時は下へ､ 縦分割時は右へ新しいウィンドウが開くようにする
   set splitbelow
   set splitright
