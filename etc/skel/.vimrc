@@ -161,12 +161,6 @@ if $SUDO_USER == '' && !(v:version < 702)
     endfunction"}}}
 endif
 
-" vim-snipmate
-NeoBundle "MarcWeber/vim-addon-mw-utils" "dependencies for vim-snipmate
-NeoBundle "tomtom/tlib_vim"              "dependencies for vim-snipmate
-NeoBundle "honza/snipmate-snippets"      "dependencies for vim-snipmate
-NeoBundle "garbas/vim-snipmate"
-
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
