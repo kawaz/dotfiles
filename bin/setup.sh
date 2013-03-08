@@ -53,14 +53,6 @@ if [ -d "$backupdir" ]; then
   echo -e "既存のドットファイルは \x1b[36m${backupdir}\x1b[0m に移動されました"
 fi
 
-# 環境に合わせたtmuxの追加設定を配備
-if is_mac; then
-  ln -sfn "$DOTFILES_DIR/etc/tmux-mac.conf" "$DOTFILES_DEST/tmux-platform.conf"
-else
-  ln -sfn "$DOTFILES_DIR/etc/tmux-default.conf" "$DOTFILES_DEST/tmux-platform.conf"
-fi
-
-
 # vim のバージョンチェック
 vim_version="$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)"
 if [ "$((echo $vim_version; echo 7.1) | sort -k1,1n -k2,2n | head -n 1)" != "7.1" ]; then
