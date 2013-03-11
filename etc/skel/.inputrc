@@ -2,3 +2,7 @@
 # 例えば s と入力した状態で C-p を押すと s で始まるコマンド履歴が補完されるようになります。
 "\C-n":history-search-forward
 "\C-p":history-search-backward
+
+# Home/Endが使えるようにする
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
