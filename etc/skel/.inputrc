@@ -6,3 +6,7 @@
 # Home/Endが使えるようにする
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
+
+# Ctr + ←/→ でワード移動
+"\eOD": backward-word
+"\eOC": forward-word
