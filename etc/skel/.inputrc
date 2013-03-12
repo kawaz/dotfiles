@@ -7,6 +7,9 @@
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
 
-# Ctr + ←/→ でワード移動
+# Ctr + 左右 でワード移動出来るようにする(PuTTY on Windows)
 "\eOD": backward-word
 "\eOC": forward-word
+# Ctr + 左右 でワード移動出来るようにする(iTerm2 on Mac)
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
