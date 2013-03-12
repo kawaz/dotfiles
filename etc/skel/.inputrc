@@ -8,6 +8,7 @@
 "\e[4~": end-of-line
 
 # Ctr + 左右 でワード移動出来るようにする(PuTTY on Windows)
+# TODO: tmux内で使えない問題をそのうち何とかしたい http://bit.ly/10GZslq
 "\eOD": backward-word
 "\eOC": forward-word
 # Ctr + 左右 でワード移動出来るようにする(iTerm2 on Mac)
