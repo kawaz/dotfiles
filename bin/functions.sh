@@ -5,7 +5,7 @@ set +o posix
 
 # ベースディレクトリを取得
 if [ ! -d "$DOTFILES_DIR" ]; then
-  DOTFILES_DIR="$(cd "$(dirname -- "${BASH_SOURCE[0]:-$0}")/.." && pwd)"
+  DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")/.." && pwd)"
 fi
 DOTFILES_ENV="$DOTFILES_DIR/.env"
 DOTFILES_SRC="$DOTFILES_ENV/src"
