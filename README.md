@@ -9,8 +9,8 @@
 
 
 ### bin/setup.shのやること
-+ ```env/dest```に必要な物を色々DLしたりする。
-+ ```etc/skel/.*```へのシンボリックリンクを```$HOME/.*```に作成する。
++ ```.env/dest```に必要な物を色々DLしたりする。
++ ```.etc/skel/.*```へのシンボリックリンクを```$HOME/.*```に作成する。
 + ```$HOME```に元からのドットファイルがあった場合は、上書き前に```~/dotfiles-backup-日付```なディレクトリに退避してくれる。
 
 
@@ -56,7 +56,6 @@
     `-- .env (bin/setup.shによって作成される、追加DL物や環境毎の設定が置かれる場所)
         |-- dest (環境毎の色々な実体置き場)
         |   |-- .dotfilesrc (bin/setup.shによって作られる、.bashrcから読み込まれDOTFILES_FIRを設定する)
-        |   |-- tmux-platform.conf (bin/setup.shによって環境に合わせたetc/tmux-*.confへ向けたシンボリックリンク)
         |   |-- dot-vim (~/.vimの最終リンク先、.gitignoreを綺麗に保つためにこの場所で管理してる)
         |   |   |-- bundle
         |   |   |   `-- (many dict)
