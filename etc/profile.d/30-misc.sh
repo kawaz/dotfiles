@@ -3,6 +3,10 @@ export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
 export EDITOR="vim"
 
+# 以下はインタラクティブシェルのときだけ適用
+[[ -z "$PS1" ]] && return
+
+
 # プロンプトの設定
 export PS1='$(r=$?;x="$(__git_ps1 2>/dev/null) ";echo "${x## }";exit $r)$([[ $? == 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]")[$(date +%d%a%T) \u@\h \W]\$\[\e[m\] '
 GIT_PS1_SHOWUPSTREAM=1
