@@ -33,8 +33,8 @@ alias last-itumono='last -adixFw'
 
 # cd file でそのfileのあるディレクトリに移動する
 function cd() {
-  if [ -e "$1" -a ! -d "$1" ]; then
-    builtin cd "`dirname "$1"`"
+  if [[ -e $1 && ! -d $1 ]]; then
+    builtin cd -- "$(dirname -- "$1")"
   else
     builtin cd "$@"
   fi
@@ -44,8 +44,8 @@ function cd() {
 function crontab() {
   local opt
   for opt in "$@"; do
-    if [ "$opt" == "-r" ]; then
-      echo '-r is sealed!'
+    if [[ $opt == -r ]]; then
+      echo 'crontab -r is sealed!'
       return 1
     fi
   done
