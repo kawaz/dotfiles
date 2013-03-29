@@ -10,6 +10,7 @@
   st = status
   co = checkout
   tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+  tr-all-branch = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --branches
 [core]
   editor = vim
   paget = "less -R"
