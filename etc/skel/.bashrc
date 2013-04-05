@@ -17,8 +17,8 @@ while IFS= read fpath; do
   fi
 done < <(
   for f in \
-    "${DOTFILES_DIR:-$HOME/.dotfiles}"/etc}/profile.d/*.sh \
-    "${DOTFILES_DIR:-$HOME/.dotfiles}"/.env/dest}/profile.d/*.sh \
+    "${DOTFILES_DIR:-$HOME/.dotfiles}"/etc/profile.d/*.sh \
+    "${DOTFILES_DIR:-$HOME/.dotfiles}"/.env/dest/profile.d/*.sh \
     ~/.profile.d/*.sh
   do
     echo "${f##*/}/$f"
