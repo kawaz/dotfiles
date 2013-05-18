@@ -6,7 +6,7 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-" Mac判定
+" OS判定
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
