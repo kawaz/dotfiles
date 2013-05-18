@@ -385,6 +385,9 @@ xnoremap <Down> gj
 nnoremap <Up> gk
 onoremap <Up> gk
 xnoremap <Up> gk
+" C-a, C-eで行頭行末に移動する
+inoremap <C-a> <ESC>^i
+inoremap <C-e> <ESC>$i
 "フレームサイズを怠惰に変更する
 map <kPlus> <C-W>+
 map <kMinus> <C-W>-
