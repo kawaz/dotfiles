@@ -76,7 +76,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     "NeoBundle 'honza/snipmate-snippets.git'
     "let g:neosnippet#snippets_directory='~/.vim/snipmate-snippets/snippets'
     " 自作スニペット置き場
-    let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
+    "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
     " For snippet_complete marker.
     if has('conceal')
       set conceallevel=2 concealcursor=i
