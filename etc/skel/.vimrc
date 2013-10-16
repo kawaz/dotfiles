@@ -20,7 +20,7 @@ NeoBundle 'jsx/jsx.vim'
 NeoBundle 'johnhamelink/blade.vim'
 " javascript
 NeoBundle 'jiangmiao/simple-javascript-indenter'
-  let g:SimpleJsIndenter_BriefMode = 0
+  let g:SimpleJsIndenter_BriefMode = 1
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 " フォルディング系
