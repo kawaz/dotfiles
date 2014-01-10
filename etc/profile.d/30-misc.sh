@@ -63,6 +63,3 @@ function crontab() {
 HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 HISTSIZE=30000
 HISTIGNORE=""
-
-# bash -x の表示をリッチにする
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
