@@ -14,6 +14,9 @@ GIT_PS1_SHOWUNTRACKEDFILES=1
 GIT_PS1_SHOWSTASHSTATE=1
 GIT_PS1_SHOWDIRTYSTATE=1
 
+# bash -x でスクリプトを実行した際の行頭の +,++,+++ とかの表示をスクリプト情報を付加する
+export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
 # 環境に無いTERMを使うと面倒な事になるのでチェックしてから使う
 for TERM in xterm-256color screen-256color screen xterm vt100; do
   if [ -f /usr/*/terminfo/*/"$TERM" ]; then
