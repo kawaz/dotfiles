@@ -15,6 +15,8 @@
   editor = vim
   paget = "less -R"
   excludesfile = ~/.gitignore
+[include]
+  path = ~/.gitconfig.local
 [push]
   # upstream or tracking http://bit.ly/SZxexh
   default = tracking
