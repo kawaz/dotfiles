@@ -77,8 +77,8 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " スニペット補完が出来るようにする
   NeoBundle 'Shougo/neosnippet.git'
     " スニペット集
-    "NeoBundle 'honza/snipmate-snippets.git'
-    "let g:neosnippet#snippets_directory='~/.vim/snipmate-snippets/snippets'
+    NeoBundle 'Shougo/neosnippet-snippets.git'
+    let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
     " 自作スニペット置き場
     "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
     " For snippet_complete marker.
