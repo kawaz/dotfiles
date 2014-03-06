@@ -123,7 +123,6 @@ NeoBundle 'quickrun.vim'
     let g:quickrun_config = {'*':{'split':''}}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
-  let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
   if s:is_mac
     let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
   endif
@@ -148,16 +147,8 @@ NeoBundle 'mattn/gist-vim'
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
-" VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
-NeoBundle 'https://github.com/mattn/vdbi-vim.git'
-  " depends on
-  NeoBundle 'https://github.com/mattn/webapi-vim.git'
-
 " HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
 NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-
-" :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
-NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
 NeoBundle 'https://github.com/kien/ctrlp.vim'
