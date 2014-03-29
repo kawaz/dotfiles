@@ -192,6 +192,30 @@ NeoBundle 'daisuzu/rainbowcyclone.vim'
   nmap cn <Plug>(rc_search_forward_with_last_pattern)
   nmap cN <Plug>(rc_search_backward_with_last_pattern)
 
+" レジスタ履歴の再利用 http://leafcage.hateblo.jp/entry/2013/10/31/yankroundvim
+NeoBundle 'LeafCage/yankround.vim'
+  " 貼り付け直後に C-p や C-n でレジスタ履歴を遡って置換
+  nmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
+
+" undo履歴を表示する。
+NeoBundle 'mbbill/undotree'
+  nmap <Leader>u :UndotreeToggle<CR>
+  let g:undotree_SetFocusWhenToggle = 1
+  let g:undotree_WindowLayout = 'topleft'
+  let g:undotree_SplitWidth = 35
+  let g:undotree_diffAutoOpen = 1
+  let g:undotree_diffpanelHeight = 25
+  let g:undotree_RelativeTimestamp = 1
+  let g:undotree_TreeNodeShape = '*'
+  let g:undotree_HighlightChangedText = 1
+  let g:undotree_HighlightSyntax = "UnderLined"
+
+NeoBundle 'https://github.com/mileszs/ack.vim'
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
 if neobundle#exists_not_installed_bundles()
