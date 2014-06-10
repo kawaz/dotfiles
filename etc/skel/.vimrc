@@ -77,8 +77,8 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " スニペット補完が出来るようにする
   NeoBundle 'Shougo/neosnippet.git'
     " スニペット集
-    "NeoBundle 'honza/snipmate-snippets.git'
-    "let g:neosnippet#snippets_directory='~/.vim/snipmate-snippets/snippets'
+    NeoBundle 'Shougo/neosnippet-snippets.git'
+    let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
     " 自作スニペット置き場
     "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
     " For snippet_complete marker.
@@ -123,7 +123,6 @@ NeoBundle 'quickrun.vim'
     let g:quickrun_config = {'*':{'split':''}}
   endif
   let g:quickrun_config.html = {'command' : 'w3m'}
-  let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
   if s:is_mac
     let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
   endif
@@ -148,16 +147,8 @@ NeoBundle 'mattn/gist-vim'
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
-" VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
-NeoBundle 'https://github.com/mattn/vdbi-vim.git'
-  " depends on
-  NeoBundle 'https://github.com/mattn/webapi-vim.git'
-
 " HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-
-" :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
-NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
+NeoBundle 'git://github.com/mattn/emmet-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
 NeoBundle 'https://github.com/kien/ctrlp.vim'
@@ -201,6 +192,30 @@ NeoBundle 'daisuzu/rainbowcyclone.vim'
   nmap cn <Plug>(rc_search_forward_with_last_pattern)
   nmap cN <Plug>(rc_search_backward_with_last_pattern)
 
+" レジスタ履歴の再利用 http://leafcage.hateblo.jp/entry/2013/10/31/yankroundvim
+NeoBundle 'LeafCage/yankround.vim'
+  " 貼り付け直後に C-p や C-n でレジスタ履歴を遡って置換
+  nmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
+
+" undo履歴を表示する。
+NeoBundle 'mbbill/undotree'
+  nmap <Leader>u :UndotreeToggle<CR>
+  let g:undotree_SetFocusWhenToggle = 1
+  let g:undotree_WindowLayout = 'topleft'
+  let g:undotree_SplitWidth = 35
+  let g:undotree_diffAutoOpen = 1
+  let g:undotree_diffpanelHeight = 25
+  let g:undotree_RelativeTimestamp = 1
+  let g:undotree_TreeNodeShape = '*'
+  let g:undotree_HighlightChangedText = 1
+  let g:undotree_HighlightSyntax = "UnderLined"
+
+NeoBundle 'https://github.com/mileszs/ack.vim'
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
 if neobundle#exists_not_installed_bundles()
