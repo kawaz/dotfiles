@@ -148,7 +148,7 @@ NeoBundle 'mattn/gist-vim'
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
 " HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+NeoBundle 'git://github.com/mattn/emmet-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
 NeoBundle 'https://github.com/kien/ctrlp.vim'
