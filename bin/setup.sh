@@ -4,6 +4,9 @@
 # setup vim (etc/skel/.vimを作るのでドットファイルのシンボリックリンク作成前に実行する)
 bash $DOTFILES_DIR/bin/setup-vim.sh
 
+# ~/.profiles.d を作る
+mkdir -p ~/.profiles.d
+
 # HOMEのドットファイルを置き換える
 backupdir="$HOME/dotfiles-backup-`date +%Y%m%dT%H%M%S`"
 echo "export DOTFILES_DIR=\"$DOTFILES_DIR\"" > "$DOTFILES_DEST/.dotfilesrc"
