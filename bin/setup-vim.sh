@@ -6,19 +6,19 @@ git clone https://github.com/Shougo/neobundle.vim "$DOTFILES_DEST/dot-vim/bundle
 ( cd "$DOTFILES_DEST/dot-vim/bundle/neobundle.vim" && git pull --rebase )
 ln -sfn "$DOTFILES_DEST/dot-vim/" "$DOTFILES_DIR/etc/skel/.vim"
 # for ref.vim
-if [ ! -d "$DOTFILES_DEST/dot-vim/php_manual/php-chunked-xhtml" ]; then
+if [[ ! -d "$DOTFILES_DEST/dot-vim/php_manual/php-chunked-xhtml" ]]; then
   mkdir -p "$DOTFILES_DEST/php_manual"
   curl -L http://jp.php.net/get/php_manual_ja.tar.gz/from/this/mirror |
     tar xz -C "$DOTFILES_DEST/php_manual" &&
     ln -sfn "$DOTFILES_DEST/php_manual" "$DOTFILES_DEST/dot-vim/php_manual"
 fi
 # PHP補完辞書を作成
-if [ ! -s "$DOTFILES_DEST/dot-vim/dict/php.dict" ]; then
+if [[ ! -s "$DOTFILES_DEST/dot-vim/dict/php.dict" ]] && type -t php >/dev/null; then
   mkdir -p "$DOTFILES_DEST/dot-vim/dict"
   php "$DOTFILES_DIR/bin/setup_vimphpdic.php" > "$DOTFILES_DEST/dot-vim/dict/php.dict"
 fi
 # migemo-dict
-if [ ! -s "$DOTFILES_DEST/dot-vim/dict" ]; then
+if [[ ! -s "$DOTFILES_DEST/dot-vim/dict" ]]; then
   cd_tmpdir &&
   ( set -e
     curl http://cmigemo.googlecode.com/files/cmigemo-default-win32-20110227.zip \
