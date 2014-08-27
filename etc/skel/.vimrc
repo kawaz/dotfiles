@@ -141,7 +141,7 @@ NeoBundle 'mattn/gist-vim'
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
-" HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
+" HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
 NeoBundle 'git://github.com/mattn/emmet-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
