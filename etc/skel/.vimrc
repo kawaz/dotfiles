@@ -38,6 +38,10 @@ if has('python')
   NeoBundle 'https://github.com/Shougo/vinarise'
 endif
 
+" インデントに縦線を表示する
+NeoBundle 'Yggdroot/indentLine'
+  set list listchars=tab:\¦\ ,
+
 " 補完の凄いやつ
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   set completeopt=menuone
@@ -376,9 +380,7 @@ function! HilightUnnecessaryWhiteSpace()
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
-"タブとかを見える化
-set list
-set listchars=tab:\ \ ,
+
 "タブ幅を設定する
 set softtabstop=2
 set shiftwidth=2
