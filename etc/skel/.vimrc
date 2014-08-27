@@ -12,12 +12,12 @@ let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
 " ファイルタイプ関連
-NeoBundle 'jade.vim'
-NeoBundle 'coffee.vim'
-NeoBundle 'vim-coffee-script'
+"NeoBundle 'jade.vim'
+"NeoBundle 'coffee.vim'
+"NeoBundle 'vim-coffee-script'
 NeoBundle 'Markdown'
-NeoBundle 'jsx/jsx.vim'
-NeoBundle 'johnhamelink/blade.vim'
+"NeoBundle 'jsx/jsx.vim'
+"NeoBundle 'johnhamelink/blade.vim'
 " javascript
 NeoBundle 'jiangmiao/simple-javascript-indenter'
   let g:SimpleJsIndenter_BriefMode = 1
@@ -31,12 +31,6 @@ NeoBundle 'othree/eregex.vim'
 
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
-" バイナリ編集が出来るプラグイン
-if has('python')
-  " Pythonインターフェースに依存するのでチェックが必要
-  " http://d.hatena.ne.jp/alwei/20120220/1329756198
-  NeoBundle 'https://github.com/Shougo/vinarise'
-endif
 
 " インデントに縦線を表示する
 NeoBundle 'Yggdroot/indentLine'
@@ -137,10 +131,6 @@ NeoBundle 'quickrun.vim'
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 
-" :Ref xxx keyword でマニュアル検索
-NeoBundle 'ref.vim'
-  let g:ref_phpmanual_path = $HOME . '/.vim/php_manual/php-chunked-xhtml'
-
 " tagsの凄い奴
 NeoBundle 'Tagbar'
   nmap <F8> :TagbarToggle<CR>
@@ -184,42 +174,6 @@ NeoBundle 'gregsexton/gitv'
     return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
   endfunction
 
-" ackで検索が捗る http://bit.ly/PfpjdT
-NeoBundle 'https://github.com/mileszs/ack.vim'
-
-" レインボーカラー検索 http://daisuzu.hatenablog.com/entry/2012/12/10/001228
-NeoBundle 'daisuzu/rainbowcyclone.vim'
-  nmap c/ <Plug>(rc_search_forward)
-  nmap c? <Plug>(rc_search_backward)
-  nmap c* <Plug>(rc_search_forward_with_cursor)
-  nmap c# <Plug>(rc_search_backward_with_cursor)
-  nmap cn <Plug>(rc_search_forward_with_last_pattern)
-  nmap cN <Plug>(rc_search_backward_with_last_pattern)
-
-" レジスタ履歴の再利用 http://leafcage.hateblo.jp/entry/2013/10/31/yankroundvim
-NeoBundle 'LeafCage/yankround.vim'
-  " 貼り付け直後に C-p や C-n でレジスタ履歴を遡って置換
-  nmap p <Plug>(yankround-p)
-  nmap P <Plug>(yankround-P)
-  nmap gp <Plug>(yankround-gp)
-  nmap gP <Plug>(yankround-gP)
-  nmap <C-p> <Plug>(yankround-prev)
-  nmap <C-n> <Plug>(yankround-next)
-
-" undo履歴を表示する。
-NeoBundle 'mbbill/undotree'
-  nmap <Leader>u :UndotreeToggle<CR>
-  let g:undotree_SetFocusWhenToggle = 1
-  let g:undotree_WindowLayout = 'topleft'
-  let g:undotree_SplitWidth = 35
-  let g:undotree_diffAutoOpen = 1
-  let g:undotree_diffpanelHeight = 25
-  let g:undotree_RelativeTimestamp = 1
-  let g:undotree_TreeNodeShape = '*'
-  let g:undotree_HighlightChangedText = 1
-  let g:undotree_HighlightSyntax = "UnderLined"
-
-NeoBundle 'https://github.com/mileszs/ack.vim'
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
 if neobundle#exists_not_installed_bundles()
