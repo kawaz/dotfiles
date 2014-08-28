@@ -32,6 +32,10 @@ NeoBundle 'othree/eregex.vim'
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
 
+" インデントに縦線を表示する
+NeoBundle 'Yggdroot/indentLine'
+  set list listchars=tab:\¦\ ,
+
 " 補完の凄いやつ
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   set completeopt=menuone
@@ -148,7 +152,7 @@ NeoBundle 'mattn/gist-vim'
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
-" HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
+" HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
 NeoBundle 'git://github.com/mattn/emmet-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
@@ -341,9 +345,7 @@ function! HilightUnnecessaryWhiteSpace()
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
-"タブとかを見える化
-set list
-set listchars=tab:\ \ ,
+
 "タブ幅を設定する
 set softtabstop=2
 set shiftwidth=2
