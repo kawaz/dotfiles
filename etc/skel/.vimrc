@@ -73,7 +73,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     " スニペット集
     NeoBundle 'Shougo/neosnippet-snippets.git'
     let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
-    " 自作スニペット置き場
+    "" 自作スニペット置き場
     "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
     " For snippet_complete marker.
     if has('conceal')
@@ -110,6 +110,17 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     \ 'php' : $HOME . '/.vim/dict/php.dict',
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
+
+" golang
+set runtimepath+=$GOROOT/misc/vim
+" golangはハードタブを使う
+au BufNewFile,BufRead *.go set noexpandtab tabstop=2 shiftwidth=2
+" golangの入力補完
+exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
 
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
