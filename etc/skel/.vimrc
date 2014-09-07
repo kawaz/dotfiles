@@ -23,6 +23,9 @@ NeoBundle 'jiangmiao/simple-javascript-indenter'
   let g:SimpleJsIndenter_BriefMode = 1
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
+" *.json5 を json(=javascruot) としてハイライトさせる
+au! BufRead,BufNewFile *.json5 set filetype=javascript
+
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
 
