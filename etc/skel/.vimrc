@@ -134,7 +134,6 @@ NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
     let g:quickrun_config = {'*':{'split':''}}
   endif
-  let g:quickrun_config.html = {'command' : 'w3m'}
   if s:is_mac
     let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
   endif
