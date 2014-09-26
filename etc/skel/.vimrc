@@ -383,13 +383,15 @@ set statusline=%<%f\ %m%=\ %{&ai?'[>]':''}%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc)
 "-----------------------------------------------------------------------------
 " マウス関連
 "
-" マウスモード有効
-if exists('&mouse')
-  set mouse=a
-endif
-" screen対応
-if &term == "screen"
-  set ttymouse=xterm2
+" マウスモード
+if 0
+  if exists('&mouse')
+    set mouse=a
+  endif
+  " screen対応
+  if &term == "screen"
+    set ttymouse=xterm2
+  endif
 endif
 
 "-----------------------------------------------------------------------------
