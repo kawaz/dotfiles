@@ -12,16 +12,19 @@ let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
 " ファイルタイプ関連
-NeoBundle 'jade.vim'
-NeoBundle 'coffee.vim'
-NeoBundle 'vim-coffee-script'
+"NeoBundle 'jade.vim'
+"NeoBundle 'coffee.vim'
+"NeoBundle 'vim-coffee-script'
 NeoBundle 'Markdown'
-NeoBundle 'jsx/jsx.vim'
-NeoBundle 'johnhamelink/blade.vim'
+"NeoBundle 'jsx/jsx.vim'
+"NeoBundle 'johnhamelink/blade.vim'
 " javascript
 NeoBundle 'jiangmiao/simple-javascript-indenter'
   let g:SimpleJsIndenter_BriefMode = 1
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+
+" *.json5 を json(=javascruot) としてハイライトさせる
+au! BufRead,BufNewFile *.json5 set filetype=javascript
 
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
@@ -31,12 +34,10 @@ NeoBundle 'othree/eregex.vim'
 
 " 複数ファイル名をタブ表示
 NeoBundle 'TabBar'
-" バイナリ編集が出来るプラグイン
-if has('python')
-  " Pythonインターフェースに依存するのでチェックが必要
-  " http://d.hatena.ne.jp/alwei/20120220/1329756198
-  NeoBundle 'https://github.com/Shougo/vinarise'
-endif
+
+" インデントに縦線を表示する
+NeoBundle 'Yggdroot/indentLine'
+  set list listchars=tab:\¦\ ,
 
 " 補完の凄いやつ
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
@@ -77,9 +78,9 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " スニペット補完が出来るようにする
   NeoBundle 'Shougo/neosnippet.git'
     " スニペット集
-    "NeoBundle 'honza/snipmate-snippets.git'
-    "let g:neosnippet#snippets_directory='~/.vim/snipmate-snippets/snippets'
-    " 自作スニペット置き場
+    NeoBundle 'Shougo/neosnippet-snippets.git'
+    let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
+    "" 自作スニペット置き場
     "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
     " For snippet_complete marker.
     if has('conceal')
@@ -117,13 +118,22 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
 
+" golang
+set runtimepath+=$GOROOT/misc/vim
+" golangはハードタブを使う
+au BufNewFile,BufRead *.go set noexpandtab tabstop=2 shiftwidth=2
+" golangの入力補完
+exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
+
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
     let g:quickrun_config = {'*':{'split':''}}
   endif
-  let g:quickrun_config.html = {'command' : 'w3m'}
-  let g:quickrun_config.jsx = { 'command': 'jsx', 'exec': ['%c --run %s'] }
   if s:is_mac
     let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
   endif
@@ -133,10 +143,6 @@ NeoBundle 'quickrun.vim'
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
-
-" :Ref xxx keyword でマニュアル検索
-NeoBundle 'ref.vim'
-  let g:ref_phpmanual_path = $HOME . '/.vim/php_manual/php-chunked-xhtml'
 
 " tagsの凄い奴
 NeoBundle 'Tagbar'
@@ -148,16 +154,8 @@ NeoBundle 'mattn/gist-vim'
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
-" VimでDBが操作できる vdbi-vim 作った。 http://bit.ly/w1sKPH
-NeoBundle 'https://github.com/mattn/vdbi-vim.git'
-  " depends on
-  NeoBundle 'https://github.com/mattn/webapi-vim.git'
-
-" HTMLの入力がすごくなる c-y, を入力で展開。http://bit.ly/LANuiJ
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-
-" :BenchVimrc で vimrc の遅い部分を探せる http://bit.ly/wGrX8X
-NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
+" HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
+NeoBundle 'git://github.com/mattn/emmet-vim.git'
 
 " ファイル選択が捗る http://bit.ly/NuXA5u
 NeoBundle 'https://github.com/kien/ctrlp.vim'
@@ -188,18 +186,6 @@ NeoBundle 'gregsexton/gitv'
   function! s:gitv_get_current_hash()
     return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
   endfunction
-
-" ackで検索が捗る http://bit.ly/PfpjdT
-NeoBundle 'https://github.com/mileszs/ack.vim'
-
-" レインボーカラー検索 http://daisuzu.hatenablog.com/entry/2012/12/10/001228
-NeoBundle 'daisuzu/rainbowcyclone.vim'
-  nmap c/ <Plug>(rc_search_forward)
-  nmap c? <Plug>(rc_search_backward)
-  nmap c* <Plug>(rc_search_forward_with_cursor)
-  nmap c# <Plug>(rc_search_backward_with_cursor)
-  nmap cn <Plug>(rc_search_forward_with_last_pattern)
-  nmap cN <Plug>(rc_search_backward_with_last_pattern)
 
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
@@ -361,9 +347,7 @@ function! HilightUnnecessaryWhiteSpace()
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
-"タブとかを見える化
-set list
-set listchars=tab:\ \ ,
+
 "タブ幅を設定する
 set softtabstop=2
 set shiftwidth=2

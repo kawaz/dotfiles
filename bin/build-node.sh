@@ -32,6 +32,6 @@ fi
 
 # install misc
 nvm use "v$node_stable"
-npm install -g coffee-script JSONPathCLI forever grunt-cli bower yo
+npm install -g coffee-script grunt-cli gulp bower yo json5
 
 # startup script is $DOTFILES_DIR/etc/profile.d/20-nvm.sh
