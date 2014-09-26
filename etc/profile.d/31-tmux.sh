@@ -30,6 +30,7 @@ tssh() {
   fi
   if [[ -n $TMUX ]]; then
     command tmux new-window "ssh $(sh-escape "${ssh_opts[@]}" "$1")"
+    shift
     for h in "$@"; do
       command tmux split-window "ssh $(sh-escape "${ssh_opts[@]}" "$h")"
       command tmux select-layout tiled >/dev/null
@@ -39,6 +40,7 @@ tssh() {
     local session="tmux-ssh-$(date +%Y%m%dT%H%M%S)-$RANDOM"
     command tmux start-server
     command tmux new-session -d -s "$session" "ssh $(sh-escape "${ssh_opts[@]}" "$1")"
+    shift
     for h in "$@"; do
       command tmux split-window -t "$session" "ssh $(sh-escape "${ssh_opts[@]}" "$h")"
       command tmux select-layout -t "$session" tiled >/dev/null
