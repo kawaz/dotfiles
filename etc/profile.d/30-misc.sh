@@ -59,6 +59,15 @@ function crontab() {
   command crontab "$@"
 }
 
+# 文字列エスケープ関数を定義しておく http://qiita.com/kawaz/items/f8d68f11d31aa3ea3d1c
+sh-escape() {
+  local s a=() q="'" qq='"'
+  for s in "$@"; do
+    a+=("'${s//$q/$q$qq$q$qq$q}'")
+  done
+  echo "${a[*]}"
+}
+
 # history関連 http://bit.ly/JLIvj9
 HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 HISTSIZE=30000
