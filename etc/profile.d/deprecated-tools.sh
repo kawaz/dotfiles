@@ -4,7 +4,7 @@
 [[ "${OSTYPE:0:6}" == "darwin" ]] && return
 
 net_tools_deprecated_message () {
-  echo 'net-tools コマンドはもう非推奨ですよ？おじさんなんじゃないですか？ '
+  echo 'net-tools コマンドはもう非推奨です'
 }
 
 arp () {
@@ -20,17 +20,17 @@ iptunnel () {
   echo 'Use `ip tunnel`'
 }
 iwconfig () {
-  echo 'iwconfig コマンドはもう非推奨ですよ？おじさんなんじゃないですか？ '
+  echo 'iwconfig コマンドはもう非推奨です'
   echo 'Use `iw`'
 }
 nameif () {
   net_tools_deprecated_message
   echo 'Use `ip link`, `ifrename`'
 }
-netstat () {
-  net_tools_deprecated_message
-  echo 'Use `ss`, `ip route` (for netstat -r), `ip -s link` (for netstat -i), `ip maddr` (for netstat -g)'
-}
+#netstat () {
+#  net_tools_deprecated_message
+#  echo 'Use `ss`, `ip route` (for netstat -r), `ip -s link` (for netstat -i), `ip maddr` (for netstat -g)'
+#}
 route () {
   net_tools_deprecated_message
   echo 'Use `ip r`'
