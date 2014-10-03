@@ -187,6 +187,11 @@ NeoBundle 'gregsexton/gitv'
     return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
   endfunction
 
+" 行番号の左側にdiffの+-とかが表示されるようにする
+" [c と ]c で前後のHunkに移動できる。
+NeoBundle 'airblade/vim-gitgutter'
+  let g:gitgutter_sign_modified = 'M'
+
 filetype plugin indent on " Required!
 " NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
 if neobundle#exists_not_installed_bundles()
