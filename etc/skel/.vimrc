@@ -40,7 +40,7 @@ NeoBundle 'Yggdroot/indentLine'
   set list listchars=tab:\¦\ ,
 
 " 補完の凄いやつ
-NeoBundle 'https://github.com/Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neocomplcache'
   set completeopt=menuone
   " 起動時に有効化
   let g:neocomplcache_enable_at_startup = 1
@@ -76,9 +76,9 @@ NeoBundle 'https://github.com/Shougo/neocomplcache.git'
   " 改行で補完ウィンドウを閉じる
   inoremap <expr><CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
   " スニペット補完が出来るようにする
-  NeoBundle 'Shougo/neosnippet.git'
+  NeoBundle 'Shougo/neosnippet'
     " スニペット集
-    NeoBundle 'Shougo/neosnippet-snippets.git'
+    NeoBundle 'Shougo/neosnippet-snippets'
     let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
     "" 自作スニペット置き場
     "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
@@ -142,7 +142,7 @@ NeoBundle 'quickrun.vim'
   set splitright
 
 " ファイル保存時にエラー行があればハイライトする
-NeoBundle 'https://github.com/scrooloose/syntastic.git'
+NeoBundle 'scrooloose/syntastic'
 
 " tagsの凄い奴
 NeoBundle 'Tagbar'
@@ -155,10 +155,10 @@ NeoBundle 'mattn/gist-vim'
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
 " HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
-NeoBundle 'git://github.com/mattn/emmet-vim.git'
+NeoBundle 'mattn/emmet-vim'
 
-" ファイル選択が捗る http://bit.ly/NuXA5u
-NeoBundle 'https://github.com/kien/ctrlp.vim'
+" C-pでファイル選択が捗る http://bit.ly/NuXA5u
+NeoBundle 'kien/ctrlp.vim'
   let g:ctrlp_use_migemo = 1
 
 " gitが捗る http://d.hatena.ne.jp/cohama/20130517/1368806202
