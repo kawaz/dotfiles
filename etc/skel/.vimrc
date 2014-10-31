@@ -26,6 +26,9 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascr
 " *.json5 を json(=javascruot) としてハイライトさせる
 au! BufRead,BufNewFile *.json5 set filetype=javascript
 
+" yaml/ymlのインデントを好みの奴にする
+NeoBundle 'mrk21/yaml-vim'
+
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
 
