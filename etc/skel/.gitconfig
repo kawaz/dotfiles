@@ -25,3 +25,6 @@
 [tig "bind"]
   generic = g move-first-line
   generic = G move-last-line
+[url "git@github.com:"]
+  pushinsteadof = "git://github.com/"
+  pushinsteadof = "https://github.com/"
