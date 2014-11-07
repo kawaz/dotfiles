@@ -15,6 +15,7 @@
   editor = vim
   paget = "less -R"
   excludesfile = ~/.gitignore
+  autocrlf = false
 [include]
   path = ~/.gitconfig.local
 [push]
