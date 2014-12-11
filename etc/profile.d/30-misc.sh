@@ -45,6 +45,12 @@ function cd() {
   else
     builtin cd "$@"
   fi
+  # historyにフルパスで履歴を残す http://inaz2.hatenablog.com/entry/2014/12/11/015125
+  local ret=$?
+  if [[ ($ret -eq 0) && (${#FUNCNAME[*]} -eq 1) ]]; then
+    history -s cd $(printf "%q" "$PWD")
+  fi
+  return $ret
 }
 
 # 危険な crontab -r を封印する http://bit.ly/K9zMae
