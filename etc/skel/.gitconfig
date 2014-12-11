@@ -15,6 +15,7 @@
   editor = vim
   paget = "less -R"
   excludesfile = ~/.gitignore
+  autocrlf = false
 [include]
   path = ~/.gitconfig.local
 [push]
@@ -28,3 +29,5 @@
 [url "git@github.com:"]
   pushinsteadof = "git://github.com/"
   pushinsteadof = "https://github.com/"
+[branch "master"]
+  mergeoptions = --no-ff
