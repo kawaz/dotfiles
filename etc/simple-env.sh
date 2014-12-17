@@ -6,5 +6,5 @@ kawaz-env() {
   if [[ ! -e "$HOME/.vim" ]]; then
     ln -s "$DOTFILES_DIR/etc/skel/.vim" "$HOME/.vim"
   fi
-  return true
+  return 0
 }
