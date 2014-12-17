@@ -4,7 +4,7 @@ filetype off                   " required!
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " OS判定
 let s:is_windows = has('win16') || has('win32') || has('win64')
@@ -195,13 +195,9 @@ NeoBundle 'gregsexton/gitv'
 NeoBundle 'airblade/vim-gitgutter'
   let g:gitgutter_sign_modified = 'M'
 
+call neobundle#end()
 filetype plugin indent on " Required!
-" NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
-if neobundle#exists_not_installed_bundles()
-  echomsg 'Not installed bundles : ' . string(neobundle#get_not_installed_bundle_names())
-  "echomsg 'Please execute ":NeoBundleInstall" command.'
-  NeoBundleInstall
-endif
+NeoBundleCheck
 
 " カラースキーマの設定はNeoBundleInstallの後に行う
 colorscheme Tomorrow-Night
