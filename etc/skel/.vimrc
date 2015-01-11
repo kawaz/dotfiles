@@ -44,7 +44,7 @@ NeoBundle 'Yggdroot/indentLine'
 
 " 補完の凄いやつ
 NeoBundle 'Shougo/neocomplcache'
-  set completeopt=menuone
+  set completeopt=menu,preview
   " 起動時に有効化
   let g:neocomplcache_enable_at_startup = 1
   " 補完候補を出すときに、自動的に一番上の候補を選択させしない
@@ -121,16 +121,30 @@ NeoBundle 'Shougo/neocomplcache'
     \ 'ctp' : $HOME . '/.vim/dict/php.dict'
     \ }
 
-" golang
-set runtimepath+=$GOROOT/misc/vim
-" golangはハードタブを使う
-au BufNewFile,BufRead *.go set noexpandtab tabstop=2 shiftwidth=2
-" golangの入力補完
-exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
+"" golang
+" golang関連の設定をいい感じにしてくれる（初めては最初に :GoInstallBinaries を実行する）
+NeoBundle 'fatih/vim-go'
+  "" <C-x><C-o> で関数名とかの補完発動
+  " mappings
+  au FileType go nmap <Leader>s <Plug>(go-implements)
+  au FileType go nmap <Leader>i <Plug>(go-info)
+  au FileType go nmap <Leader>gd <Plug>(go-doc)
+  au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+  au FileType go nmap <leader>r <Plug>(go-run)
+  au FileType go nmap <leader>b <Plug>(go-build)
+  au FileType go nmap <leader>t <Plug>(go-test)
+  au FileType go nmap <leader>c <Plug>(go-coverage)
+  au FileType go nmap gd <Plug>(go-def)
+  au FileType go nmap <Leader>ds <Plug>(go-def-split)
+  au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+  au FileType go nmap <Leader>e <Plug>(go-rename)
+  " Enable hilight
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+
 
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
