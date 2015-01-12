@@ -2,9 +2,11 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  "set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set rtp+=$DOTFILES_DIR/.env/dest/dot-vim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
+"call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand($DOTFILES_DIR."/.env/dest/dot-vim/bundle/"))
 
 " OS判定
 let s:is_windows = has('win16') || has('win32') || has('win64')
