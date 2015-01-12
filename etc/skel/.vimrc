@@ -125,6 +125,7 @@ NeoBundle 'Shougo/neocomplcache'
 " golang関連の設定をいい感じにしてくれる（初めては最初に :GoInstallBinaries を実行する）
 NeoBundle 'fatih/vim-go'
   "" <C-x><C-o> で関数名とかの補完発動
+  "" :Errors でエラー一覧
   " mappings
   au FileType go nmap <Leader>s <Plug>(go-implements)
   au FileType go nmap <Leader>i <Plug>(go-info)
