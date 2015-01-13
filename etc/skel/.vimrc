@@ -37,9 +37,6 @@ NeoBundle 'mrk21/yaml-vim'
 " %S/// でpreg正規表現を使えるように
 NeoBundle 'othree/eregex.vim'
 
-" 複数ファイル名をタブ表示
-NeoBundle 'TabBar'
-
 " インデントに縦線を表示する
 NeoBundle 'Yggdroot/indentLine'
   set list listchars=tab:\¦\ ,
@@ -155,9 +152,13 @@ NeoBundle 'fatih/vim-go'
   let g:go_highlight_structs = 1
 
 " powerline
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'Lokaltog/powerline-fontpatcher'
+"NeoBundle 'alpaca-tc/alpaca_powertabline'
+"NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+"NeoBundle 'Lokaltog/powerline-fontpatcher'
+
+" airline (better powerline)
+NeoBundle 'bling/vim-airline'
+  let g:airline_powerline_fonts=1
 
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
