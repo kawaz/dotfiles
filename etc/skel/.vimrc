@@ -154,6 +154,11 @@ NeoBundle 'fatih/vim-go'
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
 
+" powerline
+NeoBundle 'alpaca-tc/alpaca_powertabline'
+NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'Lokaltog/powerline-fontpatcher'
+
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
   if(!exists("g:quickrun_config"))
