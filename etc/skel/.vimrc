@@ -2,9 +2,11 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  "set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set rtp+=$DOTFILES_DIR/.env/dest/dot-vim/bundle/neobundle.vim/
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
+"call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand($DOTFILES_DIR."/.env/dest/dot-vim/bundle/"))
 
 " OS判定
 let s:is_windows = has('win16') || has('win32') || has('win64')
@@ -35,102 +37,128 @@ NeoBundle 'mrk21/yaml-vim'
 " %S/// でpreg正規表現を使えるように
 NeoBundle 'othree/eregex.vim'
 
-" 複数ファイル名をタブ表示
-NeoBundle 'TabBar'
-
 " インデントに縦線を表示する
 NeoBundle 'Yggdroot/indentLine'
   set list listchars=tab:\¦\ ,
 
 " 補完の凄いやつ
-NeoBundle 'Shougo/neocomplcache'
-  set completeopt=menuone
-  " 起動時に有効化
-  let g:neocomplcache_enable_at_startup = 1
-  " 補完候補を出すときに、自動的に一番上の候補を選択させしない
-  let g:neocomplcache_enable_auto_select = 0
-  " シンタックスファイル中で、補完の対象となるキーワードの最小長さを制御
-  let g:neocomplcache_min_syntax_length = 3
-  " 大文字が入力されるまで大文字小文字の区別を無視する
-  let g:neocomplcache_enable_smart_case = 1
-  " 補完候補検索時に大文字・小文字を無視する
-  let g:neocomplcache_enable_ignore_case = 1
-  " 大文字小文字を区切りとしたあいまい検索を行う（DTがDateTimeにマッチする）
-  let g:neocomplcache_enable_camel_case_completion = 1
-  " アンダーバー区切りのあいまい検索を行う（p_hがpublic_htmlにマッチする）
-  let g:neocomplcache_enable_underbar_completion = 1
-  " vim標準のキーワード補完を置き換える
-  inoremap <expr><C-n> neocomplcache#start_manual_complete()
-  inoremap <expr><C-p> neocomplcache#start_manual_complete()
-  " カーソル移動時にポップアップが出ないようにする
-  inoremap <expr><Up> pumvisible() ? "\<Up>" : neocomplcache#close_popup()."\<Up>"
-  inoremap <expr><Down> pumvisible() ? "\<Down>" : neocomplcache#close_popup()."\<Down>"
-  inoremap <expr><Left> pumvisible() ? "\<Left>" : neocomplcache#close_popup()."\<Left>"
-  inoremap <expr><Right> pumvisible() ? "\<Right>" : neocomplcache#close_popup()."\<Right>"
-  " C-h, BSで補完ウィンドウを確実に閉じる
-  inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS> neocomplcache#smart_close_popup()."\<BS>"
-  " Tabで補完候補の選択を行う
-  inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-  inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-  " C-kでスニペット展開orジャンプ
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  " 改行で補完ウィンドウを閉じる
-  inoremap <expr><CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
-  " スニペット補完が出来るようにする
-  NeoBundle 'Shougo/neosnippet'
-    " スニペット集
-    NeoBundle 'Shougo/neosnippet-snippets'
-    let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
-    "" 自作スニペット置き場
-    "let g:neosnippet#snippets_directory.=',~/.dotfiles/vim-snippets'
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
-  " オムニ補完設定
-  augroup SetOmniCompletionSetting
-    autocmd!
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType ctp setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType twig setlocal omnifunc=htmlcomplete#CompleteTags
-    "autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-  augroup END
-  " 日本語をキャッシュしない
-  if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-  endif
-  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-  " 関数を補完するための区切り文字パターン
-  if !exists('g:neocomplcache_delimiter_patterns')
-    let g:neocomplcache_delimiter_patterns = {}
-  endif
-  let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
-  "タグ補完の呼び出しパターン
-  if !exists('g:neocomplcache_member_prefix_patterns')
-    let g:neocomplcache_member_prefix_patterns = {}
-  endif
-  let g:neocomplcache_member_prefix_patterns['php'] = '->\|::'
-  " ディクショナリ定義
-  let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'php' : $HOME . '/.vim/dict/php.dict',
-    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
-    \ }
+NeoBundle 'Shougo/neocomplete'
+  " Disable AutoComplPop.
+  let g:acp_enableAtStartup = 0
+  " Use neocomplete.
+  let g:neocomplete#enable_at_startup = 1
+  " Use smartcase.
+  let g:neocomplete#enable_smart_case = 1
+  " Set minimum syntax keyword length.
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" golang
-set runtimepath+=$GOROOT/misc/vim
-" golangはハードタブを使う
-au BufNewFile,BufRead *.go set noexpandtab tabstop=2 shiftwidth=2
-" golangの入力補完
-exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+      \ 'default' : '',
+      \ 'vimshell' : $HOME.'/.vimshell_hist',
+      \ 'scheme' : $HOME.'/.gosh_completions'
+          \ }
+
+  " Define keyword.
+  if !exists('g:neocomplete#keyword_patterns')
+      let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+  " Plugin key-mappings.
+  inoremap <expr><C-g>     neocomplete#undo_completion()
+  inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+  " Recommended key-mappings.
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+    "return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key.
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  endfunction
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><C-y>  neocomplete#close_popup()
+  inoremap <expr><C-e>  neocomplete#cancel_popup()
+  " Close popup by <Space>.
+  "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+  " For cursor moving in insert mode(Not recommended)
+  "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+  "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+  "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+  "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+  " Or set this.
+  "let g:neocomplete#enable_cursor_hold_i = 1
+  " Or set this.
+  "let g:neocomplete#enable_insert_char_pre = 1
+
+  " AutoComplPop like behavior.
+  "let g:neocomplete#enable_auto_select = 1
+
+  " Shell like behavior(not recommended).
+  "set completeopt+=longest
+  "let g:neocomplete#enable_auto_select = 1
+  "let g:neocomplete#disable_auto_complete = 1
+  "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+  " Enable heavy omni completion.
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+  "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+  " For perlomni.vim setting.
+  " https://github.com/c9s/perlomni.vim
+  let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+"" golang
+" golang関連の設定をいい感じにしてくれる（初めては最初に :GoInstallBinaries を実行する）
+NeoBundle 'fatih/vim-go'
+  "" <C-x><C-o> で関数名とかの補完発動
+  "" :Errors でエラー一覧
+  " mappings
+  au FileType go nmap <Leader>s <Plug>(go-implements)
+  au FileType go nmap <Leader>i <Plug>(go-info)
+  au FileType go nmap <Leader>gd <Plug>(go-doc)
+  au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+  au FileType go nmap <leader>r <Plug>(go-run)
+  au FileType go nmap <leader>b <Plug>(go-build)
+  au FileType go nmap <leader>t <Plug>(go-test)
+  au FileType go nmap <leader>c <Plug>(go-coverage)
+  au FileType go nmap gd <Plug>(go-def)
+  au FileType go nmap <Leader>ds <Plug>(go-def-split)
+  au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+  au FileType go nmap <Leader>e <Plug>(go-rename)
+  " Enable hilight
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+
+" powerline
+"NeoBundle 'alpaca-tc/alpaca_powertabline'
+"NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+"NeoBundle 'Lokaltog/powerline-fontpatcher'
+
+" airline (better powerline)
+NeoBundle 'bling/vim-airline'
+  let g:airline_powerline_fonts=1
 
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
@@ -156,6 +184,7 @@ NeoBundle 'mattn/gist-vim'
 
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+NeoBundle 'w0ng/vim-hybrid'
 
 " HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
 NeoBundle 'mattn/emmet-vim'
@@ -195,16 +224,12 @@ NeoBundle 'gregsexton/gitv'
 NeoBundle 'airblade/vim-gitgutter'
   let g:gitgutter_sign_modified = 'M'
 
+call neobundle#end()
 filetype plugin indent on " Required!
-" NeoBundleInstallがまだだったら実行を促すメッセージを表示(というか勝手に実行してしまえ)
-if neobundle#exists_not_installed_bundles()
-  echomsg 'Not installed bundles : ' . string(neobundle#get_not_installed_bundle_names())
-  "echomsg 'Please execute ":NeoBundleInstall" command.'
-  NeoBundleInstall
-endif
+NeoBundleCheck
 
 " カラースキーマの設定はNeoBundleInstallの後に行う
-colorscheme Tomorrow-Night
+colorscheme hybrid
 
 "-----------------------------------------------------------------------------
 " 文字コード関連
