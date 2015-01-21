@@ -36,8 +36,9 @@ fi
 
 
 # vim のバージョンチェック
-vim_version="$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)"
-if [ "$((echo $vim_version; echo 7.1) | sort -k1,1n -k2,2n | head -n 1)" != "7.1" ]; then
-  echo "~/.vimrcはvim7.1以上が必要なので以下を実行してください"
+vim_version=$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)
+vim_has_lua=$(vim --version | grep +lua)
+if [[ "$((echo $vim_version; echo 7.4) | sort -k1,1n -k2,2n | head -n 1)" != "7.4" || -z $vim_has_lua ]]; then
+  echo "~/.vimrcはvim7.4以上＆if_luaが必要なので以下を実行してください"
   echo "sh '$DOTFILES_DIR/bin/build-vim.sh'"
 fi
