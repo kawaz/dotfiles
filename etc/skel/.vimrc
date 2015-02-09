@@ -182,6 +182,9 @@ NeoBundle 'Tagbar'
 " gist 編集 http://bit.ly/S1unmW
 NeoBundle 'mattn/gist-vim'
 
+" 行末の空白の可視化＆ :FixWhitespace で削除
+NeoBundle 'bronson/vim-trailing-whitespace'
+
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 NeoBundle 'w0ng/vim-hybrid'
@@ -371,12 +374,10 @@ set cursorline
 scriptencoding utf-8
 function! HilightUnnecessaryWhiteSpace()
   " on ColorScheme
-  highlight TabString ctermbg=red guibg=red
-  highlight TrailingSpaces cterm=underline ctermbg=red guibg=red
-  highlight ZenkakuSpace cterm=underline ctermbg=red guibg=red
+  highlight TabString ctermbg=52 guibg=red
+  highlight ZenkakuSpace cterm=underline ctermbg=52 guibg=red
   " on VimEnter,WinEnter
   call matchadd("TabString", '\t')
-  call matchadd("TrailingSpaces", '\s\+$')
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
