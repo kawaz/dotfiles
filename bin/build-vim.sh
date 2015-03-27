@@ -10,14 +10,13 @@ install_vim_mac() {
 
 install_vim_linux_yum() {
   # 必要パッケージのチェック
-  has_rpm_packages gcc mercurial libselinux-devel lua-devel ncurses-devel || exit 1
+  has_rpm_packages git gcc libselinux-devel lua-devel ncurses-devel || exit 1
   mkdir -p "$src"
-  hg clone "https://vim.googlecode.com/hg/" "$src"
+  git clone "https://github.com/vim/vim.git" "$src"
 
   # get sources
   cd "$src" || exit 1
-  hg pull
-  hg update
+  git pull
   ./configure --prefix="$dest" \
     --enable-multibyte \
     --enable-pythoninterp \
