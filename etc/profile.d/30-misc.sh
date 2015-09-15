@@ -74,6 +74,21 @@ sh-escape() {
   echo "${a[*]}"
 }
 
+# 一時作業用コマンド
+tmpspace() {
+  (
+  d=$(mktemp -d) && cd "$d" || exit 1
+  bash
+  s=$?
+  if [[ $s == 0 ]]; then
+    rm -rf "$d"
+  else
+    echo "Directory '$d' still exists." >&2
+  fi
+  exit $s
+  )
+}
+
 # history関連 http://bit.ly/JLIvj9
 HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 HISTSIZE=30000
