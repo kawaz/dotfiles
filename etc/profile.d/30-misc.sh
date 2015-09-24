@@ -78,7 +78,7 @@ sh-escape() {
 tmpspace() {
   (
   d=$(mktemp -d) && cd "$d" || exit 1
-  bash
+  "$SHELL"
   s=$?
   if [[ $s == 0 ]]; then
     rm -rf "$d"
