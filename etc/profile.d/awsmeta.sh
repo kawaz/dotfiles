@@ -4,7 +4,7 @@
 awsmeta() {
   local v ret=0
   for v in "$@"; do
-    curl -sf "http://169.254.169.254/latest/meta-data/$v" 2>/dev/null | perl -pe's/\n*$/\n/'
+    curl --connect-timeout 2 -sf "http://169.254.169.254/latest/meta-data/$v" 2>/dev/null | perl -pe's/\n*$/\n/'
     [[ $PIPESTATUS != 0 ]] && { ret=1; echo; }
   done
   return $ret
