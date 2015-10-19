@@ -24,7 +24,7 @@ if [[ -n "$PS1" ]]; then
     local path=$(perl -pe's/[^\/]+?$//'<<<"$cur")
     local basename=${cur##*/}
     local f; while read f; do
-      [[ $f == $basename* ]] && COMPREPLY+=("$path$f")
+      [[ -n $f && $f == $basename* ]] && COMPREPLY+=("$path$f")
     done < <(awsmeta "$path")
     # 確定候補が/終わりなら次の補完を継続できるように空白挿入を抑止する
     [[ ${#COMPREPLY[@]} == 1 && $COMPREPLY =~ /$ ]] && compopt -o nospace
