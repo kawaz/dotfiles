@@ -4,8 +4,8 @@
 # setup vim (etc/skel/.vimを作るのでドットファイルのシンボリックリンク作成前に実行する)
 bash $DOTFILES_DIR/bin/setup-vim.sh
 
-# ~/.profiles.d を作る
-mkdir -p ~/.profiles.d
+# ~/.profile.d を作る
+mkdir -p ~/.profile.d
 
 # HOMEのドットファイルを置き換える
 backupdir="$HOME/dotfiles-backup-`date +%Y%m%dT%H%M%S`"
@@ -34,6 +34,8 @@ else
   ln -sfn "$DOTFILES_DIR/etc/tmux/tmux-platform-default.conf" "$DOTFILES_DEST/tmux-platform.conf"
 fi
 
+# 新環境やつを取り込む
+bash "$DOTFILES_DIR/bin/setup-opt.sh"
 
 # vim のバージョンチェック
 vim_version=$(vim --version | egrep -o '[0-9]+\.[0-9]+' | head -n 1)
