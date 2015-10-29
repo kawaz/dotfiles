@@ -6,12 +6,12 @@ _known_hosts_real_hook_before() {
 }
 _known_hosts_real_hook_after() {
   if [[ $COMP_TYPE == 9 && ${#COMPREPLY[@]} -gt 1 ]]; then
-    if ! _zunlib_equals_all_same_index_char "${#COMP_WORDS[COMP_CWORD]}" "${COMPREPLY[@]}"; then
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    if ! _zunlib_equals_all_same_index_char "${#cur}" "${COMPREPLY[@]}"; then
       local IFS=$'\n'
-      local pecoout=$(sort -u<<<"${COMPREPLY[*]}"|peco --query "$cur")
-      if [[ -n $pecoout ]]; then
-        COMPREPLY=($pecoout)
-      fi
+      COMPREPLY=($(sort -u <<< "${COMPREPLY[*]}" | peco --query "$cur"))
+      # Call recursive, because peco's result may be multiple.
+      "$FUNCNAME"
     fi
   fi
 }
