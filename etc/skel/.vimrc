@@ -226,6 +226,14 @@ NeoBundle 'gregsexton/gitv'
 NeoBundle 'airblade/vim-gitgutter'
   let g:gitgutter_sign_modified = 'M'
 
+" 簡単コメント
+NeoBundle 'The-NERD-Commenter'
+  let g:NERDCreateDefaultMappings = 0
+  let g:NERDSpaceDelims = 1
+  " <C-_> は <C-/> と思えば良い。ttyの仕様？
+  nmap <C-_> <Plug>NERDCommenterToggle
+  vmap <C-_> <Plug>NERDCommenterToggle gv
+
 call neobundle#end()
 filetype plugin indent on " Required!
 NeoBundleCheck
