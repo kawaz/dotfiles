@@ -91,7 +91,8 @@ tmpspace() {
 
 # history関連 http://bit.ly/JLIvj9
 HISTTIMEFORMAT='%Y-%m-%dT%T%z '
-HISTSIZE=30000
+HISTSIZE=50000
+HISTFILESIZE=-1
 HISTIGNORE=""
 
 #

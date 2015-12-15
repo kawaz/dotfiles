@@ -186,7 +186,6 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 
 " カラースキーマ
 NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-NeoBundle 'w0ng/vim-hybrid'
 
 " HTMLの入力がすごくなる <C-y>, を入力で展開。http://bit.ly/LANuiJ
 NeoBundle 'mattn/emmet-vim'
@@ -239,7 +238,7 @@ filetype plugin indent on " Required!
 NeoBundleCheck
 
 " カラースキーマの設定はNeoBundleInstallの後に行う
-colorscheme hybrid
+colorscheme Tomorrow-Night-Bright
 
 "-----------------------------------------------------------------------------
 " 文字コード関連

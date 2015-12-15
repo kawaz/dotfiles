@@ -14,3 +14,6 @@
 # Ctr + 左右 でワード移動出来るようにする(iTerm2 on Mac)
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
+# Alt + 左右 でワード移動出来るようにする(iTerm2 on Mac)
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
