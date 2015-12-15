@@ -102,7 +102,7 @@ inject_current_terminal() {
 readline_search_history_hack() {
     local histline=$(
       # 時間表示と履歴番号を削除
-      HISTTIMEFORMAT= history | sed -r 's/^ *[0-9]+ *//' |
+      HISTTIMEFORMAT= history | perl -pe's/^ *[0-9]+ *//' |
       # tac が使えなかったら代替でperl使う
       if type taxc >/dev/null 2>&1; then tac; else perl -pe'print reverse <>'; fi |
       # 重複行を削除
