@@ -27,9 +27,6 @@ NeoBundle 'Markdown'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 
-" yaml/ymlのインデントを好みの奴にする
-NeoBundle 'mrk21/yaml-vim'
-
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
 
