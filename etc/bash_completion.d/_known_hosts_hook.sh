@@ -27,7 +27,7 @@ _zunlib_completion_select_with_peco() {
     esac
   done
   local IFS0=$IFS IFS=$'\n'
-  COMPREPLY=($(eval "$filter" <<< "${COMPREPLY[*]}" | peco --query "$cur"))
+  COMPREPLY=($(eval "$filter" <<< "${COMPREPLY[*]}" | peco --select-1 --layout=bottom-up --query "$cur"))
   IFS=$IFS0
   # Call recursive, because peco's result may be multiple.
   "$FUNCNAME"
