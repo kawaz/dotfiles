@@ -23,3 +23,7 @@ for url in https://github.com/kawaz/awsmeta.git; do
   find {bin,etc} -type f -exec ln -sfn "$repopath/"{} "$DOTFILES_DIR/.env/opt/"{} \;
   )
 done
+
+if is_mac; then
+  brew install hub
+fi
