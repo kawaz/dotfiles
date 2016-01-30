@@ -19,16 +19,7 @@ let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
 " ファイルタイプ関連
-"NeoBundle 'jade.vim'
-"NeoBundle 'coffee.vim'
-"NeoBundle 'vim-coffee-script'
 NeoBundle 'Markdown'
-"NeoBundle 'jsx/jsx.vim'
-"NeoBundle 'johnhamelink/blade.vim'
-" javascript
-"NeoBundle 'jiangmiao/simple-javascript-indenter'
-"  let g:SimpleJsIndenter_BriefMode = 1
-"NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 
@@ -37,10 +28,6 @@ NeoBundle 'mxw/vim-jsx'
 
 " %S/// でpreg正規表現を使えるように
 NeoBundle 'othree/eregex.vim'
-
-" インデントに縦線を表示する
-NeoBundle 'Yggdroot/indentLine'
-  set list listchars=tab:\¦\ ,
 
 " 補完の凄いやつ
 NeoBundle 'Shougo/neocomplete'
@@ -152,26 +139,12 @@ NeoBundle 'fatih/vim-go'
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
 
-" powerline
-"NeoBundle 'alpaca-tc/alpaca_powertabline'
-"NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-"NeoBundle 'Lokaltog/powerline-fontpatcher'
-
 " airline (better powerline)
 NeoBundle 'bling/vim-airline'
   let g:airline_powerline_fonts=1
 
 " \r でファイルを即時実行
 NeoBundle 'quickrun.vim'
-  if(!exists("g:quickrun_config"))
-    let g:quickrun_config = {'*':{'split':''}}
-  endif
-  if s:is_mac
-    let g:quickrun_config.markdown = { 'outputter': 'null', 'command': 'open', 'cmdopt': '-a', 'args': 'Marked', 'exec': '%c %o %a %s' }
-  endif
-  " 横分割時は下へ､ 縦分割時は右へ新しいウィンドウが開くようにする
-  set splitbelow
-  set splitright
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'scrooloose/syntastic'
