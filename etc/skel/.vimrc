@@ -178,8 +178,7 @@ NeoBundle 'kien/ctrlp.vim'
   let g:ctrlp_use_migemo = 1
 
 " gitが捗る http://d.hatena.ne.jp/cohama/20130517/1368806202
-NeoBundle 'tpope/vim-fugitive' "依存するもの
-NeoBundle 'gregsexton/gitv'
+NeoBundle 'gregsexton/gitv', {'depends': ['tpope/vim-fugitive']}
   " gitvバッファ専用設定
   autocmd FileType gitv call s:my_gitv_settings()
   function! s:my_gitv_settings()
