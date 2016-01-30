@@ -1,12 +1,17 @@
 " https://github.com/Shougo/neobundle.vim
-set nocompatible               " be iMproved
-filetype off                   " required!
+let s:my_dotvim = $DOTFILES_DIR == '' ? '~/.vim' : $DOTFILES_DIR.'/.env/dest/dot-vim'
 if has('vim_starting')
-  "set runtimepath+=~/.vim/bundle/neobundle.vim/
-  set rtp+=$DOTFILES_DIR/.env/dest/dot-vim/bundle/neobundle.vim/
+  set nocompatible               " be iMproved
+  if !isdirectory(expand(s:my_dotvim."/bundle/neobundle.vim"))
+    echo "install neobundle..."
+    :call system("git clone git://github.com/Shougo/neobundle.vim ".shellescape(expand(s:my_dotvim)."/bundle/neobundle.vim"))
+  endif
+  if &runtimepath !~# "/bundle/neobundle.vim"
+    let &runtimepath = s:my_dotvim."/bundle/neobundle.vim,".&runtimepath
+  endif
+  call neobundle#begin(expand(s:my_dotvim.'/bundle/'))
+  NeoBundleFetch 'Shougo/neobundle.vim'
 endif
-"call neobundle#begin(expand('~/.vim/bundle/'))
-call neobundle#begin(expand($DOTFILES_DIR."/.env/dest/dot-vim/bundle/"))
 
 " OS判定
 let s:is_windows = has('win16') || has('win32') || has('win64')
@@ -229,7 +234,10 @@ NeoBundle "tyru/caw.vim.git"
 
 call neobundle#end()
 filetype plugin indent on " Required!
-NeoBundleCheck
+" 足らないものがあれば確認無しで自動インストール http://bit.ly/1UwayBC
+if !empty(neobundle#get_not_installed_bundle_names())
+  NeoBundleInstall
+endif
 
 " カラースキーマの設定はNeoBundleInstallの後に行う
 colorscheme Tomorrow-Night-Bright
