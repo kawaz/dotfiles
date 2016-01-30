@@ -150,8 +150,16 @@ NeoBundle 'quickrun.vim'
 NeoBundle 'scrooloose/syntastic'
 
 " tagsの凄い奴
-NeoBundle 'Tagbar'
+NeoBundle 'majutsushi/tagbar'
   nmap <F8> :TagbarToggle<CR>
+" 自動でctagsを実行する
+NeoBundle 'soramugi/auto-ctags.vim'
+  let g:auto_ctags = 1
+  let g:auto_ctags_directory_list = ['.git', '.svn']
+  let g:auto_ctags_tags_name = 'tags'
+  let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+  let g:auto_ctags_filetype_mode = 1
+
 
 " gist 編集 http://bit.ly/S1unmW
 NeoBundle 'mattn/gist-vim'
