@@ -144,7 +144,7 @@ NeoBundle 'vim-airline/vim-airline', { 'depends': ['vim-airline/vim-airline-them
   let g:airline_powerline_fonts=1
 
 " \r でファイルを即時実行
-NeoBundle 'quickrun.vim'
+NeoBundle 'thinca/vim-quickrun'
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'scrooloose/syntastic'
