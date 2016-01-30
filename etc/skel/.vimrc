@@ -365,12 +365,14 @@ scriptencoding utf-8
 function! HilightUnnecessaryWhiteSpace()
   " on ColorScheme
   highlight TabString ctermbg=52 guibg=red
-  highlight ZenkakuSpace cterm=underline ctermbg=52 guibg=red
-  " on VimEnter,WinEnter
+  highlight ZenkakuSpace ctermbg=52 guibg=red
+  " on VimEnter,WinEntercall
   call matchadd("TabString", '\t')
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
+" 非表示文字を見えるようにする
+set list listchars=tab:▸\ ,eol:¬
 
 "タブ幅を設定する
 set softtabstop=2
