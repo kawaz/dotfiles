@@ -210,6 +210,7 @@ NeoBundle 'airblade/vim-gitgutter'
 
 " 簡単コメント
 NeoBundle "tyru/caw.vim.git"
+  " Ctr+/ でカーソル行or選択範囲をコメントトグル
   nmap <C-_> <Plug>(caw:i:toggle)
   vmap <C-_> <Plug>(caw:i:toggle)gv
 
