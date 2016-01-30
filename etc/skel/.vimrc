@@ -140,7 +140,7 @@ NeoBundle 'fatih/vim-go'
   let g:go_highlight_structs = 1
 
 " airline (better powerline)
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline', { 'depends': ['vim-airline/vim-airline-themes'] }
   let g:airline_powerline_fonts=1
 
 " \r でファイルを即時実行
