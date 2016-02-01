@@ -376,9 +376,11 @@ set cursorline
 scriptencoding utf-8
 function! HilightUnnecessaryWhiteSpace()
   " on ColorScheme
+  highlight CopipeMissEol ctermbg=52 guibg=red
   highlight TabString ctermbg=52 guibg=red
   highlight ZenkakuSpace ctermbg=52 guibg=red
   " on VimEnter,WinEntercall
+  call matchadd("CopipeMissEol", '¬ *$')
   call matchadd("TabString", '\t')
   call matchadd("ZenkakuSpace", '　')
 endfunction
