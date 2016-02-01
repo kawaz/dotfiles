@@ -142,6 +142,12 @@ NeoBundle 'fatih/vim-go'
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
 
+NeoBundle "garyburd/go-explorer"
+if executable("go") && !executable("getool")
+  echo "install getool..."
+  call system("go get -u github.com/garyburd/go-explorer/src/getool")
+endif
+
 " airline (better powerline)
 NeoBundle 'vim-airline/vim-airline', { 'depends': ['vim-airline/vim-airline-themes'] }
   let g:airline_powerline_fonts=1
