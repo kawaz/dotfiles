@@ -151,6 +151,16 @@ NeoBundle 'thinca/vim-quickrun'
 
 " ファイル保存時にエラー行があればハイライトする
 NeoBundle 'scrooloose/syntastic'
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_error_symbol='✗'
+  let g:syntastic_warning_symbol='⚠'
+  let g:syntastic_style_error_symbol = '✗'
+  let g:syntastic_style_warning_symbol = '⚠'
+  " デフォだと "go" になってて毎回 go build してくっそ重いので変える
+  "let g:syntastic_go_checkers = ['golint']
 
 " tagsの凄い奴
 NeoBundle 'majutsushi/tagbar'
