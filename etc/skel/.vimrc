@@ -23,6 +23,9 @@ NeoBundle 'Markdown'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 
+NeoBundle 'vim-scripts/bats.vim'
+NeoBundle 'kawaz/batscheck.vim'
+
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
 
