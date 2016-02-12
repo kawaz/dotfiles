@@ -170,6 +170,9 @@ NeoBundle 'scrooloose/syntastic'
   let g:syntastic_style_warning_symbol = '⚠'
   " デフォだと "go" になってて毎回 go build してくっそ重いので変える
   "let g:syntastic_go_checkers = ['golint']
+  let g:syntastic_debug = 0
+  let g:syntastic_debug_file = '~/syntastic.log'
+  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
 
 " tagsの凄い奴
 NeoBundle 'majutsushi/tagbar'
