@@ -38,6 +38,9 @@ alias du1='du --max-depth=1'
 
 alias last-itumono='last -adixFw'
 
+ghq-cd() { local d=$(peco --select-1 --layout bottom-up < <(ghq list "$@")); cd "${d:+$HOME/.ghq/$d}"; }
+alias ghcd=ghq-cd
+
 # cd fileでそのfileのあるディレクトリに移動する http://bit.ly/1dABtoO
 function cd() {
   if [[ -e $1 && ! -d $1 ]]; then
