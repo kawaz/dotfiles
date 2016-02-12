@@ -465,9 +465,9 @@ vnoremap < <gv
 " Macのクリップボードにコピーする
 if s:is_mac
   " 無名レジスタ""の内容をpbcopyに渡す
-  nmap <C-c> :call system("pbcopy", getreg("\""))<CR>
+  nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
-  vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
+  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
 endif
 
 " インデントが同じかそれより深い範囲を選択する
