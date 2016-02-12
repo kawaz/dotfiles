@@ -11,6 +11,9 @@
   co = checkout
   tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
   tr-all = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --all
+  # hub
+  pr = pull-request
+  open = browse
 [core]
   editor = vim
   paget = "less -R"
