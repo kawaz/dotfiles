@@ -1,10 +1,8 @@
 #!/bin/bash
 . "`dirname -- "$0"`"/functions.sh || exit
 
-# setup vim (etc/skel/.vimを作るのでドットファイルのシンボリックリンク作成前に実行する)
-git clone https://github.com/Shougo/neobundle.vim "$DOTFILES_DEST/dot-vim/bundle/neobundle.vim"
-( cd "$DOTFILES_DEST/dot-vim/bundle/neobundle.vim" && git pull --rebase )
-ln -sfn "$DOTFILES_DEST/dot-vim/" "$DOTFILES_DIR/etc/skel/.vim"
+# setup vim (.vimディレクトリを作る)
+mkdir -p "$DOTFILES_DEST/dot-vim/"
 # for ref.vim
 if [[ ! -d "$DOTFILES_DEST/dot-vim/php_manual/php-chunked-xhtml" ]]; then
   mkdir -p "$DOTFILES_DEST/php_manual"
