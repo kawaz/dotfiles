@@ -24,7 +24,8 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 
 NeoBundle 'vim-scripts/bats.vim'
-NeoBundle 'kawaz/batscheck.vim'
+NeoBundle 'kawaz/batscheck.vim', {'depends':["scrooloose/syntastic"]}
+NeoBundle 'kawaz/shellcheck.vim', {'depends': ['scrooloose/syntastic']}
 
 " フォルディング系
 "NeoBundle 'phpfolding.vim'
