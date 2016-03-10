@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
 export EDITOR="vim"
