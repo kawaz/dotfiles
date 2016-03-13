@@ -1,11 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
 export EDITOR="vim"
 
 # 以下はインタラクティブシェルのときだけ適用
 [[ -z "$PS1" ]] && return
-
 
 # プロンプトの設定
 export PS1='$(r=$?;x="$(__git_ps1 2>/dev/null) ";echo "${x## }";exit $r)$([[ $? == 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]")[\u@\h \W]\$\[\e[m\] '
@@ -16,14 +15,6 @@ GIT_PS1_SHOWDIRTYSTATE=1
 
 # PS4の設定でシェルスクリプトのデバッグが捗る http://bit.ly/1gncKrn
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME:+$FUNCNAME(): }'
-
-# 環境に無いTERMを使うと面倒な事になるのでチェックしてから使う
-for TERM in xterm-256color screen-256color screen xterm vt100; do
-  if [ -f /usr/*/terminfo/*/"$TERM" ]; then
-    export TERM
-    break;
-  fi
-done
 
 alias rm='rm -i'
 alias cp='cp -i'
