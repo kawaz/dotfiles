@@ -33,7 +33,7 @@
   pushinsteadof = "git://github.com/"
   pushinsteadof = "https://github.com/"
 [url "git@bitbucket.org:"]
-  pushinsteadof = "https://kawazzz@bitbucket.org/"
+  insteadof = "https://kawazzz@bitbucket.org/"
 
 # sourcetree
 [difftool "sourcetree"]
