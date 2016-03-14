@@ -13,5 +13,7 @@ if ! type -P travis >/dev/null 2>&1; then
 fi
 
 # added by travis gem
-[ -f /Users/kawaz/.travis/travis.sh ] && source /Users/kawaz/.travis/travis.sh
+if [[ -f /Users/kawaz/.travis/travis.sh ]]; then
+  source /Users/kawaz/.travis/travis.sh
+fi
 
