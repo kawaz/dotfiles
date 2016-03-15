@@ -29,13 +29,15 @@ if dein#load_cache()
   call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
   call dein#add('kawaz/rustsrcpath.vim')
   call dein#add('vim-scripts/bats.vim')
-  call dein#add('kawaz/batscheck.vim', {'depends':["scrooloose/syntastic"]})
-  call dein#add('kawaz/shellcheck.vim', {'depends': ['scrooloose/syntastic']})
-  call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline/vim-airline-themes']})
   call dein#add('majutsushi/tagbar') " tagsの凄い奴
   call dein#add('soramugi/auto-ctags.vim') " 自動でctagsを実行する
+  " syntastic vs neomake
+  call dein#add('kawaz/batscheck.vim', {'depends':["scrooloose/syntastic"]})
+  call dein#add('kawaz/shellcheck.vim', {'depends': ['scrooloose/syntastic']})
+  call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
+  call dein#add('benekastah/neomake') " asynchronous linter, instead of 'scrooloose/syntastic'
   call dein#save_cache()
 endif
 call dein#end()
@@ -74,6 +76,11 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_debug = 0
 let g:syntastic_debug_file = '~/syntastic.log'
 let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
+" " neomake
+" let g:neomake_open_list = 1
+" let g:neomake_airline = 1
+" autocmd VimEnter,BufWritePost * Neomake
+
 " vim-airline
 let g:airline_powerline_fonts=1
 " tagbar
