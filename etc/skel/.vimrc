@@ -46,7 +46,7 @@ endif
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-if !has('python3')
+if has('nvim') && !has('python3')
   echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
 endif
 " hybrid
