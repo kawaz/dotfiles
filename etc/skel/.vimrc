@@ -16,26 +16,28 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 call dein#begin(s:dein_dir)
 if dein#load_cache()
   call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
+  call dein#add('zchee/deoplete-go', {'on_ft': ['go'], 'build': {'unix': 'make'}}) " golang completion
   call dein#add('othree/eregex.vim') " %S/// でpreg正規表現を使えるように
   call dein#add('w0ng/vim-hybrid') " colorscheme
   call dein#add('thinca/vim-quickrun') " \r で即時実行
   call dein#add('bronson/vim-trailing-whitespace') " 行末の空白の可視化＆ :FixWhitespace で削除
   call dein#add('kien/ctrlp.vim') " C-pでファイル選択が捗る http://bit.ly/NuXA5u
   call dein#add('airblade/vim-gitgutter') " 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
-  call dein#add('tyru/caw.vim.git') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
+  call dein#add('tyru/caw.vim') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
   call dein#add('racer-rust/vim-racer', {'on_ft': ['rust']}) " completion (C-x C-o) and navigation (:gd goto definition)
   call dein#add('rust-lang/rust.vim', {'on_ft': ['rust']})
   call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
-  call dein#add('kawaz/rustsrcpath.vim')
-  call dein#add('vim-scripts/bats.vim')
+  call dein#add('kawaz/rustsrcpath.vim', {'on_ft': ['rust'], 'depends': ['vim-racer']})
+  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown']})
+  call dein#add('vim-scripts/bats.vim', {'on_ft': ['sh']})
   call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline/vim-airline-themes']})
+  call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline-themes']})
   call dein#add('majutsushi/tagbar') " tagsの凄い奴
   call dein#add('soramugi/auto-ctags.vim') " 自動でctagsを実行する
   " syntastic vs neomake
-  call dein#add('kawaz/batscheck.vim', {'depends':["scrooloose/syntastic"]})
-  call dein#add('kawaz/shellcheck.vim', {'depends': ['scrooloose/syntastic']})
+  call dein#add('kawaz/batscheck.vim', {'on_ft': ['sh'], 'depends': ['syntastic']})
+  call dein#add('kawaz/shellcheck.vim', {'on_ft': ['sh'], 'depends': ['syntastic']})
   call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
   call dein#add('benekastah/neomake') " asynchronous linter, instead of 'scrooloose/syntastic'
   call dein#save_cache()
@@ -46,40 +48,86 @@ if dein#check_install()
 endif
 " }}}
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-if has('nvim') && !has('python3')
-  echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
+" OS判定
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+" どこか最初に書いておく
+augroup MyAutoCmd
+  autocmd!
+augroup END
+" dein#tap()の代わりに使うとブロック内で s:{s:on_source}() という関数定義をするだけでフックが登録出来るようになる 
+function! s:dein_tap(name) abort
+  if dein#tap(a:name)
+    let s:on_source = substitute(a:name, '\W', '_', 'g') . '_on_source'
+    execute 'autocmd MyAutoCmd User'
+          \ 'dein#source#' . a:name
+          \ 'if exists("*s:' . s:on_source . '") | call s:' . s:on_source . '() | endif'
+    return 1
+  endif
+  return 0
+endfunction
+
+if dein#tap('deoplete.nvim')
+  let g:deoplete#enable_at_startup = 1
+  let g:dein#enable_name_conversion = 1
+  if has('nvim') && !has('python3')
+    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
+  endif
 endif
-" hybrid
-let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-" colorscheme
-colorscheme hybrid
-set background=dark
-" ctrlp
-let g:ctrlp_use_migemo = 1
-" gitgutter
-let g:gitgutter_sign_modified = 'M'
-" caw
-nmap <C-_> <Plug>(caw:i:toggle)
-vmap <C-_> <Plug>(caw:i:toggle)gv
-" syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_debug = 0
-let g:syntastic_debug_file = '~/syntastic.log'
-let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
-" " neomake
-" let g:neomake_open_list = 1
-" let g:neomake_airline = 1
-" autocmd VimEnter,BufWritePost * Neomake
+
+if s:dein_tap('deoplete-go')
+  let g:deoplete#sources#go#align_class = 1
+  function! s:{s:on_source}() abort
+    if executable('go') && !executable('gocode')
+      echo "install gocode ..."
+      call system("go get -u github.com/nsf/gocode &")
+    endif
+  endfunction
+endif
+
+if dein#tap('vim-hybrid')
+  let g:hybrid_custom_term_colors = 1
+  let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+  colorscheme hybrid
+  set background=dark
+endif
+
+if dein#tap('ctrlp.vim')
+  let g:ctrlp_use_migemo = 1
+endif
+
+if dein#tap('vim-gitgutter')
+  let g:gitgutter_sign_modified = 'M'
+endif
+
+if dein#tap('caw.vim')
+  nmap <C-_> <Plug>(caw:i:toggle)
+  vmap <C-_> <Plug>(caw:i:toggle)gv
+endif
+
+if dein#tap('syntastic')
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_error_symbol='✗'
+  let g:syntastic_warning_symbol='⚠'
+  let g:syntastic_style_error_symbol = '✗'
+  let g:syntastic_style_warning_symbol = '⚠'
+  let g:syntastic_debug = 0
+  let g:syntastic_debug_file = '~/syntastic.log'
+  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
+endif
+
+if dein#tap('neomake')
+  let g:neomake_open_list = 1
+  " autocmd VimEnter,BufWritePost * Neomake
+endif
+
+if dein#tap('vim-markdown')
+  let g:vim_markdown_new_list_item_indent = 2
+endif
 
 " vim-airline
 let g:airline_powerline_fonts=1
@@ -96,11 +144,6 @@ let g:auto_ctags_filetype_mode = 1
 
 
 
-
-" OS判定
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
 "
 " " ファイルタイプ関連
@@ -288,17 +331,17 @@ set scrolloff=10
 let &t_SI .= "\e[?7727h"
 let &t_EI .= "\e[?7727l"
 inoremap <special> <Esc>O[ <Esc>
-"クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
-if &term =~ '\(xterm\|screen-256color\)'
-  let &t_SI .= "\e[?2004h"
-  let &t_EI .= "\e[?2004l"
-  let &pastetoggle = "\e[201~"
-  function XTermPasteBegin(ret)
-    set paste
-    return a:ret
-  endfunction
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-endif
+" "クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
+" if &term =~ '\(xterm\|screen-256color\)'
+"   let &t_SI .= "\e[?2004h"
+"   let &t_EI .= "\e[?2004l"
+"   let &pastetoggle = "\e[201~"
+"   function XTermPasteBegin(ret)
+"     set paste
+"     return a:ret
+"   endfunction
+"   inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+" endif
 
 "-----------------------------------------------------------------------------
 " 検索関連
