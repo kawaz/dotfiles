@@ -103,6 +103,7 @@ if dein#tap('vim-gitgutter')
 endif
 
 if dein#tap('caw.vim')
+  " C-/ でコメントアウト。ビジュアルモードの時に選択範囲を解除されないようにするmapも追加
   nmap <C-_> <Plug>(caw:i:toggle)
   vmap <C-_> <Plug>(caw:i:toggle)gv
 endif
