@@ -26,6 +26,7 @@ if dein#load_cache()
   call dein#add('airblade/vim-gitgutter') " 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
   call dein#add('tyru/caw.vim') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
   call dein#add('tyru/open-browser.vim') " gx でカーソル位置のURLや単語をブラウザで開くorググる
+  call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
   call dein#add('racer-rust/vim-racer', {'on_ft': ['rust']}) " completion (C-x C-o) and navigation (:gd goto definition)
   call dein#add('rust-lang/rust.vim', {'on_ft': ['rust']})
   call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
@@ -112,6 +113,10 @@ if dein#tap('open-browser.vim')
   " gs でカーソル下のURLをブラウザで開く
   nmap gx <Plug>(openbrowser-smart-search)
   vmap gx <Plug>(openbrowser-smart-search)
+endif
+
+if dein#tap('previm')
+  " TODO: :PrevimOpen でブラウザを開けるんだがquick-runで開きたい
 endif
 
 if dein#tap('syntastic')
