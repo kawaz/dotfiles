@@ -18,6 +18,7 @@ if dein#load_cache()
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
   call dein#add('zchee/deoplete-go', {'on_ft': ['go'], 'build': {'unix': 'make'}}) " golang completion
+  call dein#add('fatih/vim-go', {'on_ft': ['go']}) "
   call dein#add('othree/eregex.vim') " %S/// でpreg正規表現を使えるように
   call dein#add('w0ng/vim-hybrid') " colorscheme
   call dein#add('thinca/vim-quickrun') " \r で即時実行
@@ -38,8 +39,8 @@ if dein#load_cache()
   call dein#add('majutsushi/tagbar') " tagsの凄い奴
   call dein#add('soramugi/auto-ctags.vim') " 自動でctagsを実行する
   " syntastic vs neomake
-  call dein#add('kawaz/batscheck.vim', {'on_ft': ['sh'], 'depends': ['syntastic']})
-  call dein#add('kawaz/shellcheck.vim', {'on_ft': ['sh'], 'depends': ['syntastic']})
+  call dein#add('kawaz/batscheck.vim', {'on_ft': ['sh']})
+  call dein#add('kawaz/shellcheck.vim', {'on_ft': ['sh']})
   call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
   call dein#add('benekastah/neomake') " asynchronous linter, instead of 'scrooloose/syntastic'
   call dein#save_cache()
@@ -58,13 +59,11 @@ let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') ||
 augroup MyAutoCmd
   autocmd!
 augroup END
-" dein#tap()の代わりに使うとブロック内で s:{s:on_source}() という関数定義をするだけでフックが登録出来るようになる 
+" dein#tap()の代わりに使うとブロック内で s:{s:on_source}() という関数定義をするだけでフックが登録出来るようになる
 function! s:dein_tap(name) abort
   if dein#tap(a:name)
     let s:on_source = substitute(a:name, '\W', '_', 'g') . '_on_source'
-    execute 'autocmd MyAutoCmd User'
-          \ 'dein#source#' . a:name
-          \ 'if exists("*s:' . s:on_source . '") | call s:' . s:on_source . '() | endif'
+    execute 'autocmd MyAutoCmd User dein#source#' . a:name . ' if exists("*s:' . s:on_source . '") | call s:' . s:on_source . '() | endif'
     return 1
   endif
   return 0
@@ -72,7 +71,9 @@ endfunction
 
 if dein#tap('deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
-  let g:dein#enable_name_conversion = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#sources#go#package_dot = 1
+  set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
   if has('nvim') && !has('python3')
     echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
   endif
@@ -80,10 +81,34 @@ endif
 
 if s:dein_tap('deoplete-go')
   let g:deoplete#sources#go#align_class = 1
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  " MEMO: gocode set autobuild してfalseだったら
+  " gocode set autobuild true するとvendorディレクトリ内も保管できるようになる
+  " またはgo buildしてあるパッケージは補完出来るのでそれがよければautobuildは不用
+endif
+
+if s:dein_tap('vim-go')
+  " MEMO: gocode set autobuild true を実行しておくとvendor内のライブラリ補完もできるようになる
+  let g:go_fmt_command = "goimports"
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_term_enabled = 1
+  if dein#tap('syntastic')
+    let g:syntastic_go_checkers = ['golint', 'gotype', 'govet', 'go']
+  endif
+  " TODO: キーマップはまだ確認してないので後でやる
+  " 関連ツールのチェック
   function! s:{s:on_source}() abort
-    if executable('go') && !executable('gocode')
-      echo "install gocode ..."
-      call system("go get -u github.com/nsf/gocode &")
+    if executable('go')
+      for s:command in ['goimports', 'godef', 'golint', 'gocode', 'gotags', 'gorename']
+        if !executable(s:command)
+          echo s:command . " is not found. Please run :GoInstallBinaries or :GoUpdateBinaries"
+          break
+        endif
+      endfor
     endif
   endfunction
 endif
