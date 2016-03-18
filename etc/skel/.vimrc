@@ -379,6 +379,10 @@ augroup END
 "バックスペースで改行やインデントを削除出来るようにする
 set backspace=indent,eol,start
 
+" スペルチェック有効
+" set spell
+set spelllang+=cjk " 日本語をスペルチェックから外す
+
 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
 set scrolloff=10
 
