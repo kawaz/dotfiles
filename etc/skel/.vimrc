@@ -15,10 +15,8 @@ endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 call dein#begin(s:dein_dir)
 if dein#load_cache()
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/deoplete.nvim', {'on_i': 1})
-  call dein#add('zchee/deoplete-go', {'on_ft': ['go'], 'build': {'unix': 'make'}}) " golang completion
-  call dein#add('fatih/vim-go', {'on_ft': ['go']}) "
+  call dein#add('Shougo/dein.vim') " プラグイン管理
+  call dein#add('Shougo/deoplete.nvim', {'on_i': 1}) " コード補完
   call dein#add('othree/eregex.vim') " %S/// でpreg正規表現を使えるように
   call dein#add('w0ng/vim-hybrid') " colorscheme
   call dein#add('thinca/vim-quickrun') " \r で即時実行
@@ -27,19 +25,29 @@ if dein#load_cache()
   call dein#add('airblade/vim-gitgutter') " 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
   call dein#add('tyru/caw.vim') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
   call dein#add('tyru/open-browser.vim') " gx でカーソル位置のURLや単語をブラウザで開くorググる
-  call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
   call dein#add('godlygeek/tabular') " :Tabularize /, とかでアライン整形（使い方メモ http://teotr.github.io/blog/2011/04/15/tabular/
+  " languages
+  "" rust
   call dein#add('racer-rust/vim-racer', {'on_ft': ['rust']}) " completion (C-x C-o) and navigation (:gd goto definition)
   call dein#add('rust-lang/rust.vim', {'on_ft': ['rust']})
   call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
   call dein#add('kawaz/rustsrcpath.vim', {'on_ft': ['rust'], 'depends': ['vim-racer']})
+  "" markdown
   call dein#add('joker1007/vim-markdown-quote-syntax', {'on_ft': ['markdown']})
-  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown'], 'depends':['tabular', 'vim-markdown-quote-syntax']})
+  call dein#add('rcmdnk/vim-markdown', {'on_ft': ['markdown'], 'depends':['tabular', 'vim-markdown-quote-syntax']})
   call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
+  "" bash
   call dein#add('vim-scripts/bats.vim', {'on_ft': ['sh']})
+  "" go
+  call dein#add('zchee/deoplete-go', {'on_ft': ['go'], 'build': {'unix': 'make'}}) " golang completion
+  call dein#add('fatih/vim-go', {'on_ft': ['go']}) "
+  "" test
   call dein#add('janko-m/vim-test') " テストコードへジャンプ
+  "" 装飾
+  " airline
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline-themes']})
+  " tags
   call dein#add('majutsushi/tagbar') " tagsの凄い奴
   call dein#add('soramugi/auto-ctags.vim') " 自動でctagsを実行する
   " syntastic vs neomake
@@ -390,6 +398,7 @@ set scrolloff=10
 let &t_SI .= "\e[?7727h"
 let &t_EI .= "\e[?7727l"
 inoremap <special> <Esc>O[ <Esc>
+
 " "クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
 " if &term =~ '\(xterm\|screen-256color\)'
 "   let &t_SI .= "\e[?2004h"
@@ -413,18 +422,12 @@ set smartcase
 set wrapscan
 "検索文字列入力時に順次対象文字列にヒットさる
 set incsearch
-"選択した文字列を検索(2文字目をゆっくり入力すれば発動しない)
-vnoremap <silent> // y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
-"選択した文字列を置換(2文字目をゆっくり入力すれば発動しない)
-vnoremap :s "xy:%s/<C-R>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 
 "-----------------------------------------------------------------------------
 " 装飾関連
 "
 "シンタックスハイライトを有効にする
-if has("syntax")
-  syntax on
-endif
+syntax on
 "編集のままバッファ切り替えができるようにする
 set hidden
 "行番号を表示しない
@@ -459,9 +462,9 @@ set showmatch
 "検索結果文字列のハイライトを有効にする
 set hlsearch
 "ステータスラインを常に表示
-set laststatus=2
+" set laststatus=2
 "ステータスラインに文字コードと改行文字を表示する
-set statusline=%<%f\ %m%=\ %{&ai?'[>]':''}%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
+" set statusline=%<%f\ %m%=\ %{&ai?'[>]':''}%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
 
 "-----------------------------------------------------------------------------
 " マウス関連
