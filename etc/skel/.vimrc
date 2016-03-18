@@ -37,6 +37,7 @@ if dein#load_cache()
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown'], 'depends':['tabular', 'vim-markdown-quote-syntax']})
   call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
   call dein#add('vim-scripts/bats.vim', {'on_ft': ['sh']})
+  call dein#add('janko-m/vim-test') " テストコードへジャンプ
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline-themes']})
   call dein#add('majutsushi/tagbar') " tagsの凄い奴
@@ -114,6 +115,19 @@ if s:dein_tap('vim-go')
       endfor
     endif
   endfunction
+endif
+
+if dein#tap('janko-m/vim-test')
+  let g:test#strategy = 'neovim' " neovim最適化?
+  " mappings
+  nmap <silent> <leader>f :TestNearest<CR>
+  nmap <silent> <leader>i :TestFile<CR>
+  nmap <silent> <leader>a :TestSuite<CR>
+  nmap <silent> <leader>l :TestLast<CR>
+  nmap <silent> <leader>g :TestVisit<CR>
+  " 言語ごとのオプション
+  let test#python#pytest#options = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
+  let test#go#gotest#options     = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
 endif
 
 if dein#tap('vim-hybrid')
