@@ -28,11 +28,14 @@ if dein#load_cache()
   call dein#add('tyru/caw.vim') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
   call dein#add('tyru/open-browser.vim') " gx でカーソル位置のURLや単語をブラウザで開くorググる
   call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
+  call dein#add('godlygeek/tabular') " :Tabularize /, とかでアライン整形（使い方メモ http://teotr.github.io/blog/2011/04/15/tabular/
   call dein#add('racer-rust/vim-racer', {'on_ft': ['rust']}) " completion (C-x C-o) and navigation (:gd goto definition)
   call dein#add('rust-lang/rust.vim', {'on_ft': ['rust']})
   call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
   call dein#add('kawaz/rustsrcpath.vim', {'on_ft': ['rust'], 'depends': ['vim-racer']})
-  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown']})
+  call dein#add('joker1007/vim-markdown-quote-syntax', {'on_ft': ['markdown']})
+  call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown'], 'depends':['tabular', 'vim-markdown-quote-syntax']})
+  call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
   call dein#add('vim-scripts/bats.vim', {'on_ft': ['sh']})
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline-themes']})
