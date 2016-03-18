@@ -86,6 +86,8 @@ if dein#tap('deoplete.nvim')
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#sources#go#package_dot = 1
   set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
   if has('nvim') && !has('python3')
     echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
   endif
