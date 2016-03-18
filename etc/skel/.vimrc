@@ -88,6 +88,7 @@ if dein#tap('deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#sources#go#package_dot = 1
+  set completeopt-=preview " プレビューウィンドウを開かないようにする
   set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
   " TAB や Shift-TAB で補完補完候補を上下する
   if ! dein#tap('neosnippet.vim')
@@ -152,7 +153,7 @@ if dein#tap('neosnippet.vim')
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
   xmap <C-k> <Plug>(neosnippet_expand_target)
   " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
-  imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"<Paste>
+  imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
   smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
   " For snippet_complete marker.
   if has('conceal')
@@ -196,6 +197,7 @@ endif
 
 if dein#tap('vim-gitgutter')
   let g:gitgutter_sign_modified = 'M'
+  let g:gitgutter_max_signs = 5000
 endif
 
 if dein#tap('caw.vim')
