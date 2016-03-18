@@ -16,7 +16,10 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 call dein#begin(s:dein_dir)
 if dein#load_cache()
   call dein#add('Shougo/dein.vim') " プラグイン管理
-  call dein#add('Shougo/deoplete.nvim', {'on_i': 1}) " コード補完
+  call dein#add('Shougo/context_filetype.vim') " コンテクストによってftが切り替わるようにする
+  call dein#add('Shougo/deoplete.nvim', {'on_i': 1, 'depends':['context_filetype.vim']}) " コード補完
+  call dein#add('Shougo/neosnippet.vim', {'on_i': 1, 'on_ft':['neosnippet'], 'depends':['neosnippet-snippets']})
+  call dein#add('Shougo/neosnippet-snippets')
   call dein#add('othree/eregex.vim') " %S/// でpreg正規表現を使えるように
   call dein#add('w0ng/vim-hybrid') " colorscheme
   call dein#add('thinca/vim-quickrun') " \r で即時実行
@@ -86,8 +89,13 @@ if dein#tap('deoplete.nvim')
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#sources#go#package_dot = 1
   set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " TAB や Shift-TAB で補完補完候補を上下する
+  if ! dein#tap('neosnippet.vim')
+    " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  endif
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  " python3が無かったらメッセージを表示
   if has('nvim') && !has('python3')
     echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
   endif
@@ -125,6 +133,41 @@ if s:dein_tap('vim-go')
       endfor
     endif
   endfunction
+endif
+
+if dein#tap('neosnippet.vim')
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_complete_done = 1
+  let g:neosnippet#expand_word_boundary = 1
+  " スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される）
+  let g:neosnippet#snippets_directory = []
+  if exists('$DOTFILES_DIR')
+    let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
+  endif
+  if ! empty(dein#get('neosnippet-snippets'))
+    let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
+  endif
+  " Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
+  imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"<Paste>
+  smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  " For snippet_complete marker.
+  if has('conceal')
+    set conceallevel=2 concealcursor=i
+  endif
+  " どっかからコピペしてきた謎設定、あとで確認する
+  imap <silent>L <Plug>(neosnippet_jump_or_expand)
+  smap <silent>L <Plug>(neosnippet_jump_or_expand)
+  xmap <silent>L <Plug>(neosnippet_expand_target)
+  imap <silent>K <Plug>(neosnippet_expand_or_jump)
+  smap <silent>K <Plug>(neosnippet_expand_or_jump)
+  imap <silent>G <Plug>(neosnippet_expand)
+  imap <silent>S <Plug>(neosnippet_start_unite_snippet)
+  xmap <silent>o <Plug>(neosnippet_register_oneshot_snippet)
+  inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
 endif
 
 if dein#tap('janko-m/vim-test')
