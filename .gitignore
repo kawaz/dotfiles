@@ -1,3 +1,6 @@
 .env
 .env/dot-vim/bundle/neobundle.vim
 etc/skel/.vim
+etc/skel/.cache
+etc/skel/.config/nvim/.init.vim-rplugin*
+etc/skel/.local/nvim

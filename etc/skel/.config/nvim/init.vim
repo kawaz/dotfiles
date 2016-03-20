@@ -159,16 +159,16 @@ if dein#tap('neosnippet.vim')
   if has('conceal')
     set conceallevel=2 concealcursor=i
   endif
-  " どっかからコピペしてきた謎設定、あとで確認する
-  imap <silent>L <Plug>(neosnippet_jump_or_expand)
-  smap <silent>L <Plug>(neosnippet_jump_or_expand)
-  xmap <silent>L <Plug>(neosnippet_expand_target)
-  imap <silent>K <Plug>(neosnippet_expand_or_jump)
-  smap <silent>K <Plug>(neosnippet_expand_or_jump)
-  imap <silent>G <Plug>(neosnippet_expand)
-  imap <silent>S <Plug>(neosnippet_start_unite_snippet)
-  xmap <silent>o <Plug>(neosnippet_register_oneshot_snippet)
-  inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
+  " " どっかからコピペしてきた謎設定、あとで確認する
+  " imap <silent>L <Plug>(neosnippet_jump_or_expand)
+  " smap <silent>L <Plug>(neosnippet_jump_or_expand)
+  " xmap <silent>L <Plug>(neosnippet_expand_target)
+  " imap <silent>K <Plug>(neosnippet_expand_or_jump)
+  " smap <silent>K <Plug>(neosnippet_expand_or_jump)
+  " imap <silent>G <Plug>(neosnippet_expand)
+  " imap <silent>S <Plug>(neosnippet_start_unite_snippet)
+  " xmap <silent>o <Plug>(neosnippet_register_oneshot_snippet)
+  " inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
 endif
 
 if dein#tap('janko-m/vim-test')
