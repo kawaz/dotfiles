@@ -13,8 +13,8 @@ if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
-call dein#begin(s:dein_dir)
-if dein#load_cache()
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
   call dein#add('Shougo/dein.vim') " プラグイン管理
   call dein#add('Shougo/context_filetype.vim') " コンテクストによってftが切り替わるようにする
   call dein#add('Shougo/deoplete.nvim', {'on_i': 1, 'depends':['context_filetype.vim']}) " コード補完
@@ -58,10 +58,10 @@ if dein#load_cache()
   call dein#add('kawaz/shellcheck.vim', {'on_ft': ['sh']})
   call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
   call dein#add('benekastah/neomake') " asynchronous linter, instead of 'scrooloose/syntastic'
-  call dein#save_cache()
+  call dein#end()
+  call dein#save_state()
 endif
-call dein#end()
-if dein#check_install()
+if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 " }}}
