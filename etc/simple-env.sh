@@ -1,7 +1,6 @@
 # bash
 kawaz-env() {
-  export DOTFILES_DIR=$(dirname "$(dirname "$BASH_SOURCE")")
+  export DOTFILES_DIR=$(cd "$(dirname "$BASH_SOURCE")/.." && pwd)
   . "$DOTFILES_DIR/etc/skel/.bashrc"
-  alias vim="command vim -u '$DOTFILES_DIR/etc/skel/.vimrc' -c 'set rtp+=$DOTFILES_DIR/.env/dest/dot-vim/'"
   return 0
 }
