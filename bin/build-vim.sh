@@ -1,7 +1,7 @@
 #!/bin/bash
-. "`dirname -- "$0"`"/functions.sh || exit
+set -e
+. "$(dirname -- "$0")"/functions.sh
 
-src="$DOTFILES_SRC/vim"
 dest="$DOTFILES_DEST/vim"
 
 install_vim_mac() {
@@ -13,15 +13,16 @@ install_vim_linux_yum() {
   sudo yum groups install -y 'Development tools'
   sudo yum install -y cmake
   if type -p pip3 2>/dev/null; then
-    pip3 install neovim --upgrade
+    sudo pip3 install neovim --upgrade
   else
-    py3_ver=$(yum list python3\*-pip -q | grep -Eo ^python3[^-] | sort | tail -n1)
+    py3_ver=$(yum list python3\*-pip -q | grep -Eo '^python3[0-9]+' | sort | tail -n1)
     sudo yum install -y "${py3_ver}"-{pip,devel}
     pip3=$(rpm -ql "${py3_ver}-pip" | grep -Eo '/bin/pip.*3.*' | head -n1)
     sudo "$pip3" install neovim --upgrade
   fi
   (
-    cd "$(mktemp -d)"
+    cd "$(mktemp -d)" || exit 1
+    trap "rm -rf $(printf %q "$(pwd)")" EXIT
     git clone https://github.com/neovim/neovim.git
     cd neovim
     make CMAKE_BUILD_TYPE=Release

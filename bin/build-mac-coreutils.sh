@@ -1,5 +1,6 @@
 #!/bin/bash
-. "`dirname -- "$0"`"/functions.sh || exit
+set -e
+. "$(dirname -- "$0")"/functions.sh || exit
 
 # Mac only
 is_mac || exit 1

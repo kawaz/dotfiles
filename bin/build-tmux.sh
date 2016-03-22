@@ -14,10 +14,6 @@ has_rpm_packages automake libevent-devel ncurses-devel || exit 1
 rm -rf "$src"
 git clone git://tmux.git.sourceforge.net/gitroot/tmux/tmux "$src"
 
-# 参考：罫線パッチ http://d.hatena.ne.jp/emonkak/20110521/1305970697
-cd "$src" || exit 1
-patch -p1 < "$DOTFILES_DIR/bin/build-tmux.sh.border_patch"
-
 # libevent2が必要なので1.xしか無い場合はソースで入れる
 if rpm -q libevent-devel-1.\* >/dev/null 2>&1; then
   src2="$DOTFILES_SRC/libevent2"

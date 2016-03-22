@@ -1,0 +1,17 @@
+# .bashrc
+
+# include settings (ファイル名順に読み込む)
+while read -r f; do
+  if [[ -f $f ]]; then
+    . "$f" || echo -e "\e[1;35mAbove error is in $f\e[1;0m" >&2
+  fi
+done < <(
+  for f in \
+    "${DOTFILES_DIR}"/etc/profile.d/*.sh \
+    "${DOTFILES_DIR}"/.env/dest/profile.d/*.sh \
+    "${DOTFILES_DIR}"/.env/opt/etc/profile.d/*.sh \
+    ~/.profile.d/*.sh
+  do
+    echo "${f##*/}/$f"
+  done | sort | cut -d/ -f2-
+)
