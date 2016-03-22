@@ -6,7 +6,6 @@
 [log]
   date = iso
 [alias]
-  ci = commit -a
   st = status
   co = checkout
   tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
@@ -15,15 +14,12 @@
   pr = pull-request
   open = browse
 [core]
-  editor = vim
-  paget = "less -R"
-  excludesfile = ~/.gitignore
   autocrlf = false
-[include]
-  path = ~/.gitconfig.local
 [push]
-  # upstream or tracking http://bit.ly/SZxexh
-  default = tracking
+  default = simple
+[rebase]
+	autostash = true
+	autosquash = true
 [github]
   user = kawaz
 [tig "bind"]
