@@ -431,32 +431,28 @@ augroup BinaryXXD
   autocmd BufWritePost * if &binary | silent %!xxd -g 1
   autocmd BufWritePost * set nomod | endif
 augroup END
-"バックスペースで改行やインデントを削除出来るようにする
-set backspace=indent,eol,start
 
-" スペルチェック有効
-" set spell
+set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
+" set spell          " スペルチェック有効
 set spelllang+=cjk " 日本語をスペルチェックから外す
-
-" カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
-set scrolloff=10
+set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
 
 "挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
-let &t_SI .= "\e[?7727h"
-let &t_EI .= "\e[?7727l"
-inoremap <special> <Esc>O[ <Esc>
+"let &t_SI .= "\e[?7727h"
+"let &t_EI .= "\e[?7727l"
+"inoremap <special> <Esc>O[ <Esc>
 
-" "クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
-" if &term =~ '\(xterm\|screen-256color\)'
-"   let &t_SI .= "\e[?2004h"
-"   let &t_EI .= "\e[?2004l"
-"   let &pastetoggle = "\e[201~"
-"   function XTermPasteBegin(ret)
-"     set paste
-"     return a:ret
-"   endfunction
-"   inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-" endif
+"クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
+if &term =~ '\(xterm\|screen-256color\|nvim\)'
+  let &t_SI .= "\e[?2004h"
+  let &t_EI .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
+  function XTermPasteBegin(ret)
+    set paste
+    return a:ret
+  endfunction
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
 
 "-----------------------------------------------------------------------------
 " 検索関連
@@ -485,18 +481,19 @@ set cursorline
 scriptencoding utf-8
 function! HilightUnnecessaryWhiteSpace()
   " on ColorScheme
+  highlight CopipeMissTab ctermbg=52 guibg=red
   highlight CopipeMissEol ctermbg=52 guibg=red
   highlight TabString ctermbg=52 guibg=red
   highlight ZenkakuSpace ctermbg=52 guibg=red
   " on VimEnter,WinEntercall
+  call matchadd("CopipeMissTab", '▸ ')
   call matchadd("CopipeMissEol", '¬ *$')
-  call matchadd("TabString", '\t')
+  " call matchadd("TabString", '\t')
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
 " 非表示文字を見えるようにする
-set list listchars=tab:▸\ ,eol:¬
-
+set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:%
 "タブ幅を設定する
 set softtabstop=2
 set shiftwidth=2
@@ -516,15 +513,8 @@ set hlsearch
 "-----------------------------------------------------------------------------
 " マウス関連
 "
-" マウスモード
-if 0
-  if exists('&mouse')
-    set mouse=a
-  endif
-  " screen対応
-  if &term == "screen"
-    set ttymouse=xterm2
-  endif
+if exists('&mouse')
+  set mouse=a " マウスモード有効
 endif
 
 "-----------------------------------------------------------------------------
