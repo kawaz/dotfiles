@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export LANG="ja_JP.UTF-8"
 export PAGER="less -R"
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # 以下はインタラクティブシェルのときだけ適用
 [[ -z "$PS1" ]] && return
