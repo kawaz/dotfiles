@@ -1,0 +1,300 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]] # コンテクストによってftが切り替わるようにする
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # コード補完
+repo = 'Shougo/deoplete.nvim'
+depends = ['context_filetype.vim']
+on_i = 1
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#sources#go#package_dot = 1
+  set completeopt-=preview " プレビューウィンドウを開かないようにする
+  set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
+  " TAB や Shift-TAB で補完補完候補を上下する
+  if ! dein#tap('neosnippet.vim')
+    " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  endif
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  " python3が無かったらメッセージを表示
+  if has('nvim') && !has('python3')
+    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
+  endif
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets']
+on_ft = ['neosnippet']
+on_i = 1
+hook_add = '''
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_complete_done = 1
+  let g:neosnippet#expand_word_boundary = 1
+  " スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される)
+  let g:neosnippet#snippets_directory = []
+  if exists('$DOTFILES_DIR')
+    let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
+  endif
+  if ! empty(dein#get('neosnippet-snippets'))
+    let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
+  endif
+  " Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
+  imap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : pumvisible() ? '\<C-n>' : '\<TAB>'
+  smap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : '\<TAB>'
+  " For snippet_complete marker.
+  if has('conceal')
+    set conceallevel=2 concealcursor=i
+  endif
+'''
+
+[[plugins]]
+# %S/// でpreg正規表現を使えるように
+repo = 'othree/eregex.vim'
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  let g:hybrid_custom_term_colors = 1
+  let g:hybrid_reduced_contrast = 1
+  set background=dark
+  autocmd MyAutoCmd VimEnter * colorscheme hybrid
+'''
+
+[[plugins]]
+# \r で即時実行
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+# 行末の空白の可視化＆ :FixWhitespace で削除
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+# C-pでファイル選択が捗る http://bit.ly/NuXA5u
+repo = 'kien/ctrlp.vim'
+hook_add = '''
+  let g:ctrlp_use_migemo = 1
+'''
+
+[[plugins]]
+# 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+  let g:gitgutter_sign_modified = 'M'
+  let g:gitgutter_max_signs = 5000
+'''
+
+[[plugins]]
+# 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
+repo = 'tyru/caw.vim'
+hook_add = '''
+  " C-/ でコメントアウト、ビジュアルモードでは選択範囲が解除されないよう直後にgvを足す
+  nmap <C-_> <Plug>(caw:i:toggle)
+  vmap <C-_> <Plug>(caw:i:toggle)gv
+'''
+
+
+[[plugins]]
+# gx でカーソル位置のURLや単語をブラウザで開くorググる
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+  " gs でカーソル下のURLをブラウザで開く
+  nmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search)
+'''
+
+[[plugins]]
+# :Tabularize /, とかでアライン整形（使い方メモ http://teotr.github.io/blog/2011/04/15/tabular/
+repo = 'godlygeek/tabular'
+
+
+# languages
+## rust
+[[plugins]]
+# completion (C-x C-o) and navigation (:gd goto definition)
+repo = 'racer-rust/vim-racer'
+on_ft = ['rust']
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+
+[[plugins]]
+repo = 'rhysd/rust-doc.vim'
+on_ft = ['rust']
+
+[[plugins]]
+repo = 'kawaz/rustsrcpath.vim'
+on_ft = ['rust']
+depends = ['vim-racer']
+
+## toml
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+
+##  markdown
+
+[[plugins]]
+repo = 'joker1007/vim-markdown-quote-syntax'
+on_ft = ['markdown']
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['markdown']
+depends = ['tabular', 'vim-markdown-quote-syntax']
+hook_add = '''
+  let g:vim_markdown_new_list_item_indent = 2
+'''
+
+[[plugins]]
+# 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
+repo = 'kannokanno/previm'
+hook_add = '''
+  " TODO: :PrevimOpen でブラウザを開けるんだがquick-runで開きたい
+'''
+
+
+
+
+## bash
+
+[[plugins]]
+repo = 'vim-scripts/bats.vim'
+on_ft = ['sh']
+
+
+
+## go
+
+[[plugins]]
+# golang completion
+repo = 'zchee/deoplete-go'
+on_ft = ['go']
+build = 'make'
+hook_add = '''
+  let g:deoplete#sources#go#align_class = 1
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  " MEMO: gocode set autobuild してfalseだったら
+  " gocode set autobuild true するとvendorディレクトリ内も保管できるようになる
+  " またはgo buildしてあるパッケージは補完出来るのでそれがよければautobuildは不用
+'''
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
+hook_add = '''
+  " MEMO: gocode set autobuild true を実行しておくとvendor内のライブラリ補完もできるようになる
+  let g:go_fmt_command = 'goimports'
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_term_enabled = 1
+  if dein#tap('syntastic')
+    let g:syntastic_go_checkers = ['golint', 'gotype', 'govet', 'go']
+  endif
+  " TODO: キーマップはまだ確認してないので後でやる
+  " 関連ツールのチェック
+  if executable('go')
+    for s:command in ['goimports', 'godef', 'golint', 'gocode', 'gotags', 'gorename']
+      if !executable(s:command)
+        echo s:command . ' is not found. Please run :GoInstallBinaries or :GoUpdateBinaries'
+        break
+      endif
+    endfor
+  endif
+'''
+
+
+
+## test
+[[plugins]]
+# テストコードへジャンプ
+repo = 'janko-m/vim-test'
+hook_add = '''
+  let g:test#strategy = 'neovim'
+  " mappings
+  nmap <silent> <leader>f :TestNearest<CR>
+  nmap <silent> <leader>i :TestFile<CR>
+  nmap <silent> <leader>a :TestSuite<CR>
+  nmap <silent> <leader>l :TestLast<CR>
+  nmap <silent> <leader>g :TestVisit<CR>
+  " 言語ごとのオプション
+  let test#python#pytest#options = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
+  let test#go#gotest#options     = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
+'''
+
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+  let g:airline_powerline_fonts=1
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+
+[[plugins]] # tagsの凄い奴
+repo = 'majutsushi/tagbar'
+hook_add = '''
+  nmap <F8> :TagbarToggle<CR>
+  " auto-ctags
+  let g:auto_ctags = 1
+  let g:auto_ctags_directory_list = ['.git', '.svn']
+  let g:auto_ctags_tags_name = 'tags'
+  let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+  let g:auto_ctags_filetype_mode = 1
+'''
+
+[[plugins]]
+# 自動でctagsを実行する
+repo = 'soramugi/auto-ctags.vim'
+
+[[plugins]]
+repo = 'kawaz/batscheck.vim'
+on_ft = ['sh']
+
+[[plugins]]
+repo = 'kawaz/shellcheck.vim'
+on_ft = ['sh']
+
+## syntastic vs neomake
+
+[[plugins]]
+# ファイル保存時にエラー行があればハイライトする
+repo = 'scrooloose/syntastic'
+hook_add = '''
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_error_symbol='✗'
+  let g:syntastic_warning_symbol='⚠'
+  let g:syntastic_style_error_symbol = '✗'
+  let g:syntastic_style_warning_symbol = '⚠'
+  let g:syntastic_debug = 0
+  let g:syntastic_debug_file = '~/syntastic.log'
+  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
+'''
+
+[[plugins]]
+# asynchronous linter, instead of 'scrooloose/syntastic'
+repo = 'benekastah/neomake'
+hook_add = '''
+  let g:neomake_open_list = 1
+  " autocmd VimEnter,BufWritePost * Neomake
+'''

@@ -2,6 +2,15 @@ if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
+" OS判定
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+" どこか最初に書いておく
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
 " dein settings {{{
 if !&compatible
   set nocompatible
@@ -15,49 +24,7 @@ endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#add('Shougo/dein.vim') " プラグイン管理
-  call dein#add('Shougo/context_filetype.vim') " コンテクストによってftが切り替わるようにする
-  call dein#add('Shougo/deoplete.nvim', {'on_i': 1, 'depends':['context_filetype.vim']}) " コード補完
-  call dein#add('Shougo/neosnippet.vim', {'on_i': 1, 'on_ft':['neosnippet'], 'depends':['neosnippet-snippets']})
-  call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('othree/eregex.vim') " %S/// でpreg正規表現を使えるように
-  call dein#add('w0ng/vim-hybrid') " colorscheme
-  call dein#add('thinca/vim-quickrun') " \r で即時実行
-  call dein#add('bronson/vim-trailing-whitespace') " 行末の空白の可視化＆ :FixWhitespace で削除
-  call dein#add('kien/ctrlp.vim') " C-pでファイル選択が捗る http://bit.ly/NuXA5u
-  call dein#add('airblade/vim-gitgutter') " 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
-  call dein#add('tyru/caw.vim') " 簡単コメント、Ctr+/ でカーソル行or選択範囲をコメントトグル
-  call dein#add('tyru/open-browser.vim') " gx でカーソル位置のURLや単語をブラウザで開くorググる
-  call dein#add('godlygeek/tabular') " :Tabularize /, とかでアライン整形（使い方メモ http://teotr.github.io/blog/2011/04/15/tabular/
-  " languages
-  "" rust
-  call dein#add('racer-rust/vim-racer', {'on_ft': ['rust']}) " completion (C-x C-o) and navigation (:gd goto definition)
-  call dein#add('rust-lang/rust.vim', {'on_ft': ['rust']})
-  call dein#add('rhysd/rust-doc.vim', {'on_ft': ['rust']})
-  call dein#add('kawaz/rustsrcpath.vim', {'on_ft': ['rust'], 'depends': ['vim-racer']})
-  "" markdown
-  call dein#add('joker1007/vim-markdown-quote-syntax', {'on_ft': ['markdown']})
-  call dein#add('rcmdnk/vim-markdown', {'on_ft': ['markdown'], 'depends':['tabular', 'vim-markdown-quote-syntax']})
-  call dein#add('kannokanno/previm') " 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
-  "" bash
-  call dein#add('vim-scripts/bats.vim', {'on_ft': ['sh']})
-  "" go
-  call dein#add('zchee/deoplete-go', {'on_ft': ['go'], 'build': {'unix': 'make'}}) " golang completion
-  call dein#add('fatih/vim-go', {'on_ft': ['go']}) "
-  "" test
-  call dein#add('janko-m/vim-test') " テストコードへジャンプ
-  "" 装飾
-  " airline
-  call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('vim-airline/vim-airline', {'depends': ['vim-airline-themes']})
-  " tags
-  call dein#add('majutsushi/tagbar') " tagsの凄い奴
-  call dein#add('soramugi/auto-ctags.vim') " 自動でctagsを実行する
-  " syntastic vs neomake
-  call dein#add('kawaz/batscheck.vim', {'on_ft': ['sh']})
-  call dein#add('kawaz/shellcheck.vim', {'on_ft': ['sh']})
-  call dein#add('scrooloose/syntastic') " ファイル保存時にエラー行があればハイライトする
-  call dein#add('benekastah/neomake') " asynchronous linter, instead of 'scrooloose/syntastic'
+  call dein#load_toml(fnamemodify(expand('<sfile>'), ':h').'/dein.toml')
   call dein#end()
   call dein#save_state()
 endif
@@ -66,196 +33,10 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-" OS判定
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
-" どこか最初に書いておく
-augroup MyAutoCmd
-  autocmd!
-augroup END
-" dein#tap()の代わりに使うとブロック内で s:{s:on_source}() という関数定義をするだけでフックが登録出来るようになる
-function! s:dein_tap(name) abort
-  if dein#tap(a:name)
-    let s:on_source = substitute(a:name, '\W', '_', 'g') . '_on_source'
-    execute 'autocmd MyAutoCmd User dein#source#' . a:name . ' if exists("*s:' . s:on_source . '") | call s:' . s:on_source . '() | endif'
-    return 1
-  endif
-  return 0
-endfunction
-
-if dein#tap('deoplete.nvim')
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#sources#go#package_dot = 1
-  set completeopt-=preview " プレビューウィンドウを開かないようにする
-  set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
-  " TAB や Shift-TAB で補完補完候補を上下する
-  if ! dein#tap('neosnippet.vim')
-    " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  endif
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-  " python3が無かったらメッセージを表示
-  if has('nvim') && !has('python3')
-    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
-  endif
-endif
-
-if s:dein_tap('deoplete-go')
-  let g:deoplete#sources#go#align_class = 1
-  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-  " MEMO: gocode set autobuild してfalseだったら
-  " gocode set autobuild true するとvendorディレクトリ内も保管できるようになる
-  " またはgo buildしてあるパッケージは補完出来るのでそれがよければautobuildは不用
-endif
-
-if s:dein_tap('vim-go')
-  " MEMO: gocode set autobuild true を実行しておくとvendor内のライブラリ補完もできるようになる
-  let g:go_fmt_command = "goimports"
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_structs = 1
-  let g:go_highlight_operators = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_term_enabled = 1
-  if dein#tap('syntastic')
-    let g:syntastic_go_checkers = ['golint', 'gotype', 'govet', 'go']
-  endif
-  " TODO: キーマップはまだ確認してないので後でやる
-  " 関連ツールのチェック
-  function! s:{s:on_source}() abort
-    if executable('go')
-      for s:command in ['goimports', 'godef', 'golint', 'gocode', 'gotags', 'gorename']
-        if !executable(s:command)
-          echo s:command . " is not found. Please run :GoInstallBinaries or :GoUpdateBinaries"
-          break
-        endif
-      endfor
-    endif
-  endfunction
-endif
-
-if dein#tap('neosnippet.vim')
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_complete_done = 1
-  let g:neosnippet#expand_word_boundary = 1
-  " スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される）
-  let g:neosnippet#snippets_directory = []
-  if exists('$DOTFILES_DIR')
-    let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
-  endif
-  if ! empty(dein#get('neosnippet-snippets'))
-    let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
-  endif
-  " Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
-  imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-  smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  " For snippet_complete marker.
-  if has('conceal')
-    set conceallevel=2 concealcursor=i
-  endif
-  " " どっかからコピペしてきた謎設定、あとで確認する
-  " imap <silent>L <Plug>(neosnippet_jump_or_expand)
-  " smap <silent>L <Plug>(neosnippet_jump_or_expand)
-  " xmap <silent>L <Plug>(neosnippet_expand_target)
-  " imap <silent>K <Plug>(neosnippet_expand_or_jump)
-  " smap <silent>K <Plug>(neosnippet_expand_or_jump)
-  " imap <silent>G <Plug>(neosnippet_expand)
-  " imap <silent>S <Plug>(neosnippet_start_unite_snippet)
-  " xmap <silent>o <Plug>(neosnippet_register_oneshot_snippet)
-  " inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
-endif
-
-if dein#tap('janko-m/vim-test')
-  let g:test#strategy = 'neovim' " neovim最適化?
-  " mappings
-  nmap <silent> <leader>f :TestNearest<CR>
-  nmap <silent> <leader>i :TestFile<CR>
-  nmap <silent> <leader>a :TestSuite<CR>
-  nmap <silent> <leader>l :TestLast<CR>
-  nmap <silent> <leader>g :TestVisit<CR>
-  " 言語ごとのオプション
-  let test#python#pytest#options = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
-  let test#go#gotest#options     = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
-endif
-
-if dein#tap('vim-hybrid')
-  let g:hybrid_custom_term_colors = 1
-  let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-  colorscheme hybrid
-  set background=dark
-endif
-
-if dein#tap('ctrlp.vim')
-  let g:ctrlp_use_migemo = 1
-endif
-
-if dein#tap('vim-gitgutter')
-  let g:gitgutter_sign_modified = 'M'
-  let g:gitgutter_max_signs = 5000
-endif
-
-if dein#tap('caw.vim')
-  " C-/ でコメントアウト。ビジュアルモードの時に選択範囲を解除されないようにするmapも追加
-  nmap <C-_> <Plug>(caw:i:toggle)
-  vmap <C-_> <Plug>(caw:i:toggle)gv
-endif
-
-if dein#tap('open-browser.vim')
-  " gs でカーソル下のURLをブラウザで開く
-  nmap gx <Plug>(openbrowser-smart-search)
-  vmap gx <Plug>(openbrowser-smart-search)
-endif
-
-if dein#tap('previm')
-  " TODO: :PrevimOpen でブラウザを開けるんだがquick-runで開きたい
-endif
-
-if dein#tap('syntastic')
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_error_symbol='✗'
-  let g:syntastic_warning_symbol='⚠'
-  let g:syntastic_style_error_symbol = '✗'
-  let g:syntastic_style_warning_symbol = '⚠'
-  let g:syntastic_debug = 0
-  let g:syntastic_debug_file = '~/syntastic.log'
-  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
-endif
-
-if dein#tap('neomake')
-  let g:neomake_open_list = 1
-  " autocmd VimEnter,BufWritePost * Neomake
-endif
-
-if dein#tap('vim-markdown')
-  let g:vim_markdown_new_list_item_indent = 2
-endif
-
-" vim-airline
-let g:airline_powerline_fonts=1
-" tagbar
-nmap <F8> :TagbarToggle<CR>
-" auto-ctags
-let g:auto_ctags = 1
-let g:auto_ctags_directory_list = ['.git', '.svn']
-let g:auto_ctags_tags_name = 'tags'
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-let g:auto_ctags_filetype_mode = 1
 
 
 
 
-
-
-"
 " " ファイルタイプ関連
 " NeoBundle 'Markdown'
 " NeoBundle 'pangloss/vim-javascript'
@@ -490,7 +271,7 @@ function! HilightUnnecessaryWhiteSpace()
   highlight ZenkakuSpace ctermbg=52 guibg=red
   " on VimEnter,WinEntercall
   call matchadd("CopipeMissEol", '¬ *$')
-  call matchadd("TabString", '\t')
+  " call matchadd("TabString", '\t')
   call matchadd("ZenkakuSpace", '　')
 endfunction
 autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
