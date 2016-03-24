@@ -1,8 +1,18 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]] # コンテクストによってftが切り替わるようにする
+[[plugins]] # コンテキストに合わせてfiletypeを切り替える
 repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+  if !exists('g:context_filetype#filetypes')
+    let g:context_filetype#filetypes = {}
+  endif
+  " dein.toml編集用
+  let g:context_filetype#filetypes['toml'] = [
+    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*'.'""'.'"', 'end':'""'.'"'},
+    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*'."''"."'", 'end':"''"."'"},
+    \ ]
+'''
 
 [[plugins]] # コード補完
 repo = 'Shougo/deoplete.nvim'
