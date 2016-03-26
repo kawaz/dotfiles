@@ -5,22 +5,24 @@ if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-" OS判定
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 " どこか最初に書いておく
 augroup MyAutoCmd
   autocmd!
 augroup END
+" OS判定
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
-" dein settings {{{
-let s:cache_home = $XDG_CACHE_HOME == '' ? expand('~/.cache') : $XDG_CACHE_HOME
+" dein settings
+" dein自体の自動インストール
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
+" stateキャッシュ作成
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
@@ -28,10 +30,11 @@ if dein#load_state(s:dein_dir)
   call dein#end()
   call dein#save_state()
 endif
+" 不足プラグインの自動インストール
 if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
-" }}}
+
 
 
 
