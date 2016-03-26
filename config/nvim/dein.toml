@@ -30,13 +30,15 @@ hook_add = '''
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#sources#go#package_dot = 1
   set completeopt-=preview " プレビューウィンドウを開かないようにする
-  set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
+  "set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
   " TAB や Shift-TAB で補完補完候補を上下する
   if ! dein#tap('neosnippet.vim')
     " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   endif
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  inoremap <expr><UP>   pumvisible() ? "\<C-p>" : "<UP>"
+  inoremap <expr><DOWN> pumvisible() ? "\<C-n>" : "<DOWN>"
   " python3が無かったらメッセージを表示
   if has('nvim') && !has('python3')
     echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
@@ -50,17 +52,17 @@ repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets']
 on_ft = ['neosnippet']
 on_i = 1
-hook_add = '''
+hook_add_ = '''
   let g:neosnippet#enable_snipmate_compatibility = 1
   let g:neosnippet#enable_complete_done = 1
   let g:neosnippet#expand_word_boundary = 1
   " スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される)
   let g:neosnippet#snippets_directory = []
   if exists('$DOTFILES_DIR')
-    let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
+  let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
   endif
   if ! empty(dein#get('neosnippet-snippets'))
-    let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
+  let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
   endif
   " Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -71,9 +73,11 @@ hook_add = '''
   smap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : '\<TAB>'
   " For snippet_complete marker.
   if has('conceal')
-    set conceallevel=2 concealcursor=i
+  set conceallevel=2 concealcursor=i
   endif
 '''
+
+
 
 [[plugins]]
 # %S/// でpreg正規表現を使えるように
