@@ -1,3 +1,6 @@
+if !&compatible
+  set nocompatible
+endif
 if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
@@ -12,9 +15,6 @@ augroup MyAutoCmd
 augroup END
 
 " dein settings {{{
-if !&compatible
-  set nocompatible
-endif
 let s:cache_home = $XDG_CACHE_HOME == '' ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
