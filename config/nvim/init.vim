@@ -22,17 +22,17 @@ let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
-" tomlが更新されてたらdeinのstateキャッシュを自動削除する
+" tomlが更新されたらstateキャッシュを自動削除
 let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 let s:state_file = s:dein_dir.'/state_'.fnamemodify(v:progname, ':r').'.vim'
 if getftime(s:state_file) < getftime(s:toml_file)
   call delete(s:state_file)
 endif
-" stateキャッシュ作成
+" プラグイン読み込み＆キャッシュ作成
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#load_toml(fnamemodify(expand('<sfile>'), ':h').'/dein.toml')
+  call dein#load_toml(s:toml_file)
   call dein#end()
   call dein#save_state()
 endif
