@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]] # コンテキストに合わせてfiletypeを切り替える
+[[plugins]] # カーソル位置のコンテキストに合わせてfiletypeを切り替える
 repo = 'osyo-manga/vim-precious'
 depends = ['Shougo/context_filetype.vim']
 
