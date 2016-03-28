@@ -4,6 +4,13 @@ repo = 'Shougo/dein.vim'
 [[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
 repo = 'osyo-manga/vim-precious'
 depends = ['Shougo/context_filetype.vim']
+hook_add = '''
+  " NORMALモードの移動中に頻繁に切り替わるとうざいのでデフォは無効化しておく
+  let g:precious_enable_switch_CursorMoved = { '*': 0, 'help': 1 }
+  " INSERTモードのON／OFFに合わせてスイッチ
+  autocmd MyAutoCmd InsertEnter * :PreciousSwitch
+  autocmd MyAutoCmd InsertLeave * :PreciousReset
+'''
 
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
