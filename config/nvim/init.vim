@@ -42,6 +42,8 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
+filetype plugin indent on
+syntax enable
 set foldmethod=marker
 
 
