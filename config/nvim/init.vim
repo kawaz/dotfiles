@@ -38,6 +38,7 @@ endif
 " }}}
 
 
+set foldmethod=marker
 
 
 
