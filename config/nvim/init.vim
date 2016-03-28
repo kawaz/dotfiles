@@ -14,7 +14,7 @@ let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
-" dein settings
+" dein settings {{{
 " dein自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
@@ -35,6 +35,7 @@ endif
 if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
+" }}}
 
 
 
@@ -334,34 +335,13 @@ map <kMinus> <C-W>-
 "インデント操作後も選択範囲を保つ
 vnoremap > >gv
 vnoremap < <gv
-" Macのクリップボードにコピーする
+
+" C-c でMacのクリップボードにコピーする {{{
 if s:is_mac
   " 無名レジスタ""の内容をpbcopyに渡す
   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
 endif
+"}}}
 
-" インデントが同じかそれより深い範囲を選択する
-function! VisualCurrentIndentBlock()
-  let current_indent = indent('.')
-  let current_line   = line('.')
-  let current_col  = col('.')
-  let last_line    = line('$')
-
-  let start_line = current_line
-  let end_line = current_line
-  while start_line != 1 && ( current_indent <= indent(start_line - 1) || getline(start_line - 1) =~ '^\s*$' )
-    let start_line = start_line - 1
-  endwhile
-  while end_line != last_line && ( current_indent <= indent(end_line + 1) || getline(end_line + 1) =~ '^\s*$' )
-    let end_line = end_line + 1
-  endwhile
-
-  call cursor(start_line, current_col)
-  normal V
-  call cursor(end_line, current_col)
-endfunction
-
-nnoremap gi :call VisualCurrentIndentBlock()<CR>
-onoremap gi :normal gi<CR>
