@@ -1,11 +1,11 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]] # カーソル位置のコンテキストに合わせてfiletypeを切り替える
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
 repo = 'osyo-manga/vim-precious'
 depends = ['Shougo/context_filetype.vim']
 
-[[plugins]] # カーソル位置のコンテキストのfiletypeを判定するライブラリ
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
 hook_add = '''
   if !exists('g:context_filetype#filetypes')
@@ -13,8 +13,7 @@ hook_add = '''
   endif
   " dein.toml編集用
   let g:context_filetype#filetypes['toml'] = [
-    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*'.'""'.'"', 'end':'""'.'"'},
-    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*'."''"."'", 'end':"''"."'"},
+    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*\('.'""'.'"'.'\|'."''"."'".'\)', 'end':'\2'},
     \ ]
 '''
 
