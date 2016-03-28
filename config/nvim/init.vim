@@ -14,7 +14,7 @@ let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
-" dein settings
+" dein settings {{{
 " dein自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
@@ -35,8 +35,10 @@ endif
 if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
+" }}}
 
 
+set foldmethod=marker
 
 
 
@@ -222,22 +224,22 @@ set backspace=indent,eol,start " バックスペースで改行やインデン�
 set spelllang+=cjk " 日本語をスペルチェックから外す
 set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
 
-"挿入モードでの ESC キーを押した後の待ちを無くす http://bit.ly/IhzWae
-"let &t_SI .= "\e[?7727h"
-"let &t_EI .= "\e[?7727l"
-"inoremap <special> <Esc>O[ <Esc>
-
-"クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe
-if &term =~ '\(xterm\|screen-256color\|nvim\)'
-  let &t_SI .= "\e[?2004h"
-  let &t_EI .= "\e[?2004l"
+" クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe {{{
+" TODO: nvim ではどうする？
+if &term =~# 'xterm' && !has('nvim')
+  let &t_ti .= "\e[?2004h"
+  let &t_te .= "\e[?2004l"
   let &pastetoggle = "\e[201~"
-  function XTermPasteBegin(ret)
-    set paste
+  function! XTermPasteBegin(ret) abort
+    setlocal paste
     return a:ret
   endfunction
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-endif
+  " mappings
+  noremap <special> <expr> <Esc>[200~ XTermPasteBegin('0i')
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin('')
+  cnoremap <special> <Esc>[200~ <nop>
+  cnoremap <special> <Esc>[201~ <nop>
+endif " }}}
 
 "-----------------------------------------------------------------------------
 " 検索関連
@@ -334,34 +336,13 @@ map <kMinus> <C-W>-
 "インデント操作後も選択範囲を保つ
 vnoremap > >gv
 vnoremap < <gv
-" Macのクリップボードにコピーする
+
+" C-c でMacのクリップボードにコピーする {{{
 if s:is_mac
   " 無名レジスタ""の内容をpbcopyに渡す
   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
 endif
+"}}}
 
-" インデントが同じかそれより深い範囲を選択する
-function! VisualCurrentIndentBlock()
-  let current_indent = indent('.')
-  let current_line   = line('.')
-  let current_col  = col('.')
-  let last_line    = line('$')
-
-  let start_line = current_line
-  let end_line = current_line
-  while start_line != 1 && ( current_indent <= indent(start_line - 1) || getline(start_line - 1) =~ '^\s*$' )
-    let start_line = start_line - 1
-  endwhile
-  while end_line != last_line && ( current_indent <= indent(end_line + 1) || getline(end_line + 1) =~ '^\s*$' )
-    let end_line = end_line + 1
-  endwhile
-
-  call cursor(start_line, current_col)
-  normal V
-  call cursor(end_line, current_col)
-endfunction
-
-nnoremap gi :call VisualCurrentIndentBlock()<CR>
-onoremap gi :normal gi<CR>
