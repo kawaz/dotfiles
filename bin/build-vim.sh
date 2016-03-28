@@ -17,13 +17,13 @@ install_vim_linux_yum() {
   else
     py3_ver=$(yum list python3\*-pip -q | grep -Eo '^python3[0-9]+' | sort | tail -n1)
     sudo yum install -y "${py3_ver}"-{pip,devel}
-    pip3=$(rpm -ql "${py3_ver}-pip" | grep -Eo '/bin/pip.*3.*' | head -n1)
+    pip3=$(rpm -ql "${py3_ver}-pip" | grep -Eo '^([/a-z]*)/bin/pip.*3.*' | head -n1)
     sudo "$pip3" install neovim --upgrade
   fi
   (
     cd "$(mktemp -d)" || exit 1
     trap "rm -rf $(printf %q "$(pwd)")" EXIT
-    git clone https://github.com/neovim/neovim.git
+    git clone --depth 1 https://github.com/neovim/neovim.git
     cd neovim
     make CMAKE_BUILD_TYPE=Release
     sudo make install
