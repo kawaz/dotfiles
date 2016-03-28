@@ -92,6 +92,17 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+  let g:airline_powerline_fonts=1
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+
+
+[[plugins]]
 # \r で即時実行
 repo = 'thinca/vim-quickrun'
 
@@ -227,7 +238,7 @@ hook_add = '''
     let g:syntastic_go_checkers = ['golint', 'gotype', 'govet', 'go']
   endif
   " TODO: キーマップはまだ確認してないので後でやる
-  " 関連ツールのチェック
+  " 関連ツールの雑なチェック
   if executable('go')
     for s:command in ['goimports', 'godef', 'golint', 'gocode', 'gotags', 'gorename']
       if !executable(s:command)
@@ -256,17 +267,6 @@ hook_add = '''
   let test#python#pytest#options = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
   let test#go#gotest#options     = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
 '''
-
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-hook_add = '''
-  let g:airline_powerline_fonts=1
-'''
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-depends = ['vim-airline-themes']
 
 [[plugins]] # tagsの凄い奴
 repo = 'majutsushi/tagbar'
