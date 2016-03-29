@@ -1,26 +1,13 @@
-" nocompatible {{{
-if !&compatible
-  set nocompatible
-endif " }}}
-
-" nvim special {{{
-if has('nvim')
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif "}}}
-
-" reset augroup {{{
+" dein.vimと使った典型的な初期化処理 {{{
+" 古臭いvi互換機能を無効化する
+if ! &compatible | set nocompatible | endif
+" nvim スペシャル設定
+if has('nvim') | let $NVIM_TUI_ENABLE_TRUE_COLOR=1 | endif
+ " Reset autocmd
 augroup MyAutoCmd
   autocmd!
-augroup END "}}}
-
-" OS判定変数 {{{
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
-" }}}
-
-" dein settings {{{
-" dein自体の自動インストール
+augroup END
+" dein.vim 自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -42,12 +29,114 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-filetype plugin indent on
-syntax enable
-set foldmethod=marker
+" 以下自分設定、プラグインは dein.toml を弄る {{{
 
+" OS判定用変数を定義{{{
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+" }}}
 
+filetype plugin indent on " これをonにしておかないとインデントやプラグインが上手く動かないので必須
+syntax on " シンタックスハイライトを有効化
+scriptencoding utf-8
+" 表示系
+set fileformats=unix,dos,mac " 改行コードの自動認識
+set ambiwidth=single " ■とか※とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
+set showmatch " 括弧入力時の対応する括弧を表示
+set foldmethod=marker " ファイルを開いた時にマーカーがフォルディングされた状態になるようにする
+set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
+set spelllang+=cjk " 日本語はスペルチェック対象から外す
+" 装飾系
+set number " 行番号を表示
+set cursorline " カーソル行の強調表示
+set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:% " 非表示文字を見えるようにする
+function! s:HilightUnnecessaryWhiteSpace() " 非表示文字をハイライト {{{
+  " on ColorScheme
+  highlight CopipeMissTab ctermbg=52 guibg=red
+  highlight CopipeMissEol ctermbg=52 guibg=red
+  highlight TabString ctermbg=52 guibg=red
+  highlight ZenkakuSpace ctermbg=52 guibg=red
+  " on VimEnter,WinEntercall
+  call matchadd("CopipeMissTab", '▸ ')
+  call matchadd("CopipeMissEol", '¬ *$')
+  " call matchadd("TabString", '\t')
+  call matchadd("ZenkakuSpace", '　')
+endfunction
+autocmd MyAutoCmd ColorScheme,VimEnter,WinEnter * call s:HilightUnnecessaryWhiteSpace() "}}}
+" 編集系
+set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
+set autoindent " オートインデントを有効化
+autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
+set softtabstop=2 " タブ幅を2タブスペースにする {{{
+set shiftwidth=2
+set tabstop=2
+set expandtab " }}}
+" 検索系
+set ignorecase " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
+set smartcase " 検索文字列に大文字が含まれている場合は区別して検索する
+set wrapscan " 検索時に最後まで行ったら最初に戻る
+set incsearch " 検索文字列入力時に順次対象文字列にヒットさる
+set hlsearch " 検索結果文字列のハイライトを有効にする
+set wildmode=list,full " コマンドラインウィンドウのTAB補完で一覧表示が出るようにする
+" 操作系
+set hidden " 編集のままバッファ切り替えができるようにする
+set mouse=a " マウスモード有効
+set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
+" クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe {{{
+if &term =~# 'xterm' && !has('nvim')
+  " TODO: nvim ではどうする？
+  let &t_ti .= "\e[?2004h"
+  let &t_te .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
+  function! XTermPasteBegin(ret) abort
+    setlocal paste
+    return a:ret
+  endfunction
+  " mappings
+  noremap <special> <expr> <Esc>[200~ XTermPasteBegin('0i')
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin('')
+  cnoremap <special> <Esc>[200~ <nop>
+  cnoremap <special> <Esc>[201~ <nop>
+endif " }}}
+" マップ定義 {{{
+" F2,F3でバッファ切り替え、F4でバッファ削除 {{{
+map <F2> <ESC>:bp<CR>
+map <F3> <ESC>:bn<CR>
+map <F4> <ESC>:bw<CR>
+" }}}
+" 表示行単位で行移動する {{{
+nnoremap j gj
+onoremap j gj
+xnoremap j gj
+nnoremap k gk
+onoremap k gk
+xnoremap k gk
+nnoremap <Down> gj
+onoremap <Down> gj
+xnoremap <Down> gj
+nnoremap <Up> gk
+onoremap <Up> gk
+xnoremap <Up> gk
+" }}}
+" C-a, C-eで行頭行末に移動する {{{
+inoremap <C-a> <ESC>^i
+inoremap <C-e> <ESC>$i
+" }}}
+" VISUALモードでインデント操作後に選択範囲を保つ {{{
+vnoremap > >gv
+vnoremap < <gv
+" }}}
+" " C-c でMacのクリップボードにコピーする {{{
+" if s:is_mac
+"   " 無名レジスタ""の内容をpbcopyに渡す
+"   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
+"   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
+"   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
+" endif " }}}
+" " }}} マップ定義
 
+" }}}
 
 " " ファイルタイプ関連
 " NeoBundle 'Markdown'
@@ -200,155 +289,18 @@ set foldmethod=marker
 "   endfunction
 "
 
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
-"if exists('&ambiwidth')
-"  set ambiwidth=double
-"endif
 
-"-----------------------------------------------------------------------------
-" 編集関連
-"
-"オートインデントする
-set autoindent
-"コメント行で改行すると次の行もコメントになってしまうのを防止する
-autocmd FileType * setlocal formatoptions-=ro
-"バイナリ編集(xxd)モード（vim -b での起動、もしくは *.bin で発動します）
-augroup BinaryXXD
-  autocmd!
-  autocmd BufReadPre  *.bin let &binary =1
-  autocmd BufReadPost * if &binary | silent %!xxd -g 1
-  autocmd BufReadPost * set ft=xxd | endif
-  autocmd BufWritePre * if &binary | %!xxd -r | endif
-  autocmd BufWritePost * if &binary | silent %!xxd -g 1
-  autocmd BufWritePost * set nomod | endif
-augroup END
 
-set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
-" set spell          " スペルチェック有効
-set spelllang+=cjk " 日本語をスペルチェックから外す
-set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
+" "バイナリ編集(xxd)モード（vim -b での起動、もしくは *.bin で発動します）
+" augroup BinaryXXD
+"   autocmd!
+"   autocmd BufReadPre  *.bin let &binary =1
+"   autocmd BufReadPost * if &binary | silent %!xxd -g 1
+"   autocmd BufReadPost * set ft=xxd | endif
+"   autocmd BufWritePre * if &binary | %!xxd -r | endif
+"   autocmd BufWritePost * if &binary | silent %!xxd -g 1
+"   autocmd BufWritePost * set nomod | endif
+" augroup END
 
-" クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe {{{
-" TODO: nvim ではどうする？
-if &term =~# 'xterm' && !has('nvim')
-  let &t_ti .= "\e[?2004h"
-  let &t_te .= "\e[?2004l"
-  let &pastetoggle = "\e[201~"
-  function! XTermPasteBegin(ret) abort
-    setlocal paste
-    return a:ret
-  endfunction
-  " mappings
-  noremap <special> <expr> <Esc>[200~ XTermPasteBegin('0i')
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin('')
-  cnoremap <special> <Esc>[200~ <nop>
-  cnoremap <special> <Esc>[201~ <nop>
-endif " }}}
 
-"-----------------------------------------------------------------------------
-" 検索関連
-"
-"検索文字列が小文字の場合は大文字小文字を区別なく検索する
-set ignorecase
-"検索文字列に大文字が含まれている場合は区別して検索する
-set smartcase
-"検索時に最後まで行ったら最初に戻る
-set wrapscan
-"検索文字列入力時に順次対象文字列にヒットさる
-set incsearch
-
-"-----------------------------------------------------------------------------
-" 装飾関連
-"
-"シンタックスハイライトを有効にする
-syntax on
-"編集のままバッファ切り替えができるようにする
-set hidden
-"行番号を表示しない
-set nonumber
-"カーソル行の強調表示
-set cursorline
-"非表示文字をハイライト
-scriptencoding utf-8
-function! HilightUnnecessaryWhiteSpace()
-  " on ColorScheme
-  highlight CopipeMissTab ctermbg=52 guibg=red
-  highlight CopipeMissEol ctermbg=52 guibg=red
-  highlight TabString ctermbg=52 guibg=red
-  highlight ZenkakuSpace ctermbg=52 guibg=red
-  " on VimEnter,WinEntercall
-  call matchadd("CopipeMissTab", '▸ ')
-  call matchadd("CopipeMissEol", '¬ *$')
-  " call matchadd("TabString", '\t')
-  call matchadd("ZenkakuSpace", '　')
-endfunction
-autocmd ColorScheme,VimEnter,WinEnter * call HilightUnnecessaryWhiteSpace()
-" 非表示文字を見えるようにする
-set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:%
-"タブ幅を設定する
-set softtabstop=2
-set shiftwidth=2
-set tabstop=2
-set expandtab
-"入力中のコマンドをステータスに表示する
-set showcmd
-"括弧入力時の対応する括弧を表示
-set showmatch
-"検索結果文字列のハイライトを有効にする
-set hlsearch
-"ステータスラインを常に表示
-" set laststatus=2
-"ステータスラインに文字コードと改行文字を表示する
-" set statusline=%<%f\ %m%=\ %{&ai?'[>]':''}%m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}\ %l,%c\ %P
-
-"-----------------------------------------------------------------------------
-" マウス関連
-"
-if exists('&mouse')
-  set mouse=a " マウスモード有効
-endif
-
-"-----------------------------------------------------------------------------
-" マップ定義
-"
-"バッファ移動用キーマップ
-" F2: 前のバッファ
-" F3: 次のバッファ
-" F4: バッファ削除
-map <F2> <ESC>:bp<CR>
-map <F3> <ESC>:bn<CR>
-map <F4> <ESC>:bw<CR>
-"表示行単位で行移動する
-nnoremap j gj
-onoremap j gj
-xnoremap j gj
-nnoremap k gk
-onoremap k gk
-xnoremap k gk
-nnoremap <Down> gj
-onoremap <Down> gj
-xnoremap <Down> gj
-nnoremap <Up> gk
-onoremap <Up> gk
-xnoremap <Up> gk
-" C-a, C-eで行頭行末に移動する
-inoremap <C-a> <ESC>^i
-inoremap <C-e> <ESC>$i
-"フレームサイズを怠惰に変更する
-map <kPlus> <C-W>+
-map <kMinus> <C-W>-
-"インデント操作後も選択範囲を保つ
-vnoremap > >gv
-vnoremap < <gv
-
-" C-c でMacのクリップボードにコピーする {{{
-if s:is_mac
-  " 無名レジスタ""の内容をpbcopyに渡す
-  nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
-  " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
-  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
-endif
-"}}}
 
