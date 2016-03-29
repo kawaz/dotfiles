@@ -10,13 +10,15 @@ install_vim_mac() {
 }
 
 install_vim_linux_yum() {
-  sudo yum groups install -y 'Development tools'
+  if ! sudo yum groups install -y 'Development tools'; then
+    sudo yum groups install -y 'Development Tools'
+  fi
   sudo yum install -y cmake
   if type -p pip3 2>/dev/null; then
     pip3=pip3
   else
     py3_ver=$(yum list python3\*-devel -q | grep -Eo '^python3[0-9]+' | sort | tail -n1)
-    [[ -z $python3 ]] && return 1
+    [[ -z $py3_ver ]] && return 1
     sudo yum install -y "${py3_ver}"-devel
     if yum list "${py3_ver}-pip" >/dev/null 2>&1; then
       sudo yum install -y "${py3_ver}"-pip
