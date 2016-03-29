@@ -90,16 +90,28 @@ hook_add = '''
   set background=dark
   " カラースキーマの適用はsource後じゃないといけないので遅延セット
   autocmd MyAutoCmd VimEnter * colorscheme hybrid
+  " colorscheme設定後のタイミングで実行したいがhook_addの実行が順不同なのでhybridの方でも実行する
+  autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
 
 [[plugins]] # ステータスラインを手軽にかっこ良くする(フォントパッチ必要)
-repo = 'vim-airline/vim-airline'
-depends = ['vim-airline-themes']
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
+repo = 'itchyny/lightline.vim'
+depends = ['vim-hybrid']
 hook_add = '''
-  let g:airline_powerline_fonts=1
+  " lightlineがあればshowmodeは不用
+  set noshowmode
+  " プラグインで入るカラースキーマはdeinのステートキャッシュの実行タイミングの問題でうまく動かないのでlightlineには渡さず後で#colorscheme()を実行してパレットを適用させる
+  let g:lightline = {
+        \ '_colorscheme': 'hybrid',
+        \ 'component': {
+        \   'readonly': '%{&filetype=="help"?"":&readonly?"\ue0a2":""}',
+        \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+        \ },
+        \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+        \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+        \ }
+  " colorscheme設定後のタイミングで実行したいがhook_addの実行が順不同なのでhybridの方でも実行する
+  autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
 
 [[plugins]] # \r で即時実行
