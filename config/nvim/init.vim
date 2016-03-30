@@ -124,6 +124,7 @@ inoremap <C-a> <ESC>^i
 inoremap <C-e> <ESC>$i
 " }}}
 " VISUALモードでインデント操作後に選択範囲を保つ {{{
+vnoremap = =gv
 vnoremap > >gv
 vnoremap < <gv
 " }}}
