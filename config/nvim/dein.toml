@@ -87,25 +87,28 @@ hook_add = '''
 
 [[plugins]] # ステータスラインを手軽にかっこ良くする(要フォントパッチ)
 repo = 'itchyny/lightline.vim'
-depends = ['vim-hybrid']
 hook_add = '''
   " lightlineがあればshowmodeは不用なので消す
   set noshowmode
   " フォントパッチが何種類かあるのでコードでメモ
   let s:powerfonts = {
-        \ 'powerline':     { 'left':"\ue0b0", 'leftsub':"\ue0b0", 'right':"\ue0b2", 'rightsub':"\ue0b2", 'readonly':"\ue0a2", 'branch':"\ue0a0", 'linecolumn':"\ue0a1" },
-        \ 'vim-powerline': { 'left':"\u2b80", 'leftsub':"\u2b81", 'right':"\u2b82", 'rightsub':"\u2b83", 'readonly':"\u2b64", 'branch':"\u2b60", 'linecolumn':"\u2b81" }
+        \ 'powerline':     { 'left':"\ue0b0", 'leftsub':"\ue0b1", 'right':"\ue0b2", 'rightsub':"\ue0b3", 'branch':"\ue0a0", 'linecolumn':"\ue0a1", 'readonly':"\ue0a2" },
+        \ 'vim-powerline': { 'left':"\u2b80", 'leftsub':"\u2b81", 'right':"\u2b82", 'rightsub':"\u2b83", 'branch':"\u2b60", 'linecolumn':"\u2b81", 'readonly':"\u2b64" }
         \ }
   " Patched fonts for Powerline https://github.com/powerline/fonts
   let s:powerfont = s:powerfonts['powerline']
+  " TODO: syntastic, ctrlpmark, unite, vimshell, vimfiler, ...対応
+  " TODO: winwidth(0) を見てレスポンシブ対応
+  " TODO: gitのahead/behind数表示
   let g:lightline = {
-        \ 'colorscheme': 'default',
+        \ 'colorscheme': 'wombat',
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+        \             [ 'fugitive', 'gitgutter', 'readonly', 'filename', 'modified' ] ]
         \ },
         \ 'component_function': {
         \   'fugitive': 'LightLineFugitive',
+        \   'gitgutter': 'LightLineGitgutter',
         \   'readonly': 'LightLineReadonly',
         \   'modified': 'LightLineModified'
         \ },
@@ -114,11 +117,35 @@ hook_add = '''
         \ }
   " gitブランチ表示
   function! LightLineFugitive()
-    if &ft !~? 'help\|vimfiler\|gundo' && exists("*fugitive#head")
-      let _ = fugitive#head()
-      return strlen(_) ? s:powerfont.branch . _ : ''
-    endif
+    try
+      if &ft !~? 'help\|vimfiler\|gundo' && exists("*fugitive#head")
+        let _ = fugitive#head()
+        return strlen(_) ? s:powerfont.branch .' '. _ : ''
+      endif
+    catch
+    endtry
     return ''
+  endfunction
+  " gitハンク表示
+  function! LightLineGitgutter()
+    if ! exists('*GitGutterGetHunkSummary')
+          \ || ! get(g:, 'gitgutter_enabled', 0)
+          \ || winwidth('.') <= 90
+      return ''
+    endif
+    let symbols = [
+          \ g:gitgutter_sign_added,
+          \ g:gitgutter_sign_modified,
+          \ g:gitgutter_sign_removed
+          \ ]
+    let hunks = GitGutterGetHunkSummary()
+    let ret = []
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(ret, symbols[i] . hunks[i])
+      endif
+    endfor
+    return join(ret, ' ')
   endfunction
   " 読込み専用マーク
   function! LightLineReadonly()
