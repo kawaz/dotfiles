@@ -31,12 +31,6 @@ endif
 
 " 以下自分設定、プラグインは dein.toml を弄る {{{
 
-" OS判定用変数を定義{{{
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows && !s:is_cygwin && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
-" }}}
-
 filetype plugin indent on " これをonにしておかないとインデントやプラグインが上手く動かないので必須
 syntax on " シンタックスハイライトを有効化
 scriptencoding utf-8
@@ -85,7 +79,7 @@ set mouse=a " マウスモード有効
 set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
 " クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe {{{
 if &term =~# 'xterm' && !has('nvim')
-  " TODO: nvim ではどうする？
+  " nvim は何もしなくても自動でpaste/nopasteしてくれるっぽい？
   let &t_ti .= "\e[?2004h"
   let &t_te .= "\e[?2004l"
   let &pastetoggle = "\e[201~"
@@ -128,14 +122,14 @@ vnoremap = =gv
 vnoremap > >gv
 vnoremap < <gv
 " }}}
-" " C-c でMacのクリップボードにコピーする {{{
-" if s:is_mac
-"   " 無名レジスタ""の内容をpbcopyに渡す
-"   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
-"   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
-"   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
-" endif " }}}
-" " }}} マップ定義
+" C-c でMacのクリップボードにコピーする {{{
+if dein#util#_is_mac()
+  " 無名レジスタ""の内容をpbcopyに渡す
+  nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
+  " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
+  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
+endif " }}}
+" }}} マップ定義
 
 " }}}
 
