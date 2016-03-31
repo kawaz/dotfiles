@@ -7,15 +7,6 @@ depends = ['Shougo/context_filetype.vim']
 
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
-hook_add = '''
-  if !exists('g:context_filetype#filetypes')
-    let g:context_filetype#filetypes = {}
-  endif
-  " dein.toml編集用
-  let g:context_filetype#filetypes['toml'] = [
-    \ {'filetype':'vim', 'start':'^\s*hook_\(add\|source\|post_source\)\s*=\s*\('.'""'.'"'.'\|'."''"."'".'\)', 'end':'\2'},
-    \ ]
-'''
 
 [[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時のみ必要。
 repo = 'kana/vim-textobj-user'
