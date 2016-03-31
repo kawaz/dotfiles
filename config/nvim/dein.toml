@@ -102,7 +102,7 @@ hook_add = '''
   set noshowmode
   " プラグインで入るカラースキーマはdeinのステートキャッシュの実行タイミングの問題でうまく動かないのでlightlineには渡さず後で#colorscheme()を実行してパレットを適用させる
   let g:lightline = {
-        \ '_colorscheme': 'hybrid',
+        \ 'colorscheme': 'default',
         \ 'component': {
         \   'readonly': '%{&filetype=="help"?"":&readonly?"\ue0a2":""}',
         \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
