@@ -94,22 +94,49 @@ hook_add = '''
   autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
 
-[[plugins]] # ステータスラインを手軽にかっこ良くする(フォントパッチ必要)
+[[plugins]] # ステータスラインを手軽にかっこ良くする(要フォントパッチ)
 repo = 'itchyny/lightline.vim'
 depends = ['vim-hybrid']
 hook_add = '''
-  " lightlineがあればshowmodeは不用
+  " lightlineがあればshowmodeは不用なので消す
   set noshowmode
-  " プラグインで入るカラースキーマはdeinのステートキャッシュの実行タイミングの問題でうまく動かないのでlightlineには渡さず後で#colorscheme()を実行してパレットを適用させる
+  " フォントパッチが何種類かあるのでコードでメモ
+  let s:powerfonts = {
+        \ 'powerline':     { 'left':"\ue0b0", 'leftsub':"\ue0b0", 'right':"\ue0b2", 'rightsub':"\ue0b2", 'readonly':"\ue0a2", 'branch':"\ue0a0", 'linecolumn':"\ue0a1" },
+        \ 'vim-powerline': { 'left':"\u2b80", 'leftsub':"\u2b81", 'right':"\u2b82", 'rightsub':"\u2b83", 'readonly':"\u2b64", 'branch':"\u2b60", 'linecolumn':"\u2b81" }
+        \ }
+  " Patched fonts for Powerline https://github.com/powerline/fonts
+  let s:powerfont = s:powerfonts['powerline']
   let g:lightline = {
         \ 'colorscheme': 'default',
-        \ 'component': {
-        \   'readonly': '%{&filetype=="help"?"":&readonly?"\ue0a2":""}',
-        \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
         \ },
-        \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-        \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+        \ 'component_function': {
+        \   'fugitive': 'LightLineFugitive',
+        \   'readonly': 'LightLineReadonly',
+        \   'modified': 'LightLineModified'
+        \ },
+        \ 'separator': { 'left': s:powerfont.left, 'right': s:powerfont.right },
+        \ 'subseparator': { 'left': s:powerfont.leftsub, 'right': s:powerfont.rightsub }
         \ }
+  " gitブランチ表示
+  function! LightLineFugitive()
+    if &ft !~? 'help\|vimfiler\|gundo' && exists("*fugitive#head")
+      let _ = fugitive#head()
+      return strlen(_) ? s:powerfont.branch . _ : ''
+    endif
+    return ''
+  endfunction
+  " 読込み専用マーク
+  function! LightLineReadonly()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &readonly ? s:powerfont.readonly : ''
+  endfunction
+  " 編集マーク
+  function! LightLineModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
   " colorscheme設定後のタイミングで実行したいがhook_addの実行が順不同なのでhybridの方でも実行する
   autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
