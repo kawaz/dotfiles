@@ -134,13 +134,6 @@ endif " }}}
 
 " }}}
 
-" " ファイルタイプ関連
-" NeoBundle 'Markdown'
-" NeoBundle 'pangloss/vim-javascript'
-" NeoBundle 'mxw/vim-jsx'
-"
-" NeoBundle 'sgur/vim-gf-autoload', {'depends': ['kana/vim-gf-user']}
-"
 " " 補完の凄いやつ
 " NeoBundle 'Shougo/neocomplete'
 "   " Disable AutoComplPop.
@@ -256,47 +249,3 @@ endif " }}}
 "   echo "install getool..."
 "   call system("go get -u github.com/garyburd/go-explorer/src/getool")
 " endif
-"
-"
-"
-" " gitが捗る http://d.hatena.ne.jp/cohama/20130517/1368806202
-" NeoBundle 'gregsexton/gitv', {'depends': ['tpope/vim-fugitive']}
-"   " gitvバッファ専用設定
-"   autocmd FileType gitv call s:my_gitv_settings()
-"   function! s:my_gitv_settings()
-"     " t でdiffのフォルディングを開閉
-"     nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
-"     " git操作を簡単にするmap
-"     nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
-"     nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
-"     nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
-"     nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
-"   endfunction
-"   " gitバッファのフォルディングをトグルする関数
-"   autocmd FileType git setlocal nofoldenable foldlevel=0
-"   function! s:toggle_git_folding()
-"     if &filetype ==# 'git'
-"       setlocal foldenable!
-"     endif
-"   endfunction
-"   " gitvバッファでカレント行のハッシュ値を取得する関数
-"   function! s:gitv_get_current_hash()
-"     return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
-"   endfunction
-"
-
-
-
-" "バイナリ編集(xxd)モード（vim -b での起動、もしくは *.bin で発動します）
-" augroup BinaryXXD
-"   autocmd!
-"   autocmd BufReadPre  *.bin let &binary =1
-"   autocmd BufReadPost * if &binary | silent %!xxd -g 1
-"   autocmd BufReadPost * set ft=xxd | endif
-"   autocmd BufWritePre * if &binary | %!xxd -r | endif
-"   autocmd BufWritePost * if &binary | silent %!xxd -g 1
-"   autocmd BufWritePost * set nomod | endif
-" augroup END
-
-
-
