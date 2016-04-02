@@ -72,7 +72,8 @@ set smartcase " 検索文字列に大文字が含まれている場合は区別�
 set wrapscan " 検索時に最後まで行ったら最初に戻る
 set incsearch " 検索文字列入力時に順次対象文字列にヒットさる
 set hlsearch " 検索結果文字列のハイライトを有効にする
-set wildmode=list,full " コマンドラインウィンドウのTAB補完で一覧表示が出るようにする
+set wildmenu " コマンドラインウィンドウの補完強化。候補の順番表示で横スクロールメニューみたいなのが表示されるようになるやつ。
+set wildmode=longest,list,full " コマンドラインウィンドウのTAB補完で最長一致まで保管した後、一覧表示して、更に順番に選択出来るようにする
 " 操作系
 set hidden " 編集のままバッファ切り替えができるようにする
 set mouse=a " マウスモード有効
