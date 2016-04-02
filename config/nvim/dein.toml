@@ -374,3 +374,12 @@ hook_add = '''
   let g:neomake_open_list = 1
   " autocmd VimEnter,BufWritePost * Neomake
 '''
+
+[[plugins]]
+repo = 'tyru/vim-altercmd'
+hook_add = '''
+  " 使うには初期化処理が必要
+  call altercmd#load()
+  " helpを横分割で右側に開く
+  CAlterCommand h[elp] vertical belowright help
+'''
