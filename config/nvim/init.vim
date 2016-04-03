@@ -117,6 +117,8 @@ xnoremap <Up> gk
 " C-a, C-eで行頭行末に移動する {{{
 inoremap <C-a> <ESC>^i
 inoremap <C-e> <ESC>$i
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 " }}}
 " VISUALモードでインデント操作後に選択範囲を保つ {{{
 vnoremap = =gv
