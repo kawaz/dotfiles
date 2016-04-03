@@ -176,6 +176,12 @@ repo = 'airblade/vim-gitgutter'
 hook_add = '''
   let g:gitgutter_sign_modified = 'M'
   let g:gitgutter_max_signs = 5000
+  " カレント行のhunkについて diff/add/reset を行うマップを追加
+  nmap <Leader>hs <Plug>GitGutterStageHunk
+  nmap <Leader>ha <Plug>GitGutterStageHunk
+  nmap <Leader>hr <Plug>GitGutterRevertHunk
+  nmap <Leader>hp <Plug>GitGutterPreviewHunk
+  nmap <Leader>hd <Plug>GitGutterPreviewHunk
 '''
 
 [[plugins]] # GstatusとかGblameとかvim内でgit操作が出来る。あとgitcommitモードのmodifiedとかの行でEnterするとファイルに飛べたりする
