@@ -68,11 +68,6 @@ hook_add_ = '''
 '''
 
 
-
-[[plugins]]
-# %S/// でpreg正規表現を使えるように
-repo = 'othree/eregex.vim'
-
 [[plugins]] # カラースキーマ
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
