@@ -68,10 +68,10 @@ sh-escape() {
   echo "${a[*]}"
 }
 
-# 一時作業用コマンド
+# 一時作業用コマンド http://bit.ly/22GF66y
 tmpspace() {
   (
-  d=$(mktemp -d) && cd "$d" || exit 1
+  d=$(mktemp -d "${TMPDIR:-/tmp}/${1:-tmpspace}.XXXXXXXXXX") && cd "$d" || exit 1
   "$SHELL"
   s=$?
   if [[ $s == 0 ]]; then
@@ -82,6 +82,8 @@ tmpspace() {
   exit $s
   )
 }
+# typoで補完が出てこないのもストレスなのでaliasも作っておくことにした
+alias tempspace=tmpspace
 
 # history関連 http://bit.ly/JLIvj9
 HISTTIMEFORMAT='%Y-%m-%dT%T%z '
