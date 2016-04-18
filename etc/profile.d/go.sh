@@ -1,9 +1,14 @@
 # bash
 
-# brew install go されたMac用
-if [[ -d /usr/local/opt/go/libexec ]]; then
-  [[ -d ~/.gopath ]] || mkdir -p ~/.gopath
-  export GOROOT=/usr/local/opt/go/libexec
-  export GOPATH=~/.gopath
-  export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+# brew install go されたMac用にPATHを通す
+if [[ -d /usr/local/opt/go/libexec/bin && ":$PATH:" != *":/usr/local/opt/go/libexec/bin:"* ]]; then
+  export PATH=$PATH:/usr/local/opt/go/libexec/bin
+fi
+
+if [[ -z $GOPATH ]] && type -p go >/dev/null; then
+  export GOPATH="${XDG_DATA_HOME:-~/.local/share}/gopath"
+fi
+
+if [[ -n $GOPATH && ":$PATH:" != *":$GOPATH/bin:"* ]]; then
+  export PATH="$PATH:$GOPATH/bin"
 fi
