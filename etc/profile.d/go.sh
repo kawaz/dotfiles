@@ -1,9 +1,13 @@
 # bash
 
-# brew install go されたMac用にPATHを通す
-if [[ -d /usr/local/opt/go/libexec/bin && ":$PATH:" != *":/usr/local/opt/go/libexec/bin:"* ]]; then
-  export PATH=$PATH:/usr/local/opt/go/libexec/bin
-fi
+for GOROOT in /usr/local/opt/go/libexec "${XDG_DATA_HOME:-~/.local/share}/go"; do
+  echo $GOROOT
+  if [[ -d $GOROOT && ":$PATH:" != *":$GOROOT/bin:"* ]]; then
+    export PATH=$PATH:$GOROOT/bin
+    break
+  fi
+done
+unset GOROOT
 
 if [[ -z $GOPATH ]] && type -p go >/dev/null; then
   export GOPATH="${XDG_DATA_HOME:-~/.local/share}/gopath"
