@@ -282,7 +282,7 @@ hook_add = '''
 [[plugins]]
 repo = 'fatih/vim-go'
 on_ft = ['go']
-hook_add = '''
+hook_post_source = '''
   " MEMO: gocode set autobuild true を実行しておくとvendor内のライブラリ補完もできるようになる
   let g:go_fmt_command = 'goimports'
   let g:go_highlight_functions = 1
