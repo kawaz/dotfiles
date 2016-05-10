@@ -31,7 +31,7 @@ hook_add = '''
   inoremap <expr><DOWN> pumvisible() ? "\<C-n>" : "<DOWN>"
   " python3が無かったらメッセージを表示
   if has('nvim') && !has('python3')
-    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9"
+    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9 or execute 'pip3 install neovim --upgrade' and :call dein#update()"
   endif
 '''
 
