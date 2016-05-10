@@ -70,18 +70,19 @@ hook_add_ = '''
 
 [[plugins]] # カラースキーマ
 repo = 'w0ng/vim-hybrid'
+on_event = ['VimEnter'] # 非lazyプラグインだとhook_post_sourceが使えないのでなんちゃってlazy化
+hook_post_source = 'colorscheme hybrid' # colorschemeの設定はsource後に行う
 hook_add = '''
   let g:hybrid_custom_term_colors = 1
   let g:hybrid_reduced_contrast = 1
   set background=dark
-  " カラースキーマの適用はsource後じゃないといけないので遅延セット
-  autocmd MyAutoCmd VimEnter * colorscheme hybrid
-  " colorscheme設定後のタイミングで実行したいがhook_addの実行が順不同なのでhybridの方でも実行する
-  autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
 
 [[plugins]] # ステータスラインを手軽にかっこ良くする(要フォントパッチ)
 repo = 'itchyny/lightline.vim'
+depends = ['vim-hybrid']
+on_event = ['VimEnter'] # 非lazyプラグインだとdependsとhook_post_sourceが効かないので似非lazy化
+hook_post_source = 'call lightline#colorscheme()' # colorschemeの設定前にaddされると初期化が不十分になるので、colorscheme後に初期化
 hook_add = '''
   " lightlineがあればshowmodeは不用なので消す
   set noshowmode
@@ -150,8 +151,6 @@ hook_add = '''
   function! LightLineModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
   endfunction
-  " colorscheme設定後のタイミングで実行したいがhook_addの実行が順不同なのでhybridの方でも実行する
-  autocmd MyAutoCmd VimEnter * call lightline#colorscheme()
 '''
 
 [[plugins]] # \r で即時実行
