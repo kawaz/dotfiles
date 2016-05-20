@@ -62,6 +62,7 @@ autocmd MyAutoCmd ColorScheme,VimEnter,WinEnter * call s:HilightUnnecessaryWhite
 set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
 set autoindent " オートインデントを有効化
 autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
+autocmd InsertLeave * set nopaste "インサートモードを抜けたら自動でPASTEモードを抜ける
 set softtabstop=2 " タブ幅を2タブスペースにする {{{
 set shiftwidth=2
 set tabstop=2
