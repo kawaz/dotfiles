@@ -101,6 +101,8 @@ map <F2> <ESC>:bp<CR>
 map <F3> <ESC>:bn<CR>
 map <F4> <ESC>:bw<CR>
 " }}}
+" 削除キーでyankしない
+nnoremap x "_x
 " 表示行単位で行移動する {{{
 nnoremap j gj
 onoremap j gj
