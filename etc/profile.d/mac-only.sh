@@ -18,3 +18,7 @@ if type boot2docker >/dev/null 2>&1; then
   export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2375
 fi
 
+# awscli completion
+if [[ -x /usr/local/bin/aws_completer ]]; then
+  complete -C '/usr/local/bin/aws_completer' aws
+fi
