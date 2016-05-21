@@ -15,11 +15,17 @@
   open = browse
 [core]
   autocrlf = false
+[merge]
+  ff = false
+[pull]
+  ff = only
 [push]
   default = simple
 [rebase]
-	autostash = true
-	autosquash = true
+  # rebase時に作業中のファイルがあればでその前後で stash / stash pop を自動で実行させる。これは pull にも効く。
+  autostash = true
+  # --fixupとか--squashされたcommitがrebase -iの時に自動でsquashされるようにする
+  autosquash = true
 [github]
   user = kawaz
 [tig "bind"]
@@ -33,8 +39,8 @@
 
 # sourcetree
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
