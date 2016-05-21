@@ -15,6 +15,10 @@
   open = browse
 [core]
   autocrlf = false
+[merge]
+	ff = false
+[pull]
+	ff = only
 [push]
   default = simple
 [rebase]
