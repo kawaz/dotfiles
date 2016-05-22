@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mac以外では無視
-[[ $OSTYPE == darwin* ]] && return
+[[ $OSTYPE == darwin* ]] || return
 
 # shellcheck disable=SC2155,SC1090
 {
