@@ -46,19 +46,34 @@ let g:is_bash=1 " shebangが無い時のshのsyntaxをbashモードにする（�
 set number " 行番号を表示
 set cursorline " カーソル行の強調表示
 set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:% " 非表示文字を見えるようにする
-function! s:HilightUnnecessaryWhiteSpace() " 非表示文字をハイライト {{{
-  " on ColorScheme
-  highlight CopipeMissTab ctermbg=52 guibg=red
-  highlight CopipeMissEol ctermbg=52 guibg=red
-  highlight TabString ctermbg=52 guibg=red
-  highlight ZenkakuSpace ctermbg=52 guibg=red
-  " on VimEnter,WinEntercall
-  call matchadd("CopipeMissTab", '▸ ')
-  call matchadd("CopipeMissEol", '¬ *$')
-  " call matchadd("TabString", '\t')
-  call matchadd("ZenkakuSpace", '　')
-endfunction
-autocmd MyAutoCmd ColorScheme,VimEnter,WinEnter * call s:HilightUnnecessaryWhiteSpace() "}}}
+" 注意すべき文字をハイライト {{{
+" listcharsを個別に取り出してmagicモードの正規表現で只の文字になるようエスケープ
+let s:lcs_tab   = escape(matchstr(&listchars, 'tab:\zs[^,]\{2\}'), '\.*^$[]~')
+let s:lcs_trail = escape(matchstr(&listchars, 'trail:\zs.'), '\.*^$[]~')
+let s:lcs_eol   = escape(matchstr(&listchars, 'eol:\zs.'), '\.*^$[]~')
+" listchars文字のコピペミス(trail,eol)
+au MyAutoCmd Syntax * hi link MyHi_CopipeMissEol Error
+if !empty(s:lcs_eol)
+  au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissEol", (empty(s:lcs_trail)?'':s:lcs_trail.'*').s:lcs_eol.'\s*$')
+endif
+" listchars文字のコピペミス(tab)
+au MyAutoCmd Syntax * hi link MyHi_CopipeMissTab Error
+if !empty(s:lcs_tab)
+  au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissTab", s:lcs_tab.'*')
+endif
+" 空白とTABの混合(表示自体はlistcharsのtabに任せる)
+au MyAutoCmd Syntax * hi link MyHi_MixedTabSpace WarningMsg
+au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_MixedTabSpace", '\%(\t \| \t\)')
+" 行末スペース(表示はlistcharsのtrailに任せる)
+au MyAutoCmd Syntax * hi link MyHi_TrailSpace WarningMsg
+au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_TrailSpace", '\s\+$')
+" 全角空白(表示自体は全角空白が可視化されてるRictyフォントとかをって対応)
+au MyAutoCmd Syntax * hi link MyHi_ZenkakuSpace WarningMsg
+au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
+" FIXME 改行なしのEOF(表示自体ははlistcharsのeolに任せる)
+" au MyAutoCmd Syntax * hi link MyHi_EofWithoutNL WarningMsg
+" au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_EofWithoutNL", '[^\n]\zs\%$')
+"}}}
 " 編集系
 set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
 set autoindent " オートインデントを有効化
@@ -136,6 +151,9 @@ if dein#util#_is_mac()
   " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
 endif " }}}
+" help を q で閉じる
+au MyAutoCmd FileType help nmap q :bw<CR>
+
 " }}} マップ定義
 
 " }}}
