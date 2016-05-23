@@ -190,6 +190,9 @@ hook_add = '''
   vmap <C-_> <Plug>(caw:i:toggle)gv
 '''
 
+[[plugins]]
+# :Capture syn とかすると出力をバッファに入れることが出来る
+repo = 'tyru/capture.vim'
 
 [[plugins]]
 # gx でカーソル位置のURLや単語をブラウザで開くorググる
