@@ -375,9 +375,13 @@ hook_add = '''
   let g:syntastic_warning_symbol='⚠'
   let g:syntastic_style_error_symbol = '✗'
   let g:syntastic_style_warning_symbol = '⚠'
+  " debug系
   let g:syntastic_debug = 0
   let g:syntastic_debug_file = '~/syntastic.log'
-  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
+  " shellcheckの引数メモ
+  " -x      : 変数未定義のチェックなどでsource先ファイルも考慮するようにする
+  " -s basa : shebang が無い場合のデフォルトをbashモードにする
+  let g:syntastic_sh_shellcheck_args = '-x -s bash'
 '''
 
 [[plugins]]
