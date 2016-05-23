@@ -377,7 +377,12 @@ hook_add = '''
   let g:syntastic_style_warning_symbol = '⚠'
   " debug系
   let g:syntastic_debug = 0
-  let g:syntastic_debug_file = '~/syntastic.log'
+  let g:syntastic_debug_file = expand('$TMPDIR/syntastic.log')
+  function! s:SyntasticDebugToggle()
+    let g:syntastic_debug = !g:syntastic_debug
+    echo (g:syntastic_debug ? '🔔  Enabled' : '🔕a Disabled').': ' . g:syntastic_debug_file
+  endfunction
+  command! SyntasticDebugToggle :call s:SyntasticDebugToggle()
   " shellcheckの引数メモ
   " -x      : 変数未定義のチェックなどでsource先ファイルも考慮するようにする
   " -s basa : shebang が無い場合のデフォルトをbashモードにする
