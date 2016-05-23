@@ -41,6 +41,7 @@ set showmatch " 括弧入力時の対応する括弧を表示
 set foldmethod=marker " ファイルを開いた時にマーカーがフォルディングされた状態になるようにする
 set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
 set spelllang+=cjk " 日本語はスペルチェック対象から外す
+let g:is_bash=1 " shebangが無い時のshのsyntaxをbashモードにする（デフォだとshになってしまう）
 " 装飾系
 set number " 行番号を表示
 set cursorline " カーソル行の強調表示
