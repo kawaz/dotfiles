@@ -190,6 +190,9 @@ hook_add = '''
   vmap <C-_> <Plug>(caw:i:toggle)gv
 '''
 
+[[plugins]]
+# :Capture syn とかすると出力をバッファに入れることが出来る
+repo = 'tyru/capture.vim'
 
 [[plugins]]
 # gx でカーソル位置のURLや単語をブラウザで開くorググる
@@ -228,7 +231,7 @@ depends = ['vim-racer']
 ## toml
 [[plugins]]
 repo = 'cespare/vim-toml'
-on_ft = 'toml'
+on_ft = ['toml']
 
 
 ##  markdown
@@ -375,9 +378,18 @@ hook_add = '''
   let g:syntastic_warning_symbol='⚠'
   let g:syntastic_style_error_symbol = '✗'
   let g:syntastic_style_warning_symbol = '⚠'
+  " debug系
   let g:syntastic_debug = 0
-  let g:syntastic_debug_file = '~/syntastic.log'
-  let g:syntastic_sh_shellcheck_args = '-e SC1008,SC1091'
+  let g:syntastic_debug_file = expand('$TMPDIR/syntastic.log')
+  function! s:SyntasticDebugToggle()
+    let g:syntastic_debug = !g:syntastic_debug
+    echo (g:syntastic_debug ? '🔔  Enabled' : '🔕a Disabled').': ' . g:syntastic_debug_file
+  endfunction
+  command! SyntasticDebugToggle :call s:SyntasticDebugToggle()
+  " shellcheckの引数メモ
+  " -x      : 変数未定義のチェックなどでsource先ファイルも考慮するようにする
+  " -s basa : shebang が無い場合のデフォルトをbashモードにする
+  let g:syntastic_sh_shellcheck_args = '-x -s bash'
 '''
 
 [[plugins]]
