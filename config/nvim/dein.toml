@@ -228,7 +228,7 @@ depends = ['vim-racer']
 ## toml
 [[plugins]]
 repo = 'cespare/vim-toml'
-on_ft = 'toml'
+on_ft = ['toml']
 
 
 ##  markdown
