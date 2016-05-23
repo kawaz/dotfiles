@@ -83,6 +83,7 @@ set softtabstop=2 " タブ幅を2タブスペースにする {{{
 set shiftwidth=2
 set tabstop=2
 set expandtab " }}}
+set updatetime=1000 " syntasticやgitgutterの更新反映時間を短くする(default:4000
 " 検索系
 set ignorecase " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
 set smartcase " 検索文字列に大文字が含まれている場合は区別して検索する
