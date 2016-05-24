@@ -90,12 +90,6 @@ tmpspace() {
 # typoで補完が出てこないのもストレスなのでaliasも作っておくことにした
 alias tempspace=tmpspace
 
-# history関連 http://bit.ly/JLIvj9
-HISTTIMEFORMAT='%Y-%m-%dT%T%z '
-HISTSIZE=50000
-HISTFILESIZE=-1
-HISTIGNORE=""
-
 #
 inject_current_terminal() {
   local keyseq=$*

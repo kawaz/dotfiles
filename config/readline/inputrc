@@ -17,3 +17,8 @@
 # Alt + 左右 でワード移動出来るようにする(iTerm2 on Mac)
 "\e[1;3D": backward-word
 "\e[1;3C": forward-word
+
+$if Bash
+  # C-^ で $DOTFILES_DIR/ が入力されるようにする
+  "\C-^": '$DOTFILES_DIR/'
+$endif
