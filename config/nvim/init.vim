@@ -29,7 +29,7 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-" 以下自分設定、プラグインは dein.toml を弄る {{{
+" 自分設定、プラグインは dein.toml を弄る {{{
 
 filetype plugin indent on " これをonにしておかないとインデントやプラグインが上手く動かないので必須
 syntax on " シンタックスハイライトを有効化
@@ -47,7 +47,7 @@ set number " 行番号を表示
 set cursorline " カーソル行の強調表示
 set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:% " 非表示文字を見えるようにする
 " 注意すべき文字をハイライト {{{
-" listcharsを個別に取り出してmagicモードの正規表現で只の文字になるようエスケープ
+" listcharsを個別に取り出してmagicモードの正規表現で只の文字として使えるようエスケープ
 let s:lcs_tab   = escape(matchstr(&listchars, 'tab:\zs[^,]\{2\}'), '\.*^$[]~')
 let s:lcs_trail = escape(matchstr(&listchars, 'trail:\zs.'), '\.*^$[]~')
 let s:lcs_eol   = escape(matchstr(&listchars, 'eol:\zs.'), '\.*^$[]~')
@@ -159,6 +159,7 @@ au MyAutoCmd FileType help nmap q :bw<CR>
 
 " }}}
 
+"{{{
 " " 補完の凄いやつ
 " NeoBundle 'Shougo/neocomplete'
 "   " Disable AutoComplPop.
@@ -274,3 +275,4 @@ au MyAutoCmd FileType help nmap q :bw<CR>
 "   echo "install getool..."
 "   call system("go get -u github.com/garyburd/go-explorer/src/getool")
 " endif
+"}}}
