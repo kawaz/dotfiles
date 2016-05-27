@@ -15,7 +15,7 @@
 
   # bash_completion
   _cache_brew_prefix=/usr/local # $(brew --prefix)
-  if [[ -f /share/bash-completion/bash_completion ]]; then
+  if [[ -f "$_cache_brew_prefix/share/bash-completion/bash_completion" ]]; then
     . "$_cache_brew_prefix/share/bash-completion/bash_completion"
   fi
 }

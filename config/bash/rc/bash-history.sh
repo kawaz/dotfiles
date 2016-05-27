@@ -21,3 +21,9 @@ HISTCONTROL=
 # ファイルに保存しないだけなら積極的に消してくんだがオンメモリの履歴にも残らないのはこまるので未指定一択
 # 例えば df を無視すると df<Enter> して <Up><Enter> とかで同じコマンドの繰り返しが出来なくなる…
 HISTIGNORE=
+
+# 履歴ファイルを日付で分割保存
+if [[ -n $XDG_DATA_HOME ]]; then
+  test -d "$XDG_DATA_HOME/bash/history" || mkdir -p "$_"
+  HISTFILE="$_/bash_history-$(date +%Y%m%d)"
+fi
