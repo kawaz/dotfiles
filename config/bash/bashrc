@@ -1,12 +1,20 @@
-# bashrc
+# vim:foldmethod=syntax:
 
-if [[ -z $BASHRC_LOADED ]]; then
-  export BASHRC_LOADED=1
-fi
-
-# ユーティリティ関数 #{{{
-
-nsec() { #{{{
+println() {
+  printf "%s\n" "$*"
+}
+quote () {
+  local q=()
+  for _ in "$@"; do
+    q+=("$(printf %q "$_")")
+  done
+  printf "%s\n" "${q[*]}"
+}
+scriptdir() {
+  # ${BASH_SOURCE[0]} のディレクトリのフルパスを取得
+  (cd "$(dirname "${BASH_SOURCE[1]}")" && pwd)
+}
+nsec() {
   local d
   d=$(PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
   if [[ $("$d" +%N) == [0-9]* ]]; then
@@ -15,8 +23,8 @@ nsec() { #{{{
     nsec() { date +%s000000000; }
   fi
   nsec
-} #}}}
-msec() { #{{{
+}
+msec() {
   local d
   d=$(PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
   if [[ $("$d" +%N) == [0-9]* ]]; then
@@ -25,40 +33,70 @@ msec() { #{{{
     msec() { date +%s000; }
   fi
   msec
-} #}}}
-
-# digest() {{{
-eval 'digest() {
-if [[ $# != 0 ]]; then
-  printf %s "$1" | digest
-else
-  local d=($('"$(printf %q "$(type -p sha1sum || type -p shasum || type -p md5sum)")"'))
-  echo "${d[0]}"
-fi
-}' #}}}
-
-quote() { #{{{
-  if [[ $(printf %q '~') == '~' ]]; then
-    quote() { local q; q=$(printf %q "$1"); printf %s "${q//\~/\\\~/}"; }
+}
+fnpatch() {
+  # 既存関数を書き換える
+  # Usage: fnpatch patch_end_matk [ glob_pattern replacement ].. [ --- args.. ]
+  local t f p r
+  t=$1; shift
+  f=$(declare -f "${FUNCNAME[1]}")
+  local n=$'\n'
+  echo "${#FUNCNAME[@]} BEFORE ================= $n$f$n"
+  f=${f//()*"$t"[;]/()\{ }
+  while
+    p=$1; shift
+    if [[ $p == -- ]]; then
+      # -- 以降は呼び出しの引数なのでwhile終了
+      false
+    else
+      # pとセットのrを読む
+      r=$1; shift
+    fi
+  do
+    # パターンは生のまま使う、リプレースは単純文字列扱い
+    eval "f=\${f//$p/$(printf %q "$r")}"
+  done
+  # 関数の書き換え実行
+  # unset -f "${FUNCNAME[1]}"
+  eval "$f"
+  echo "${#FUNCNAME[@]} AFTER ================== $n$f$n"
+  # 元々の関数を再実行
+  ${FUNCNAME[1]} "$@"
+}
+digest() {
+  # パッチ版を作ってみたもののサブシェルで使われた場合はパッチが毎回やり直しににあるので気をつけること
+  # XSUM を使えそうなハッシュコマンドに書き換える
+  fnpatch ===1 XSUM "$(type -p sha1sum || type -p shasum || type -p md5sum || echo 'openssl dgst -sha1')" -- "$@";
+  return $?;
+  ===========1;
+  local TRIM_D;
+  if [[ $(echo | XSUM) == *= ]]; then
+    TRIM_D='{d##*= }';
   else
-    quote() { printf %q "$1"; }
-  fi
-  quote "$1"
-} #}}}
-
-#}}}
+    TRIM_D='{d%% *}';
+  fi;
+  # 変数 $d からハッシュ値を取り出す変数式を使用コマンドの出力に合わせて書き換える
+  fnpatch ====2 TRIM_D "$TRIM_D" -- "$@";
+  return $?;
+  ============2;
+  local d;
+  d=$(if [[ $# != 0 ]]; then printf %s "$1"; else cat; fi | XSUM);
+  d=$TRIM_D;
+  echo "$d"
+}
 
 # デバッグSTART {{{
-BASHRC_DEBUG=1
 if [[ -n $BASHRC_DEBUG ]]; then
   BASHRC_DEBUG_START=$(msec)
-  .() { local s t; eval 'builtin . "$@"; s=$?; t=$(($(msec) - '"$(msec)"'))'; printf "%5d %q\n" "$t" "$1"; return "$s"; }
-  source() { local s t; eval 'builtin source "$@"; s=$?; t=$(($(msec) - '"$(msec)"'))'; printf "%5d %q\n" "$t" "$1"; return "$s"; }
+  BASHRC_DEBUG_adjustment_msec=13
+  BASHRC_DEBUG_adjustment_msec_sum=0
+  .() { ((BASHRC_DEBUG_adjustment_msec_sum+=BASHRC_DEBUG_adjustment_msec));local s t; eval 'builtin . "$@"; s=$?; t=$(($(msec) - '"$(msec)"' - BASHRC_DEBUG_adjustment_msec))'; printf "%5d %q\n" "$t" "$1"; return "$s"; }
+  source() { ((BASHRC_DEBUG_adjustment_msec_sum+=BASHRC_DEBUG_adjustment_msec));local s t; eval 'builtin source "$@"; s=$?; t=$(($(msec) - '"$(msec)"' - BASHRC_DEBUG_adjustment_msec))'; printf "%5d %q\n" "$t" "$1"; return "$s"; }
 fi
 #}}}
 
 # rc/*.sh を名前順に source する
-for f in "$(dirname "${BASH_SOURCE[0]}")"/{rc,rc.local}/*.sh; do
+for f in "$(dirname "${BASH_SOURCE[0]}")"/{rc.local,rc,rc.after,rc.local.after}/*.sh; do
   if [[ -f $f ]]; then
     f=$(printf %q "$f")
     eval ". $f"' || echo -e "\e[1;35mError in '"$f"'\e[1;0m" >&2'
@@ -67,7 +105,7 @@ done
 
 # デバッグEND {{{
 if [[ -n $BASHRC_DEBUG ]]; then
-  printf "%5d %s\n" $(($(msec) - BASHRC_DEBUG_START)) "${BASH_SOURCE[0]}"
+  printf "%5d %s\n" $(($(msec) - BASHRC_DEBUG_START - BASHRC_DEBUG_adjustment_msec_sum)) "${BASH_SOURCE[0]}"
   unset -v BASHRC_DEBUG_START
   unset -f source
   .() { builtin . "$@"; }
