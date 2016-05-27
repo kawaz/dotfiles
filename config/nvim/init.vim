@@ -35,6 +35,7 @@ endif
 filetype plugin indent on " これをonにしておかないとインデントやプラグインが上手く動かないので必須
 syntax on " シンタックスハイライトを有効化
 scriptencoding utf-8
+
 " 表示系
 set fileformats=unix,dos,mac " 改行コードの自動認識
 set ambiwidth=single " ■とか※とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
@@ -43,6 +44,7 @@ set foldmethod=marker " ファイルを開いた時にマーカーがフォル�
 set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
 set spelllang+=cjk " 日本語はスペルチェック対象から外す
 let g:is_bash=1 " shebangが無い時のshのsyntaxをbashモードにする（デフォだとshになってしまう）
+
 " 装飾系
 set number " 行番号を表示
 set cursorline " カーソル行の強調表示
@@ -75,6 +77,7 @@ au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
 " au MyAutoCmd Syntax * hi link MyHi_EofWithoutNL WarningMsg
 " au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_EofWithoutNL", '[^\n]\zs\%$')
 "}}}
+
 " 編集系
 set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
 set autoindent " オートインデントを有効化
@@ -85,6 +88,7 @@ set shiftwidth=2
 set tabstop=2
 set expandtab " }}}
 set updatetime=1000 " syntasticやgitgutterの更新反映時間を短くする(default:4000
+
 " 検索系
 set ignorecase " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
 set smartcase " 検索文字列に大文字が含まれている場合は区別して検索する
@@ -93,6 +97,7 @@ set incsearch " 検索文字列入力時に順次対象文字列にヒットさ�
 set hlsearch " 検索結果文字列のハイライトを有効にする
 set wildmenu " コマンドラインウィンドウの補完強化。候補の順番表示で横スクロールメニューみたいなのが表示されるようになるやつ。
 set wildmode=longest,list,full " コマンドラインウィンドウのTAB補完で最長一致まで保管した後、一覧表示して、更に順番に選択出来るようにする
+
 " 操作系
 set hidden " 編集のままバッファ切り替えができるようにする
 set mouse=a " マウスモード有効
@@ -113,6 +118,7 @@ if &term =~# 'xterm' && !has('nvim')
   cnoremap <special> <Esc>[200~ <nop>
   cnoremap <special> <Esc>[201~ <nop>
 endif " }}}
+
 " マップ定義 {{{
 " F2,F3でバッファ切り替え、F4でバッファ削除 {{{
 map <F2> <ESC>:bp<CR>
@@ -155,8 +161,13 @@ if dein#util#_is_mac()
 endif " }}}
 " help を q で閉じる
 au MyAutoCmd FileType help nmap q :bw<CR>
-
 " }}} マップ定義
+
+" ft=sh の設定 set fmd=syntax にすると効く
+let g:sh_fold_enabled = 1   " sh の syntax フォルディングを有効化
+let g:sh_fold_functions = 1 " sh の関数をフォルディングする
+let g:sh_fold_heredoc = 1   " ヒアドキュメントをフォルディングする
+let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングする
 
 " }}}
 
