@@ -1,14 +1,14 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
-repo = 'osyo-manga/vim-precious'
-depends = ['Shougo/context_filetype.vim']
-
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
 
-[[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時のみ必要。
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim', 'vim-textobj-user']
+
+[[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時に必要。
 repo = 'kana/vim-textobj-user'
 
 [[plugins]] # コード補完
