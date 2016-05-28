@@ -72,9 +72,14 @@ hook_add_ = '''
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
   let g:hybrid_custom_term_colors = 1
-  let g:hybrid_reduced_contrast = 1
+  let g:hybrid_reduced_contrast = 0
   set background=dark
-  " colorscheme 設定は dein#end() 後のタイミングで発火予定のユーザイベントで行う
+  " colorscheme の設定はsource後に行う必要がある
+  " → 非lazyプラグインではdeinで用意されているhook_post_sourceフックは使えない
+  " → on_event = ['VimEnter'] 等による似非lazy化を行えばhook_post_sourceが利用可能になる
+  " → VimEnter 中に colorscheme を行うと Colorscheme イベントが発火しない
+  " → Colorscheme が発生しないと他プラグインの初期化処理に問題が起こる
+  " → dein#end() の後にUserイベントを発火させることで解決した
   au MyAutoCmd User MyEvent_DeinAllSet colorscheme hybrid
 '''
 
