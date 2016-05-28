@@ -18,7 +18,7 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 " プラグイン読み込み＆キャッシュ作成
 let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])
+  call dein#begin(s:dein_dir, [$MYVIMRC, expand('<sfile>:p'), s:toml_file])
   call dein#load_toml(s:toml_file)
   call dein#end()
   call dein#save_state()
