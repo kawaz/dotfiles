@@ -9,7 +9,7 @@ fi
 
 
 # 以下はインタラクティブシェルのときだけ適用
-[[ -z "$PS1" ]] && return
+[[ -z "$PS1" ]] && return 0
 
 # プロンプトの設定
 export PS1='$(r=$?;x="$(__git_ps1 2>/dev/null) ";echo "${x## }";exit $r)$([[ $? == 0 ]]&&echo "\[\e[1;34m\]"||echo "\[\e[1;31m\]")[\u@\h \W]\$\[\e[m\] '

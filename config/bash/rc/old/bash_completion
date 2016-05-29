@@ -1,8 +1,8 @@
-#!/bin/bash
-[[ -z "$PS1" ]] && return
+[[ -z "$PS1" ]] && return 0
 
 for f in "${DOTFILES_DIR}"/{etc,.env/dest,.env/opt/etc}/bash_completion.d/*.sh ~/.bash_completion.d/*.sh; do
   if [[ -f "$f" ]]; then
+    # shellcheck disable=SC1090
     . "$f"
   fi
 done

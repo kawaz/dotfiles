@@ -6,7 +6,7 @@
 
 function _tmux_list_commands() {
   # tmux起動済み
-  tmux list-commands 2>/dev/null && return
+  tmux list-commands 2>/dev/null && return 0
   # tmux未起動
   echo "attach-session new-session start-server" | perl -pe's/ /\n/g'
   # --help的なオプションが無いのでありえないオプション時のエラーからusageを取得する
