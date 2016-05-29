@@ -30,14 +30,14 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-" 自分設定、プラグインは dein.toml を弄る {{{
+" 基本的な設定
 filetype plugin indent on
 syntax on
 scriptencoding utf-8
 
 " 表示系
 set fileformats=unix,dos,mac " 改行コードの自動認識
-set ambiwidth=single " ■とか※とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
+set ambiwidth=single " ■ とか※ とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
 set showmatch " 括弧入力時の対応する括弧を表示
 set foldmethod=marker " ファイルを開いた時にマーカーがフォルディングされた状態になるようにする
 set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
@@ -54,26 +54,26 @@ let s:lcs_tab   = escape(matchstr(&listchars, 'tab:\zs[^,]\{2\}'), '\.*^$[]~')
 let s:lcs_trail = escape(matchstr(&listchars, 'trail:\zs.'), '\.*^$[]~')
 let s:lcs_eol   = escape(matchstr(&listchars, 'eol:\zs.'), '\.*^$[]~')
 " listchars文字のコピペミス(trail,eol)
-au MyAutoCmd Syntax * hi link MyHi_CopipeMissEol Error
+au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissEol Error
 if !empty(s:lcs_eol)
   au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissEol", (empty(s:lcs_trail)?'':s:lcs_trail.'*').s:lcs_eol.'\s*$')
 endif
 " listchars文字のコピペミス(tab)
-au MyAutoCmd Syntax * hi link MyHi_CopipeMissTab Error
+au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissTab Error
 if !empty(s:lcs_tab)
   au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissTab", s:lcs_tab.'*')
 endif
 " 空白とTABの混合(表示自体はlistcharsのtabに任せる)
-au MyAutoCmd Syntax * hi link MyHi_MixedTabSpace WarningMsg
+au MyAutoCmd Colorscheme * hi link MyHi_MixedTabSpace WarningMsg
 au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_MixedTabSpace", '\%(\t \| \t\)')
 " 行末スペース(表示はlistcharsのtrailに任せる)
-au MyAutoCmd Syntax * hi link MyHi_TrailSpace WarningMsg
+au MyAutoCmd Colorscheme * hi link MyHi_TrailSpace WarningMsg
 au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_TrailSpace", '\s\+$')
 " 全角空白(表示自体は全角空白が可視化されてるRictyフォントとかをって対応)
-au MyAutoCmd Syntax * hi link MyHi_ZenkakuSpace WarningMsg
+au MyAutoCmd Colorscheme * hi link MyHi_ZenkakuSpace WarningMsg
 au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
 " FIXME 改行なしのEOF(表示自体ははlistcharsのeolに任せる)
-" au MyAutoCmd Syntax * hi link MyHi_EofWithoutNL WarningMsg
+" au MyAutoCmd Colorscheme * hi link MyHi_EofWithoutNL WarningMsg
 " au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_EofWithoutNL", '[^\n]\zs\%$')
 "}}}
 
@@ -81,6 +81,7 @@ au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
 set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
 set autoindent " オートインデントを有効化
 autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
+autocmd FileType * setlocal formatoptions-=tc "自動折り返しを無効にする
 autocmd InsertLeave * set nopaste "インサートモードを抜けたら自動でPASTEモードを抜ける
 set softtabstop=2 " タブ幅を2タブスペースにする {{{
 set shiftwidth=2
@@ -155,8 +156,8 @@ vnoremap < <gv
 if dein#util#_is_mac()
   " 無名レジスタ""の内容をpbcopyに渡す
   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
-  " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
-  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
+  " 選択範囲をyank→ ヤンク内容が入った無名レジスタをpbcopyに渡す→ 選択範囲を元に戻す
+  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>gv
 endif " }}}
 " help を q で閉じる
 au MyAutoCmd FileType help nmap q :bw<CR>
@@ -168,9 +169,7 @@ let g:sh_fold_functions = 1 " sh の関数をフォルディングする
 let g:sh_fold_heredoc = 1   " ヒアドキュメントをフォルディングする
 let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングする
 
-" }}}
-
-"{{{
+" 古い設定をコメントアウトで残してあるだけ {{{
 " " 補完の凄いやつ
 " NeoBundle 'Shougo/neocomplete'
 "   " Disable AutoComplPop.
@@ -286,4 +285,4 @@ let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングす�
 "   echo "install getool..."
 "   call system("go get -u github.com/garyburd/go-explorer/src/getool")
 " endif
-"}}}
+" }}}
