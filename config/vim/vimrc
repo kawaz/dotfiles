@@ -1,0 +1,9 @@
+set directory=$XDG_CACHE_HOME/vim
+set backupdir=$XDG_CACHE_HOME/vim
+set viminfo+="$XDG_CACHE_HOME/vim/viminfo"
+set runtimepath=$XDG_CONFIG_HOME/nvim,$XDG_CONFIG_HOME/nvim/after,$VIM,$VIMRUNTIME
+let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+if !isdirectory(&directory)
+  call mkdir(&directory, "p")
+endif
+execute "source" "$XDG_CONFIG_HOME/nvim/init.vim"
