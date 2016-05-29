@@ -1,23 +1,28 @@
-# リポジトリルートを使いまわし用に環境変にセット
-DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/../../" && pwd)
-export DOTFILES_DIR
-
 # bashrcの読込み速度を計測
 if [[ -n $BASHRC_DEBUG ]]; then
   BASHRC_DEBUG=
   # shellcheck source=./misc/debug.sh
-  . "$DOTFILES_DIR/config/bash/misc/debug.sh" "${BASH_SOURCE[0]}"
+  . "$(dirname "${BASH_SOURCE[0]}")/misc/debug.sh" "${BASH_SOURCE[0]}"
   return $?
 fi
+
+source_recursive() {
+  local p
+  for p in "$@"; do
+    if [[ -f $p && ( $p == *.sh || $p == *.bash ) ]]; then
+      p=$(printf %q "$p")
+      eval ". $p"' || echo -e "\e[1;35mError in '"$p"'\e[1;0m" >&2'
+    elif [[ -d $p ]]; then
+      for _ in "$p"/*; do
+        "${FUNCNAME[0]}" "$_"
+      done
+    fi
+  done
+}
 
 # *.sh を名前順に source する、読み込み順番は以下のとおり
 # 1. rc.local
 # 2. rc
 # 3. rc.after
 # 4. rc.local.after
-for f in "$DOTFILES_DIR/config/bash"/{rc.local,rc,rc.after,rc.local.after}/*.sh; do
-  if [[ -f $f ]]; then
-    f=$(printf %q "$f")
-    eval ". $f"' || echo -e "\e[1;35mError in '"$f"'\e[1;0m" >&2'
-  fi
-done
+source_recursive "$(dirname "${BASH_SOURCE[0]}")"/{rc.local,rc,rc.after,rc.local.after}
