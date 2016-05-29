@@ -5,55 +5,21 @@ kawaz'z dotfiles
 
 ```bash
 git clone https://github.com/kawaz/dotfiles.git /path/to/dotfiles
-echo '. /path/to/dotfiles/etc/simple-env.sh && kawaz-env' >> ~/.bashrc
 ```
 
-+ 欲しいパッケージをインストールする権限が無いときや環境が古く最新バージョンを使いたかったりしたときは必要に応じて`bash bin/build-*.sh`を実行する。
-+ 初めてvimを起動すると勝手に`dein#install()`が始まるようになってるので面食らうかもしれないが最初だけなので我慢。
-
+```bash:~/.bashrcに追記
+# 自分しか使わない環境ならコレ
+. /path/to/dotfiles/config/bash/bashrc
+# 共用サーバの共用ユーザで他の人も利用する環境の場合はコチラ
+. /path/to/dotfiles/config/bash/bashrc-delay.sh
+```
 
 ## 起動処理メモ
-- `config/bash/bashrc` は `~/.profile.d/*.sh`と`$DOTFILES_DIR/etc/profile.d/*.sh`と`$DOTFILES_DIR/.env/dest/profile.d/*.sh`にあるスクリプトを全て読み込んでいく。
-  - 3箇所のprofile.d配下のスクリプトはそれぞれの**ファイル名でソート**した順で読み込まれる。
-  - `~/.profile.d/*.sh` はgit管理外なのでその環境のみで行いたい設定はここに書いておく。
-  - 誰よりも先に読み込みたい設定は場合はファイル名を`00-*.sh`とかにしておけば良い。
+- `config/bash/bashrc` は `config/bash/rc*/*.sh` を順番に読み込んでいく
+- ローカル環境のみで読み込みたい場合は rc.local か rc.after に置いておく
 
-
-## ディレクトリ構成
-全体像把握の為の図を以下に示す。
-
-    |-- README.md
-    |-- bin
-    |   |-- build-*.sh   (自前ビルド用のスクリプト、手順メモも兼ねてる)
-    |   |-- functions.sh (共通処理用の小物スクリプト、sourceで読み込んで使う)
-    |   `-- setup.sh     (deprecated, 古い環境メモとして残しているが削除予定)
-    |-- etc
-    |   |-- bash_completion.d (config/bash_completion から読み込まれるbashの追加補完スクリプト)
-    |   |   |-- npm.sh
-    |   |   |-- tmux.sh
-    |   |   `-- virsh.sh
-    |   `-- profile.d    (config/bashrcから読み込まれる初期化スクリプト置き場、何となく用途別に分割してる)
-    |       |-- 00-XDG.sh       ($XDG_CONFIG_HOMEとかの設定を行う。重要なので最初に読み込む)
-    |       |-- 20-keychain.sh
-    |       |-- 20-nvm.sh
-    |       |-- 30-cpanm.sh
-    |       |-- 30-misc.sh
-    |       |-- 30-tmux.bash_completion.sh
-    |       `-- README
-    |-- config  ($XDG_CONFIG_HOME で指定されるパス。各種アプリの設定ファイル置き場)
-    |-- cache   ($XDG_CACHE_HOME で指定されるパス。各種アプリのキャッシュファイル置き場。いつキャッシュなので消しても良い。)
-    |-- local   ($XDG_DATA_HOME で指定されるパス。各種アプリのデータ置き場。消しても構わないが環境ごとにアプリが何か大切なデータを保存してる可能性があるので気をつける)
-    `-- .env (bin/setup.shによって作成される、追加DL物や環境毎の設定が置かれる場所)
-        |-- dest (環境毎の色々な実体置き場)
-        |   |-- .dotfilesrc (bin/setup.shによって作られる、.bashrcから読み込まれDOTFILES_FIRを設定する)
-        |   |-- dot-vim (~/.vimの最終リンク先、.gitignoreを綺麗に保つためにこの場所で管理してる)
-        |   |   |-- bundle
-        |   |   |   `-- (many dict)
-        |   |   `-- :
-        |   |-- profile.d (bin/build-*.shの成果物の初期化スクリプト置き場、.bashrcから読み込まれる)
-        |   |   |-- 10-git.sh
-        |   |   |-- 10-vim.sh
-        |   |   `-- :
-        |   `-- :
-        |-- src (bin/build-*.shで使うソース置き場、ビルド環境)
-        `-- tmp (何かしらの中間処理で出来る一時ゴミエリア)
+## 設定適用の遅延について
+共用サーバの共用ユーザでほかの人も利用するような環境の場合は bashrc の代わりに、bashrc-delay.sh を読むようにしておく。
+自分環境を有効化したい場合は手で `dotfiles-on` を実行すると bashrc の方の読込みが発動する。
+または、環境変数 `XMODIFIERS` に `@dotfiles=on` が含まれていると `bashrc-delay.sh` が読み込まれた直後に自動で `dotfiles-on` が実行される。
+リモートの共用サーバに自分のPCからログインした時は手で `dotfiles-on` をする必要を無くせるハックです。
