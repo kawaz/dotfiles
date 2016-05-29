@@ -30,14 +30,14 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-" 自分設定、プラグインは dein.toml を弄る {{{
+" 基本的な設定
 filetype plugin indent on
 syntax on
 scriptencoding utf-8
 
 " 表示系
 set fileformats=unix,dos,mac " 改行コードの自動認識
-set ambiwidth=single " ■とか※とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
+set ambiwidth=single " ■ とか※ とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
 set showmatch " 括弧入力時の対応する括弧を表示
 set foldmethod=marker " ファイルを開いた時にマーカーがフォルディングされた状態になるようにする
 set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
@@ -169,9 +169,7 @@ let g:sh_fold_functions = 1 " sh の関数をフォルディングする
 let g:sh_fold_heredoc = 1   " ヒアドキュメントをフォルディングする
 let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングする
 
-" }}}
-
-"{{{
+" 古い設定をコメントアウトで残してあるだけ {{{
 " " 補完の凄いやつ
 " NeoBundle 'Shougo/neocomplete'
 "   " Disable AutoComplPop.
@@ -287,4 +285,4 @@ let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングす�
 "   echo "install getool..."
 "   call system("go get -u github.com/garyburd/go-explorer/src/getool")
 " endif
-"}}}
+" }}}
