@@ -28,15 +28,14 @@ if has('vim_starting') && dein#check_install()
   let g:dein#types#git#clone_depth = 1
   call dein#install()
 endif
-" dein#end() 後に有効化する
-filetype plugin indent on
-syntax on
 " dein#end()/install() 完了後のタイミングでユーザイベントを発生させる
 " これは非lazyプラグインで hook_post_source が使えない代わりに利用する
 doau User MyEvent_DeinAllSet
 " }}}
 
 " 自分設定、プラグインは dein.toml を弄る {{{
+filetype plugin indent on
+syntax on
 scriptencoding utf-8
 
 " 表示系
