@@ -156,8 +156,8 @@ vnoremap < <gv
 if dein#util#_is_mac()
   " 無名レジスタ""の内容をpbcopyに渡す
   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
-  " 選択範囲をyankして、更にヤンク内容が入りたての無名レジスタをpbcopyに渡す
-  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>
+  " 選択範囲をyank→ ヤンク内容が入った無名レジスタをpbcopyに渡す→ 選択範囲を元に戻す
+  vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>gv
 endif " }}}
 " help を q で閉じる
 au MyAutoCmd FileType help nmap q :bw<CR>
