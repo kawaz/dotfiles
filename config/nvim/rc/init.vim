@@ -81,6 +81,7 @@ au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
 set backspace=indent,eol,start " バックスペースで改行やインデントも削除出来るようにする
 set autoindent " オートインデントを有効化
 autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
+autocmd FileType * setlocal formatoptions-=tc "自動折り返しを無効にする
 autocmd InsertLeave * set nopaste "インサートモードを抜けたら自動でPASTEモードを抜ける
 set softtabstop=2 " タブ幅を2タブスペースにする {{{
 set shiftwidth=2
