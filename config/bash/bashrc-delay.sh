@@ -2,10 +2,9 @@
 # 他の人もログインする共用サーバの共用ユーザとかだと個人的な設定はしづらい。
 # その場合はこの dotfiles.sh を ~/.bashrc から読むようにすれば自動適用されないので便利です。
 dotfiles-on() {
-  unset -f dotfiles-on
-  # shellcheck source=./bashrc
+  eval "${FUNCNAME[0]}() { :; }"
+  # shellcheck disable=SC1090
   . "$(dirname "${BASH_SOURCE[0]}")/bashrc"
-  return $?
 }
 
 # $XMODIFIERS に @dotfiles=on を含んでいたら自動適用します。
