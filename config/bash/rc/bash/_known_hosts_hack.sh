@@ -1,4 +1,4 @@
-[[ $(type -t _known_hosts_real) != function ]] && return
+[[ $(type -t _known_hosts_real) != function ]] && return 0
 
 # backup original function
 if [[ $(type -t _known_hosts_real_orig) != function ]]; then

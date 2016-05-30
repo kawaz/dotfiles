@@ -1,8 +1,9 @@
-#!bash
+ghq-cd() { local d=$(peco --select-1 --layout bottom-up < <(ghq list "$@")); cd "${d:+$HOME/.ghq/$d}"; }
+alias ghcd=ghq-cd
+
 #
 # bash completion support for ghq(https://github.com/motemen/ghq)
 #
-
 _ghq() {
   local cur prev
   cur=${COMP_WORDS[COMP_CWORD]}

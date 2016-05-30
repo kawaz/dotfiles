@@ -1,5 +1,5 @@
 # Mac以外では無視
-[[ $OSTYPE == darwin* ]] || return
+[[ $OSTYPE == darwin* ]] || return 0
 
 brew_prefix="/usr/local" # $(brew --prefix)
 
