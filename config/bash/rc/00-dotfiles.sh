@@ -12,8 +12,10 @@ if [[ -n $DOTFILES_DIR ]]; then
   export XDG_CONFIG_HOME=$DOTFILES_DIR/config
   export XDG_CACHE_HOME=$DOTFILES_DIR/cache
   export XDG_DATA_HOME=$DOTFILES_DIR/local/share
+  export PATH=$DOTFILES_DIR/local/bin:$PATH
 else
   export XDG_CONFIG_HOME=~/.config
   export XDG_CACHE_HOME=~/.cache
   export XDG_DATA_HOME=~/.local/share
+  export PATH=~/.local/bin:$PATH
 fi
