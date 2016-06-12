@@ -7,6 +7,16 @@ repo = 'Shougo/context_filetype.vim'
 [[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
+hook_add = '''
+let g:context_filetype#filetypes = {
+      \ 'sh': [
+      \   {
+      \    'start': '[^<]<<\([''"]\?\)\([a-zA-Z0-9]\+\)\1$',
+      \    'end': '^\1$', 'filetype': '\2',
+      \   },
+      \ ],
+      \}"}}}
+'''
 
 [[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時に必要。
 repo = 'kana/vim-textobj-user'
