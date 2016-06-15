@@ -13,6 +13,8 @@
   # hub
   pr = pull-request
   open = browse
+  # see config/git/hooks/log.sh
+  hooks-log = !"ls -rt \"${TMPDIR:-/tmp}\"/git-hooks-log.[0-6]|while read -r f;do [[ -f $f ]] && cat \"$f\";done"
 [core]
   autocrlf = input
 [pager]
@@ -44,6 +46,10 @@
   pushinsteadof = "https://github.com/"
 [url "git@bitbucket.org:"]
   insteadof = "https://kawazzz@bitbucket.org/"
+
+[include]
+  # 絶対パス表記が必要な設定などの設定用 (e.g. core.hooksPath)
+  path = ../../cache/gitconfig.local
 
 # sourcetree
 [difftool "sourcetree"]
