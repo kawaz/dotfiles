@@ -4,14 +4,14 @@ kawaz'z dotfiles
 とりあえず以下を実行しておけば大体環境が整う。
 
 ```bash
-git clone https://github.com/kawaz/dotfiles.git /path/to/dotfiles
-```
+# clone
+git clone https://github.com/kawaz/dotfiles.git ~/.dotfiles
 
-```bash:~/.bashrcに追記
-# 自分しか使わない環境ならコレ
-. /path/to/dotfiles/config/bash/bashrc
-# 共用サーバの共用ユーザで他の人も利用する環境の場合はコチラ
-. /path/to/dotfiles/config/bash/bashrc-delay.sh
+# ~/.bashrc に追記
+## ローカルPCの場合はこっち
+echo ". ~/.dotfiles/config/bash/bashrc" >> ~/.bashrc
+## リモートの特に複数人で同じユーザでログインするようなサーバの場合はコチラ
+echo ". ~/.dotfiles/config/bash/bashrc-delay.sh" >> ~/.bashrc
 ```
 
 ## 起動処理メモ
