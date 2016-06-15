@@ -15,6 +15,14 @@
   open = browse
 [core]
   autocrlf = false
+[pager]
+  log  = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+  show = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+  diff = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+[interactive]
+  diffFilter = (diff-highlight 2>/dev/null || cat)
+[diff]
+  compactionHeuristic = true
 [merge]
   ff = false
 [pull]
