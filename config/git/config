@@ -14,7 +14,7 @@
   pr = pull-request
   open = browse
 [core]
-  autocrlf = false
+  autocrlf = input
 [pager]
   log  = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
   show = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
