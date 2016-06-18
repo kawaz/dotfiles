@@ -369,9 +369,10 @@ on_ft = ['sh']
 repo = 'kawaz/shellcheck.vim'
 on_ft = ['sh']
 
-[[plugins]]
-repo = 'mtscout6/syntastic-local-eslint.vim'
-hook_add = "let g:syntastic_javascript_checkers = ['eslint']"
+# ftplugin は上書きがウザいので使用中断
+#[[plugins]]
+#repo = 'mtscout6/syntastic-local-eslint.vim'
+#hook_add = "let g:syntastic_javascript_checkers = ['eslint']"
 
 ## syntastic vs neomake
 
