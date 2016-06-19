@@ -1,3 +1,6 @@
+# only interactive
+[[ $- == *i* ]] || return 0
+
 # 不用な端末コマンドを殺す（そもそも邪魔＆他で再利用できるようにするため）
 if type -P stty >/dev/null; then
   # 絶対使わない＆邪魔にしかならない start(C-q)/stop(C-s) を殺す

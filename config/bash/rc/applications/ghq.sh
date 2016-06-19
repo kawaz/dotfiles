@@ -1,6 +1,9 @@
 # ソースファイルは全部ここに集める
 export GHQ_ROOT="${XDG_DATA_HOME:-~/.local/share}/repos"
 
+# only intaractive
+[[ $- == *i* ]] || return 0
+
 # peco で移動
 ghq-cd() {
   local d

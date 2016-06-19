@@ -1,3 +1,6 @@
+# only interactive
+[[ $- == *i* ]] || return 0
+
 # ! の入力で変な挙動になるのを防止する（History Expantion機能の無効化）
 set +H
 
