@@ -414,7 +414,8 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tyru/vim-altercmd'
-hook_add = '''
+on_event = ['VimEnter']
+hook_source = '''
   " 使うには初期化処理が必要
   call altercmd#load()
   " helpを横分割で右側に開く
