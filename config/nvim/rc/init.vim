@@ -120,10 +120,10 @@ if &term =~# 'xterm' && !has('nvim')
 endif " }}}
 
 " マップ定義 {{{
-" F2,F3でバッファ切り替え、F4でバッファ削除 {{{
-map <F2> <ESC>:bp<CR>
-map <F3> <ESC>:bn<CR>
-map <F4> <ESC>:bw<CR>
+" F2,F3でタブ切り替え、F4でバッファ削除 {{{
+map <F2> <ESC>:tabprevious<CR>
+map <F3> <ESC>:tabnext<CR>
+map <F4> <ESC>:tabclose<CR>
 " }}}
 " 削除キーでyankしない
 nnoremap x "_x
