@@ -80,15 +80,16 @@ if type peco >/dev/null 2>&1; then
           [[ $allline == *$'\n'"$line"$'\n'* ]] && continue
           allline+="$line"$'\n'
           (( count += 1 ))
-          # 時間無しで出力
-          printf "%s\n" "$line"
+          # 時間を見やすくすると遅いので対策検討中
+          echo "$ts $line"
         done < <(tac "$f")
       done
     } |
     # 既に何か入力中でかつ行末カーソルなら先頭一致でフィルタ
+
     if [[ -n $READLINE_LINE && ${#READLINE_LINE} == "$READLINE_POINT" ]]; then
       while read -r line; do
-        [[ $line == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
+        [[ ${line#* } == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
       done |
       # フィルタ済みなのでデフォルトクエリ無しでpecoる
       peco --select-1 --layout=bottom-up
