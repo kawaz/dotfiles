@@ -11,6 +11,6 @@ cd $tmp || exit 1
 git clone --depth=1 git://github.com/gitster/git.git
 cd git
 make configure
-./configure --prefix="$DOTFILES_DIR/local"
+./configure --prefix="$DOTFILES_LOCAL"
 make
 make install

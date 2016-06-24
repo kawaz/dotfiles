@@ -33,7 +33,7 @@ pip3_path() {
   git clone https://github.com/neovim/neovim.git --depth=1
   cd neovim
   rm -rf build/
-  make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$DOTFILES_DIR/local" CMAKE_BUILD_TYPE=Release
+  make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$DOTFILES_LOCAL" CMAKE_BUILD_TYPE=Release
   make install
 }
 

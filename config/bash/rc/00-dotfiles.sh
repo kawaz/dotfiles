@@ -18,8 +18,9 @@ else
   export XDG_DATA_HOME=~/.local/share
 fi
 
-# Add PATH
-if ! [[ -d $XDG_CACHE_HOME/dotfiles/bin ]]; then
-  mkdir -p "$XDG_CACHE_HOME/dotfiles/bin"
+# dotfiles space
+export DOTFILES_LOCAL="$XDG_CACHE_HOME/dotfiles"
+if ! [[ -d $DOTFILES_LOCAL/bin ]]; then
+  mkdir -p "$DOTFILES_LOCAL/bin"
 fi
-export PATH=$XDG_CACHE_HOME/dotfiles/bin:$PATH
+export PATH=$DOTFILES_LOCAL/bin:$PATH

@@ -2,9 +2,9 @@
 # http://qiita.com/kawaz/items/a8485f3fbe449c248f9c
 if ! type -P diff-highlight >/dev/null 2>&1; then
   (
-  for d in /usr/local/share /usr/share; do
-    if [[ -x $d/git-core/contrib/diff-highlight/diff-highlight ]]; then
-      ln -sfn "$d/git-core/contrib/diff-highlight/diff-highlight" "${XDG_CACHE_HOME:-~/.cache}/dotfiles/bin/"
+  for d in /usr/local /usr "$DOTFILES_LOCAL"; do
+    if [[ -x $d/share/git-core/contrib/diff-highlight/diff-highlight ]]; then
+      ln -sfn "$d/share/git-core/contrib/diff-highlight/diff-highlight" "$DOTFILES_LOCAL/bin/"
       exit
     fi
   done
