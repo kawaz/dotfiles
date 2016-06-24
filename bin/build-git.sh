@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+[[ -z $DOTFILES_LOCAL ]] && { echo "\$DOTFILES_LOCAL is empty" >&2; exit 1; }
 sudo yum install -y perl-ExtUtils-MakeMaker expat-devel gettext autoconf zlib-devel
 sudo yum install -y libcurl-devel || sudo yum install -y curl-devel
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+[[ -z $DOTFILES_LOCAL ]] && { echo "\$DOTFILES_LOCAL is empty" >&2; exit 1; }
 sudo yum -y install libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip git
 
 pip3_path() {
