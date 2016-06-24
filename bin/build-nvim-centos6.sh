@@ -3,11 +3,19 @@ set -e
 [[ -z $DOTFILES_LOCAL ]] && { echo "\$DOTFILES_LOCAL is empty" >&2; exit 1; }
 sudo yum -y install libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip git
 
+search_bin() {
+  local prog=$1 ver=$2 bin
+  bin=$( (compgen -c "$prog$ver" || compgen -c "$prog-$ver") | grep '[0-9]$' | sort -rV | head -n 1 )
+  if [[ -n $bin ]]; then
+    type -P "$bin"
+  fi
+}
+
 install_python_neovim() {
   local pip3 python3
-  pip3=$(compgen -c pip3 || compgen -c pip-3 | sort -rV | head -n 1)
+  pip3=$(search_bin pip 3)
   if [[ -z $pip3 ]]; then
-    python3=$(compgen -c python3 || compgen -c python-3 | sort -rV | head -n 1)
+    python3=$(search_bin python 3)
     if [[ -z $python3 ]]; then
       py3_ver=$(yum list python3\*-devel -q | grep -Eo '^python3[0-9]+' | sort | tail -n1)
       if [[ -n $py3_ver ]]; then
@@ -15,12 +23,12 @@ install_python_neovim() {
       else
         install_python3
       fi
-      python3=$(compgen -c python3 || compgen -c python-3 | sort -rV | head -n 1)
-      pip3=$(compgen -c pip3 || compgen -c pip-3 | sort -rV | head -n 1)
+      python3=$(search_bin python 3)
+      pip3=$(search_bin pip 3)
     fi
     if [[ -z $pip3 && -n $python3 ]]; then
       curl https://bootstrap.pypa.io/get-pip.py | sudo "$python3"
-      pip3=$(compgen -c pip3 || compgen -c pip-3 | sort -rV | head -n 1)
+      pip3=$(search_bin pip 3)
     fi
   fi
   [[ -z $pip3 ]] && return 1
@@ -38,6 +46,11 @@ install_python3() {
   ./configure --prefix="$DOTFILES_LOCAL"
   make
   make altinstall
+  # make symlink for python3
+  python3=$(search_bin python 3)
+  if [[ -n $python && ! -x $DOTFILES_LOCAL/bin/python3 ]]; then
+    ln -sfn "$python3" "$DOTFILES_LOCAL/bin/python3"
+  fi
 }
 
 install_neovim() {
