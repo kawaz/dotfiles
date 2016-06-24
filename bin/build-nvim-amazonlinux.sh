@@ -2,7 +2,7 @@
 set -e
 sudo yum -y install libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip git
 
-pip3() {
+pip3_path() {
   local pip3 py3_ver
   if type -P pip3 >/dev/null 2>&1; then
     pip3=pip3
@@ -21,7 +21,7 @@ pip3() {
     fi
   fi
   [[ -z $pip3 ]] && return 1
-  command "$pip3" "$@"
+  type -P "$pip3"
 }
 
 # build nvim
@@ -38,4 +38,4 @@ pip3() {
 }
 
 # pip install neovim
-pip3 install --upgrade neovim
+sudo "$(pip3_path)" install --upgrade neovim
