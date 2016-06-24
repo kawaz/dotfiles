@@ -48,7 +48,7 @@ install_python3() {
   make altinstall
   # make symlink for python3
   python3=$(search_bin python 3)
-  if [[ -n $python && ! -x $DOTFILES_LOCAL/bin/python3 ]]; then
+  if [[ -n $python3 && ! -x $DOTFILES_LOCAL/bin/python3 ]]; then
     ln -sfn "$python3" "$DOTFILES_LOCAL/bin/python3"
   fi
 }
