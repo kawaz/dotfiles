@@ -52,7 +52,7 @@ PROMPT_COMMAND="histoty_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
 # C-r の履歴検索をハック
 if type peco >/dev/null 2>&1; then
   readline_search_history_hack_select() {
-    local f ts line count
+    local f ts line count allline=$'\n'
     # tac が使えなかったら代替でperl使えるようにしておく
     if ! type tac >/dev/null 2>&1; then
       tac() { perl -pe'print reverse <>'; }
@@ -76,15 +76,19 @@ if type peco >/dev/null 2>&1; then
           fi
           # どうでも良い行は除外
           [[ $line =~ ^(ls|pwd|ps|top|fg|df)(\ [^;\|<>]*)?$ ]] && continue
+          # 重複削除
+          [[ $allline == *$'\n'"$line"$'\n'* ]] && continue
+          allline+="$line"$'\n'
           (( count += 1 ))
-          echo "$(date -d "@$((ts/1000))" +%Y-%m-%dT%H:%M:%S) $line"
+          # 時間無しで出力
+          printf "%s\n" "$line"
         done < <(tac "$f")
       done
     } |
     # 既に何か入力中でかつ行末カーソルなら先頭一致でフィルタ
     if [[ -n $READLINE_LINE && ${#READLINE_LINE} == "$READLINE_POINT" ]]; then
       while read -r line; do
-        [[ ${line#* } == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
+        [[ $line == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
       done |
       # フィルタ済みなのでデフォルトクエリ無しでpecoる
       peco --select-1 --layout=bottom-up
