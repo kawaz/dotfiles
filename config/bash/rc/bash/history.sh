@@ -84,12 +84,15 @@ if type peco >/dev/null 2>&1; then
           allline+="$line"$'\n'
           (( count += 1 ))
           # 時間を見やすくすると遅いので対策検討中
-          echo "$ts $line"
+          if [[ -n $HISTHACK_FORMATTIME ]]; then
+            echo "$(date -d "@${ts:0:(-3)}" +%Y-%m-%dT%T%z) $line"
+          else
+            echo "$ts $line"
+          fi
         done < <(tac "$f")
       done
     } |
     # 既に何か入力中でかつ行末カーソルなら先頭一致でフィルタ
-
     if [[ -n $READLINE_LINE && ${#READLINE_LINE} == "$READLINE_POINT" ]]; then
       while read -r line; do
         [[ ${line#* } == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
