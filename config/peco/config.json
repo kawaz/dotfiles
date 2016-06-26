@@ -1,9 +1,9 @@
 {
-    "Style": {
-        "Basic": ["default", "on_default"],
-        "SavedSelection": ["white", "on_yellow", "bold"],
-        "Selected": ["default", "on_default", "bold"],
-        "Query": ["default", "on_default"],
-        "Matched": ["cyan", "on_default"]
-    }
+  "Style": {
+    "Basic": ["default", "on_default"],
+    "SavedSelection": ["white", "on_yellow", "bold"],
+    "Selected": ["default", "on_default", "bold"],
+    "Query": ["default", "on_default"],
+    "Matched": ["cyan", "on_default"]
+  }
 }
