@@ -47,7 +47,10 @@ histoty_push() {
   fi
   return $s
 }
-PROMPT_COMMAND="histoty_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
+
+if [[ ";$PROMPT_COMMAND;" != *";histoty_push;"* ]]; then
+  PROMPT_COMMAND="histoty_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
+fi
 
 # C-r の履歴検索をハック
 if type peco >/dev/null 2>&1; then
