@@ -25,11 +25,11 @@ HISTCONTROL=
 # 例えば df を無視すると df<Enter> して <Up><Enter> とかで同じコマンドの繰り返しが出来なくなる…
 HISTIGNORE=
 
-# 自前の histoty_push で保存するのでデフォルトの ~/bash_history 保存は無効化
+# 自前の history_push で保存するのでデフォルトの ~/bash_history 保存は無効化
 HISTFILE=
 
 # 履歴をタイムスタンプ付きで綺麗に保存する
-histoty_push() {
+history_push() {
   local s=$?
   if [[ -z $history_push_current_session ]]; then
     history_push_current_session="$(date +%s)_$$_$BASH_SUBSHELL"
@@ -48,8 +48,8 @@ histoty_push() {
   return $s
 }
 
-if [[ ";$PROMPT_COMMAND;" != *";histoty_push;"* ]]; then
-  PROMPT_COMMAND="histoty_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
+if [[ ";$PROMPT_COMMAND;" != *";history_push;"* ]]; then
+  PROMPT_COMMAND="history_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
 fi
 
 # C-r の履歴検索をハック
