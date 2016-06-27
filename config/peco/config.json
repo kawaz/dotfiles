@@ -1,9 +1,17 @@
 {
+  "InitialFilter": "IgnoreCase",
   "Style": {
     "Basic": ["default", "on_default"],
     "SavedSelection": ["white", "on_yellow", "bold"],
-    "Selected": ["default", "on_default", "bold"],
+    "_Selected": ["default", "on_default", "bold"],
     "Query": ["default", "on_default"],
     "Matched": ["cyan", "on_default"]
+  },
+  "Keymap": {
+    "Pgup": "peco.ScrollPageUp",
+    "Pgdn": "peco.ScrollPageDown",
+    "C-r": "peco.SelectUp",
+    "ArrowLeft": "peco.BackwardChar",
+    "ArrowRight": "peco.ForwardChar"
   }
 }
