@@ -4,18 +4,16 @@
 brew_prefix="/usr/local" # $(brew --prefix)
 
 # coreutils
-brew_prefix_coreutils="$brew_prefix/opt/coreutils" # $(brew --prefix coreutils)
-export PATH="$brew_prefix_coreutils/libexec/gnubin:$PATH"
-unset -v brew_prefix_coreutils
+export PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
 
 # findutils
 alias find=gfind
 alias xargs=gxargs
 
 # bash_completion
-if [[ -f "$brew_prefix/share/bash-completion/bash_completion" ]]; then
+if [[ -f "$brew_prefix/etc/bash_completion" ]]; then
   # shellcheck disable=SC1090
-  . "$brew_prefix/share/bash-completion/bash_completion"
+  . "$brew_prefix/etc/bash_completion"
 fi
 
 unset -v brew_prefix
