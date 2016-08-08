@@ -23,4 +23,3 @@ ver-le() { [[ -z $2 ]] && set -- "$BASH_VERSION" "$1"; ver-cmp "$1" le "$2"; }
 ver-ne() { ! ver-eq "$@"; }
 ver-gt() { ! ver-le "$@"; }
 ver-lt() { ! ver-ge "$@"; }
-
