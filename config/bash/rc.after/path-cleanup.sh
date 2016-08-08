@@ -1,16 +1,15 @@
 #!/bin/bash
 _() {
-  local p0=() p1=() p2=() p3=() p=
-  declare -A ps=()
+  local p0=() p1=() p2=() p3=() p ps
   while read -r p; do
-    if [[ -z ${ps["$p"]} ]]; then
+    if [[ $ps != *":$p:"* ]]; then
       case "$p" in
         "$HOME"/bin)  p0+=("$p");;
         "$HOME"/*)    p1+=("$p");;
         /usr/local/*) p2+=("$p");;
         *)            p3+=("$p");;
       esac
-      ps["$p"]=1
+      ps+=":$p:"
     fi
   done <<<"${PATH//:/$'\n'}"
   # 優先度付きでPATHをマージしてexport
