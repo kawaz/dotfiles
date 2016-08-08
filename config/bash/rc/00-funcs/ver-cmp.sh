@@ -15,9 +15,12 @@ ver-cmp() {
     eval "$exp" || return
   done
 }
-ver-eq() { ver-cmp "$1" eq "$2"; }
-ver-ge() { ver-cmp "$1" ge "$2"; }
-ver-le() { ver-cmp "$1" le "$2"; }
+# 第2引数が無ければ $BASH_VERSION と比較
+ver-eq() { [[ -z $2 ]] && set -- "$BASH_VERSION" "$1"; ver-cmp "$1" eq "$2"; }
+ver-ge() { [[ -z $2 ]] && set -- "$BASH_VERSION" "$1"; ver-cmp "$1" ge "$2"; }
+ver-le() { [[ -z $2 ]] && set -- "$BASH_VERSION" "$1"; ver-cmp "$1" le "$2"; }
+# イコールなし系は逆のNOTにしておくとバージョンの桁が合わないケースの実装が楽
 ver-ne() { ! ver-eq "$@"; }
 ver-gt() { ! ver-le "$@"; }
 ver-lt() { ! ver-ge "$@"; }
+
