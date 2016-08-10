@@ -27,7 +27,7 @@ repo = 'kana/vim-textobj-user'
 
 [[plugins]] # コード補完
 repo = 'Shougo/deoplete.nvim'
-depends = ['context_filetype.vim']
+if = 'has("nvim")'
 on_i = 1
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
@@ -50,11 +50,15 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/neocomplete'
+if = 'has("lua")'
+on_i = 1
+
+[[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets']
-on_ft = ['neosnippet']
 on_i = 1
 hook_add_ = '''
   let g:neosnippet#enable_snipmate_compatibility = 1
