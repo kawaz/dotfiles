@@ -328,15 +328,9 @@ hook_post_source = '''
   " TODO: キーマップはまだ確認してないので後でやる
   " 関連ツールの雑なチェック
   if executable('go')
-    for s:command in ['goimports', 'godef', 'golint', 'gocode', 'gotags', 'gorename']
-      if !executable(s:command)
-        echo s:command . ' is not found. Please run :GoInstallBinaries or :GoUpdateBinaries'
-        break
-      endif
-    endfor
+    execute 'GoInstallBinaries'
   endif
 '''
-
 
 
 ## test
