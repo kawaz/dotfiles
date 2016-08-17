@@ -23,10 +23,19 @@ if dein#load_state(s:dein_dir)
   call dein#end()
   call dein#save_state()
 endif
-" 不足プラグインの自動インストール
-if has('vim_starting') && dein#check_install()
-  let g:dein#types#git#clone_depth = 1
-  call dein#install()
+" プラグインの自動インストール＆アップデート
+if has('vim_starting')
+  let s:dein_last_update_marker = g:dein#_base_path . '/last_update_maker'
+  " 不足プラグインの自動インストール
+  if dein#check_install()
+    call dein#install()
+    call writefile([strftime('%s')], s:dein_last_update_marker)
+  endif
+  " プラグインの定期的な自動アップデート
+  if getftime(s:dein_last_update_marker) < strftime('%s') - 3600 * 24 * 7
+    call dein#update()
+    call writefile([strftime('%s')], s:dein_last_update_marker)
+  endif
 endif
 " }}}
 
