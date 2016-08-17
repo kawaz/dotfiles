@@ -37,6 +37,8 @@ if has('vim_starting')
     call writefile([strftime('%s')], s:dein_last_update_marker)
   endif
 endif
+" lazyプラグインがvim起動時にsourceされてしまう場合(on_ft対象のファイルを開くときなど)でも hook_post_source が機能するようにする
+au MyAutoCmd VimEnter * call dein#call_hook('post_source')
 " }}}
 
 " 基本的な設定
