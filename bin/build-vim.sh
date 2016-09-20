@@ -12,9 +12,8 @@ git clone --depth=1 https://github.com/vim/vim.git
 cd vim/src
 ./configure \
   --enable-multibyte \
-  --enable-python3interp \
   --enable-luainterp \
-  --with-luajit \
+  --enable-python3interp \
   --prefix="$XDG_CACHE_HOME/dotfiles"
 make
 make install
