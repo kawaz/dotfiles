@@ -299,7 +299,7 @@ on_ft = ['sh']
 
 [[plugins]]
 # golang completion
-repo = 'zchee/deoplete-go'
+#repo = 'zchee/deoplete-go'
 on_ft = ['go']
 build = 'make'
 hook_add = '''
@@ -430,17 +430,17 @@ hook_add = '''
   command! SyntasticDebugToggle :call s:SyntasticDebugToggle()
   " shellcheckの引数メモ
   " -x      : 変数未定義のチェックなどでsource先ファイルも考慮するようにする
-  " -s basa : shebang が無い場合のデフォルトをbashモードにする
+  " -s bash : shebang が無い場合のデフォルトをbashモードにする
   let g:syntastic_sh_shellcheck_args = '-x -s bash'
 '''
 
-[[plugins]]
-# asynchronous linter, instead of 'scrooloose/syntastic'
-repo = 'benekastah/neomake'
-hook_add = '''
-  let g:neomake_open_list = 1
-  " autocmd VimEnter,BufWritePost * Neomake
-'''
+# [[plugins]]
+# # asynchronous linter, instead of 'scrooloose/syntastic'
+# repo = 'benekastah/neomake'
+# hook_add = '''
+#   let g:neomake_open_list = 1
+#   " autocmd VimEnter,BufWritePost * Neomake
+# '''
 
 [[plugins]]
 repo = 'tyru/vim-altercmd'

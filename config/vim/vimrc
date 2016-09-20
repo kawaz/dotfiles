@@ -1,9 +1,26 @@
-set directory=$XDG_CACHE_HOME/vim
-set backupdir=$XDG_CACHE_HOME/vim
-set viminfo+="$XDG_CACHE_HOME/vim/viminfo"
-set runtimepath=$XDG_CONFIG_HOME/nvim,$XDG_CONFIG_HOME/nvim/after,$VIM,$VIMRUNTIME
+" XDG対応
 let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
-if !isdirectory(&directory)
-  call mkdir(&directory, "p")
+if empty($XDG_CACHE_HOME)
+  let $XDG_CACHE_HOME = '~/.cache'
 endif
-execute "source" "$XDG_CONFIG_HOME/nvim/init.vim"
+if empty($XDG_CONFIG_HOME)
+  let $XDG_CONFIG_HOME = '~/.config'
+endif
+set directory=$XDG_CACHE_HOME/vim/swap
+set backupdir=$XDG_CACHE_HOME/vim/backup
+set undodir=$XDG_CACHE_HOME/vim/undo
+set undofile
+set viminfo+="$XDG_CACHE_HOME/vim/viminfo"
+for d in [ &directory, &backupdir, &undodir, $XDG_CACHE_HOME."/vim/viminfo" ]
+  if !isdirectory(d)
+    call mkdir(d, "p")
+  endif
+endfor
+set runtimepath-=~/.vim
+set runtimepath-=~/.vim/after
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+" このディレクトリは runtimepath に含まれててファイル名の制約とか面倒なので
+" ./rc てディレクトリを掘って実体をそっちに移す
+execute 'source' expand('<sfile>:p:h').'/rc/vimrc'
