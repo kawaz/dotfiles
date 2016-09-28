@@ -1,5 +1,5 @@
 # cd fileでそのfileのあるディレクトリに移動する http://bit.ly/1dABtoO
-function cd() {
+function _cd_hacked() {
   if [[ -e $1 && ! -d $1 ]]; then
     builtin cd -- "$(dirname -- "$1")"
   else
@@ -12,4 +12,4 @@ function cd() {
   fi
   return $ret
 }
-
+alias cd='_cd_hacked'
