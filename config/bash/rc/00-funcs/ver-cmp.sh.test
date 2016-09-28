@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+# shellcheck disable=SC1090
+. "${0%.test}"
+
+! ver-eq
+  ver-eq 0 0
+  ver-eq 0 0.0
+  ver-eq 1.2.3 1.2.3
+  ver-eq 1.2.3 1.2.3.0
+! ver-eq 1.010 1.8
+  ver-eq 1.010 1.10
+! ver-eq 1.010 1.11
+! ver-eq "4.3.46(1)-release" 3.999
+! ver-eq "4.3.46(1)-release" 4.3
+  ver-eq "4.3.46(1)-release" 4.3.46.1
+! ver-eq "4.3.46(1)-release" 4.4
+! ver-eq "4.3.46(1)-release" 5.0
+! ver-eq 0.0.1
+! ver-eq 999
+  ver-eq "$BASH_VERSION"
+
+! ver-ne
+! ver-ne 0 0
+! ver-ne 0 0.0
+! ver-ne 1.2.3 1.2.3
+! ver-ne 1.2.3 1.2.3.0
+  ver-ne 1.010 1.8
+! ver-ne 1.010 1.10
+  ver-ne "4.3.46(1)-release" 3.999
+  ver-ne "4.3.46(1)-release" 4.3
+! ver-ne "4.3.46(1)-release" 4.3.46.1
+  ver-ne "4.3.46(1)-release" 4.4
+  ver-ne "4.3.46(1)-release" 5.0
+  ver-ne 0.0.1
+  ver-ne 999
+! ver-ne "$BASH_VERSION"
+
+! ver-ge
+  ver-ge 0 0
+  ver-ge 0 0.0
+  ver-ge 1.2.3 1.2.3
+  ver-ge 1.2.3 1.2.3.0
+  ver-ge 1.010 1.8
+  ver-ge 1.010 1.10
+! ver-ge 1.010 1.011
+  ver-ge "4.3.46(1)-release" 3.999
+  ver-ge "4.3.46(1)-release" 4.3
+  ver-ge "4.3.46(1)-release" 4.3.46.1
+! ver-ge "4.3.46(1)-release" 4.4
+! ver-ge "4.3.46(1)-release" 5.0
+  ver-ge 0.0.1
+! ver-ge 999
+  ver-ge "$BASH_VERSION"
+
+! ver-le
+  ver-le 0 0
+  ver-le 0 0.0
+  ver-le 1.2.3 1.2.3
+  ver-le 1.2.3 1.2.3.0
+! ver-le 1.010 1.8
+  ver-le 1.010 1.10
+  ver-le 1.010 1.011
+! ver-le "4.3.46(1)-release" 3.999
+! ver-le "4.3.46(1)-release" 4.3
+  ver-le "4.3.46(1)-release" 4.3.46.1
+  ver-le "4.3.46(1)-release" 4.4
+  ver-le "4.3.46(1)-release" 5.0
+! ver-le 0.0.1
+  ver-le 999
+  ver-le "$BASH_VERSION"
+
+! ver-gt
+! ver-gt 0 0
+! ver-gt 0 0.0
+! ver-gt 1.2.3 1.2.3
+! ver-gt 1.2.3 1.2.3.0
+  ver-gt 1.010 1.8
+! ver-gt 1.010 1.10
+! ver-gt 1.010 1.011
+  ver-gt "4.3.46(1)-release" 3.999
+  ver-gt "4.3.46(1)-release" 4.3
+! ver-gt "4.3.46(1)-release" 4.3.46.1
+! ver-gt "4.3.46(1)-release" 4.4
+! ver-gt "4.3.46(1)-release" 5.0
+  ver-gt 0.0.1
+! ver-gt 999
+! ver-gt "$BASH_VERSION"
+
+! ver-lt
+! ver-lt 0 0
+! ver-lt 0 0.0
+! ver-lt 1.2.3 1.2.3
+! ver-lt 1.2.3 1.2.3.0
+! ver-lt 1.010 1.8
+! ver-lt 1.010 1.10
+  ver-lt 1.010 1.011
+! ver-lt "4.3.46(1)-release" 3.999
+! ver-lt "4.3.46(1)-release" 4.3
+! ver-lt "4.3.46(1)-release" 4.3.46.1
+  ver-lt "4.3.46(1)-release" 4.4
+  ver-lt "4.3.46(1)-release" 5.0
+! ver-lt 0.0.1
+  ver-lt 999
+! ver-lt "$BASH_VERSION"
+
+echo "ALL OK"
