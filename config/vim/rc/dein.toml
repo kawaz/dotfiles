@@ -342,31 +342,6 @@ hook_add = '''
 '''
 
 
-
-
-## bash
-
-[[plugins]]
-repo = 'vim-scripts/bats.vim'
-on_ft = ['sh']
-
-
-
-## go
-
-[[plugins]]
-# golang completion
-#repo = 'zchee/deoplete-go'
-on_ft = ['go']
-build = 'make'
-hook_add = '''
-  let g:deoplete#sources#go#align_class = 1
-  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-  " MEMO: gocode set autobuild してfalseだったら
-  " gocode set autobuild true するとvendorディレクトリ内も保管できるようになる
-  " またはgo buildしてあるパッケージは補完出来るのでそれがよければautobuildは不用
-'''
-
 [[plugins]]
 repo = 'fatih/vim-go'
 on_ft = ['go']
@@ -449,10 +424,6 @@ hook_add = '''
 repo = 'soramugi/auto-ctags.vim'
 
 [[plugins]]
-repo = 'kawaz/batscheck.vim'
-on_ft = ['sh']
-
-[[plugins]]
 repo = 'kawaz/shellcheck.vim'
 on_ft = ['sh']
 
@@ -490,14 +461,6 @@ hook_add = '''
   " -s bash : shebang が無い場合のデフォルトをbashモードにする
   let g:syntastic_sh_shellcheck_args = '-x -s bash'
 '''
-
-# [[plugins]]
-# # asynchronous linter, instead of 'scrooloose/syntastic'
-# repo = 'benekastah/neomake'
-# hook_add = '''
-#   let g:neomake_open_list = 1
-#   " autocmd VimEnter,BufWritePost * Neomake
-# '''
 
 [[plugins]]
 repo = 'tyru/vim-altercmd'
