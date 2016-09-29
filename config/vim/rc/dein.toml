@@ -384,8 +384,7 @@ hook_post_source = '''
 
 
 ## test
-[[plugins]]
-# テストコードへジャンプ
+[[plugins]] # テストコードへジャンプ
 repo = 'janko-m/vim-test'
 hook_add = '''
   let g:test#strategy = 'neovim'
@@ -410,6 +409,7 @@ hook_add = '''
   let g:auto_ctags_tags_name = 'tags'
   let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
   let g:auto_ctags_filetype_mode = 1
+  " let g:tagbar_left = 1
 '''
 
 [[plugins]] # g> g< gs で引数の位置交換を簡単に行う
@@ -421,8 +421,7 @@ hook_add = '''
   autocmd FileType c,cpp,rust,haskell,python,go,javascript,ruby,php nmap <buffer>K <Plug>(devdocs-under-cursor)
 '''
 
-[[plugins]]
-# 自動でctagsを実行する
+[[plugins]] # 自動でctagsを実行する
 repo = 'soramugi/auto-ctags.vim'
 
 [[plugins]]
@@ -436,10 +435,7 @@ hook_add = "let g:syntastic_javascript_checkers = ['eslint']"
 [[plugins]]
 repo = 'kawaz/quickrun-local-mocha.vim'
 
-## syntastic vs neomake
-
-[[plugins]]
-# ファイル保存時にエラー行があればハイライトする
+[[plugins]] # ファイル保存時にエラー行があればハイライトする
 repo = 'scrooloose/syntastic'
 hook_add = '''
   let g:syntastic_always_populate_loc_list = 1
@@ -475,3 +471,4 @@ hook_source = '''
   " helpを横分割で右側に開く
   CAlterCommand e tabnew
 '''
+
