@@ -272,8 +272,8 @@ repo = 'tpope/vim-fugitive'
 repo = 'tyru/caw.vim'
 hook_add = '''
   " C-/ でコメントアウト、ビジュアルモードでは選択範囲が解除されないよう直後にgvを足す
-  nmap <C-_> <Plug>(caw:i:toggle)
-  vmap <C-_> <Plug>(caw:i:toggle)gv
+  nmap <C-_> <Plug>(caw:hatpos:toggle)
+  vmap <C-_> <Plug>(caw:hatpos:toggle)gv
 '''
 
 [[plugins]]
