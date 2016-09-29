@@ -374,6 +374,8 @@ hook_post_source = '''
   au FileType go nmap <Leader>s <Plug>(go-implements)
   au FileType go nmap <Leader>i <Plug>(go-info)
   au FileType go nmap <Leader>e <Plug>(go-rename)
+'''
+hook_post_source = '''
   " 関連ツールの自動インストール
   if executable('go')
     execute 'GoInstallBinaries'
