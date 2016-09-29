@@ -53,37 +53,94 @@ hook_add = '''
 repo = 'Shougo/neocomplete'
 if = 'has("lua")'
 on_i = 1
+hook_add = '''
+  " 最初の候補がデフォで選択されないようにする
+  set completeopt+=noinsert
+  " 起動時に有効化
+  let g:neocomplete#enable_at_startup = 1
+  " " 自動で補完候補を出す
+  let g:neocomplete#disable_auto_complete = 0
+  " メニューの一番目を自動選択
+  let g:neocomplete#enable_auto_select = 1
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+
+  let g:neocomplete#keyword_patterns = get(g:, 'neocomplete#keyword_pattern', {})
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+  " ログファイルは補完を停止
+  let g:neocomplete#sources#buffer#disabled_pattern = '\.log\|\.log\.\|\.jax\|Log.txt'
+  " " 大文字小文字とかあいまい検索とか
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case  = 1
+  let g:neocomplete#enable_fuzzy_completion = 1
+
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+  let g:neocomplete#force_omni_input_patterns = get(g:, 'neocomplete#force_omni_input_patterns', {})
+  let g:neocomplete#force_omni_input_patterns.go = '[^. \t]\.\%(\h\w*\)\?'
+  let g:neocomplete#force_omni_input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+  let g:neocomplete#delimiter_patterns = get(g:, 'neocomplete#delimiter_patterns', {})
+  let g:neocomplete#delimiter_patterns.ruby = ['::']
+  let g:neocomplete#same_filetypes = get(g:, 'neocomplete#same_filetypes', {})
+  let g:neocomplete#same_filetypes.ruby = 'eruby'
+  " KeyMaps
+  " Tabでいい感じに補完
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " Enterで確定（確定と同時に改行しない）
+  inoremap <expr><CR>  pumvisible() ? neocomplete#close_popup() : "<CR>"
+'''
+hook_post_source = '''
+  " neco-look を連携させる（カスタムソース追加＆text_mode_filetypesで有効化したいftリストの設定が必要）
+  call neocomplete#custom#source('look', 'min_pattern_length', 1)
+  let g:neocomplete#text_mode_filetypes = get(g:, 'neocomplete#text_mode_filetypes', {})
+  for t in [ 'rst', 'markdown', 'gitrebase', 'gitcommit', 'vcs-commit', 'hybrid', 'text', 'help', 'tex' ]
+    let g:neocomplete#text_mode_filetypes[t] = 1
+  endfor
+'''
+[[plugins]] # 英単語が補完されるようになる(neocompleteから呼ばれる)
+repo = 'ujihisa/neco-look'
+on_i = 1
+[[plugins]] # Github の絵文字やIssueやリポジトリURLが補完されるようになる
+repo = 'rhysd/github-complete.vim'
+on_i = 1
+[[plugins]] # Syntaxファイルから補完候補を作ってくれる
+repo = 'Shougo/neco-syntax'
+on_i = 1
+
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets']
 on_i = 1
-hook_add_ = '''
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_complete_done = 1
-  let g:neosnippet#expand_word_boundary = 1
-  " スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される)
-  let g:neosnippet#snippets_directory = []
-  if exists('$DOTFILES_DIR')
-  let g:neosnippet#snippets_directory += [$DOTFILES_DIR . '/etc/vim/neosnippets']
-  endif
-  if ! empty(dein#get('neosnippet-snippets'))
+hook_post_source = '''
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#enable_complete_done = 1
+let g:neosnippet#expand_word_boundary = 1
+" スニペットディレクトリを設定（同じスニペットが見つかった場合は最初の先に見つかったほうが優先される)
+let g:neosnippet#snippets_directory = get(g:, 'neosnippet#snippets_directory', [])
+let g:neosnippet#snippets_directory += [$XDG_CONFIG_HOME . '/vim/rc/neosnippets']
+if ! empty(dein#get('neosnippet-snippets'))
   let g:neosnippet#snippets_directory += [dein#get('neosnippet-snippets').path . '/neosnippets']
-  endif
-  " Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
-  imap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : pumvisible() ? '\<C-n>' : '\<TAB>'
-  smap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : '\<TAB>'
-  " For snippet_complete marker.
-  if has('conceal')
+endif
+" Plugin key-mappings. スニペット補完候補がある場合は C-k でスニペットを展開する（Enterではない）
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+" " SuperTab like snippets behavior. スニペットのプレースホルダ上にいる時はTabで次のプレースホルダにジャンプする
+" imap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : pumvisible() ? '\<C-n>' : '\<TAB>'
+" smap <expr><TAB> neosnippet#jumpable() ? '\<Plug>(neosnippet_expand_or_jump)' : '\<TAB>'
+" For snippet_complete marker.
+if has('conceal')
   set conceallevel=2 concealcursor=i
-  endif
+endif
 '''
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
 
 
 [[plugins]] # カラースキーマ
