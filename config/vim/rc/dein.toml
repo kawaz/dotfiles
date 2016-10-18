@@ -439,6 +439,10 @@ repo = 'kawaz/quickrun-local-mocha.vim'
 
 [[plugins]] # ファイル保存時にエラー行があればハイライトする
 repo = 'scrooloose/syntastic'
+hook_post_update = '''
+  " VimEnter時の謎エラーの回避（とりあえず版）
+  call system('sed -i.bak "s/lockvar g:syntastic_version/\"&/" ' . shellescape(dein#get("syntastic").path . "/plugin/syntastic.vim"))
+'''
 hook_add = '''
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 1
