@@ -2,3 +2,4 @@
 /cache
 /local
 /config/nvim/.init.vim-rplugin~
+/config/gocode/config.json
