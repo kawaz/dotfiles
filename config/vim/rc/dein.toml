@@ -160,6 +160,8 @@ depends = ['vim-hybrid']
 hook_add = '''
   " lightlineがあればshowmodeは不用なので消す
   set noshowmode
+  " ステータスラインを常に表示
+  set laststatus=2
   " フォントパッチが何種類かあるのでコードでメモ
   let s:powerfonts = {
         \ 'powerline':     { 'left':"\ue0b0", 'leftsub':"\ue0b1", 'right':"\ue0b2", 'rightsub':"\ue0b3", 'branch':"\ue0a0", 'linecolumn':"\ue0a1", 'readonly':"\ue0a2" },
