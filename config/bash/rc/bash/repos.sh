@@ -4,7 +4,7 @@
 # peco で移動
 cd-repos() {
   local d
-  local repos="${XDG_DATA_HOME:-~/.local/share}/repos"
+  local repos="${XDG_DATA_HOME:-~/.local/share}/gopath/src"
   d=$(cd "$repos" && for d in */*/*/.git; do echo "${d%/.git}"; done | peco --select-1 --layout bottom-up --query "$READLINE_LINE$*")
   if [[ -n $d ]]; then
     READLINE_LINE="cd $(printf %q "$repos/$d")"
