@@ -8,8 +8,9 @@ if empty($XDG_CONFIG_HOME)
 endif
 set directory=$XDG_CACHE_HOME/vim/swap
 set backupdir=$XDG_CACHE_HOME/vim/backup
+" set backup
 set undodir=$XDG_CACHE_HOME/vim/undo
-set undofile
+" set undofile
 set viminfo+="$XDG_CACHE_HOME/vim/viminfo"
 for d in [ &directory, &backupdir, &undodir, $XDG_CACHE_HOME."/vim/viminfo" ]
   if !isdirectory(d)
