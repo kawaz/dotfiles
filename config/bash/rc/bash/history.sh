@@ -72,8 +72,9 @@ if type peco >/dev/null 2>&1; then
       count=0
       while (( count < ${HISTSIZE:-500} )) && read -r f; do
         [[ -f $f ]] || continue
-        while (( count < ${HISTSIZE:-500} )) && read -r ts line; do
-          eval "line=$line"
+        while (( count < ${HISTSIZE:-500} )) && IFS= read -r line; do
+          read -r ts line <<<"$line."
+          eval "line=${line%.}"
           if [[ $line == *$'\n'* ]]; then
             line="$(printf %q "$line") #MULTILINE_HISOTRY"
           fi
@@ -94,7 +95,7 @@ if type peco >/dev/null 2>&1; then
     } |
     # 既に何か入力中でかつ行末カーソルなら先頭一致でフィルタ
     if [[ -n $READLINE_LINE && ${#READLINE_LINE} == "$READLINE_POINT" ]]; then
-      while read -r line; do
+      while IFS= read -r line; do
         [[ ${line#* } == "$READLINE_LINE"* ]] && printf '%s\n' "$line"
       done |
       # フィルタ済みなのでデフォルトクエリ無しでpecoる
