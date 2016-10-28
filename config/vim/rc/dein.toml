@@ -176,7 +176,7 @@ hook_add = '''
         \ 'colorscheme': 'wombat',
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'fugitive', 'gitgutter', 'readonly', 'filename', 'modified' ] ]
+        \             [ 'fugitive', 'gitgutter', 'readonly', 'relativepath', 'modified' ] ]
         \ },
         \ 'component_function': {
         \   'fugitive': 'LightLineFugitive',
