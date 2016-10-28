@@ -63,27 +63,27 @@ let s:lcs_tab   = escape(matchstr(&listchars, 'tab:\zs[^,]\{2\}'), '\.*^$[]~')
 let s:lcs_trail = escape(matchstr(&listchars, 'trail:\zs.'), '\.*^$[]~')
 let s:lcs_eol   = escape(matchstr(&listchars, 'eol:\zs.'), '\.*^$[]~')
 " listchars文字のコピペミス(trail,eol)
-au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissEol Error
 if !empty(s:lcs_eol)
-  au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissEol", (empty(s:lcs_trail)?'':s:lcs_trail.'*').s:lcs_eol.'\s*$')
+  au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissEol Error
+  au MyAutoCmd Colorscheme * call matchadd("MyHi_CopipeMissEol", (empty(s:lcs_trail)?'':s:lcs_trail.'*').s:lcs_eol.'\s*$')
 endif
 " listchars文字のコピペミス(tab)
-au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissTab Error
 if !empty(s:lcs_tab)
-  au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_CopipeMissTab", s:lcs_tab.'*')
+  au MyAutoCmd Colorscheme * hi link MyHi_CopipeMissTab Error
+  au MyAutoCmd Colorscheme * call matchadd("MyHi_CopipeMissTab", s:lcs_tab.'*')
 endif
 " 空白とTABの混合(表示自体はlistcharsのtabに任せる)
 au MyAutoCmd Colorscheme * hi link MyHi_MixedTabSpace WarningMsg
-au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_MixedTabSpace", '\%(\t \| \t\)')
+au MyAutoCmd Colorscheme * call matchadd("MyHi_MixedTabSpace", '\%(\t \| \t\)')
 " 行末スペース(表示はlistcharsのtrailに任せる)
 au MyAutoCmd Colorscheme * hi link MyHi_TrailSpace WarningMsg
-au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_TrailSpace", '\s\+$')
+au MyAutoCmd Colorscheme * call matchadd("MyHi_TrailSpace", '\s\+$')
 " 全角空白(表示自体は全角空白が可視化されてるRictyフォントとかをって対応)
 au MyAutoCmd Colorscheme * hi link MyHi_ZenkakuSpace WarningMsg
-au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
+au MyAutoCmd Colorscheme * call matchadd("MyHi_ZenkakuSpace", '\%u3000')
 " FIXME 改行なしのEOF(表示自体ははlistcharsのeolに任せる)
 " au MyAutoCmd Colorscheme * hi link MyHi_EofWithoutNL WarningMsg
-" au MyAutoCmd VimEnter,WinEnter * call matchadd("MyHi_EofWithoutNL", '[^\n]\zs\%$')
+" au MyAutoCmd Colorscheme * call matchadd("MyHi_EofWithoutNL", '[^\n]\zs\%$')
 "}}}
 
 " 編集系
