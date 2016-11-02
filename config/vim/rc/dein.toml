@@ -173,7 +173,7 @@ hook_add = '''
   " TODO: winwidth(0) を見てレスポンシブ対応
   " TODO: gitのahead/behind数表示
   let g:lightline = {
-        \ 'colorscheme': 'wombat',
+        " \ 'colorscheme': 'wombat',
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
         \             [ 'fugitive', 'gitgutter', 'readonly', 'relativepath', 'modified' ] ]
