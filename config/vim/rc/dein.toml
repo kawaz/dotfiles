@@ -481,3 +481,6 @@ hook_source = '''
   CAlterCommand e tabnew
 '''
 
+[[plugins]]
+# ツリー状のundo履歴をブラウズする :GundoTree
+repo = 'sjl/gundo.vim'
