@@ -251,6 +251,8 @@ repo = 'bronson/vim-trailing-whitespace'
 repo = 'kien/ctrlp.vim'
 hook_add = '''
   let g:ctrlp_use_migemo = 1
+  " ignoreされてるファイル/ディレクトリは検索しない（高速化）
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 '''
 
 [[plugins]] # 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
