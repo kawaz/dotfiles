@@ -1,5 +1,5 @@
 {
-  "InitialFilter": "IgnoreCase",
+  "InitialFilter": "Fuzzy",
   "Style": {
     "Basic": ["default", "on_default"],
     "SavedSelection": ["white", "on_yellow", "bold"],
