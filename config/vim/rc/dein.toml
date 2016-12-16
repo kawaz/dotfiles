@@ -297,6 +297,8 @@ hook_add = '''
 # :Tabularize /, とかでアライン整形（使い方メモ http://teotr.github.io/blog/2011/04/15/tabular/
 repo = 'godlygeek/tabular'
 
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
 
 # languages
 ## rust
