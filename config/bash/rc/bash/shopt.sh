@@ -3,3 +3,5 @@ if ver-ge 4.2.29; then
   shopt -s direxpand
 fi
 
+# ヒストリ展開を無効化（!が特殊文字になっててウザいやつ）
+set +H
