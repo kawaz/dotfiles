@@ -317,20 +317,22 @@ hook_source = '''
 let g:vim_jsx_pretty_enable_jsx_highlight = 1
 let g:vim_jsx_pretty_colorful_config = 1
 '''
-[[plugins]]
-repo = 'Valloric/YouCompleteMe'
-build = 'python2 ./install.py --clang-completer --system-libclang'
-on_ft = ['javascript']
-hook_source = '''
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-let g:EclimCompletionMethod = 'omnifunc'
-autocmd FileType javascript nnoremap ,gd :<C-u>YcmCompleter GetDoc<CR>
-autocmd Filetype javascript nnoremap ,gt :<C-u>YcmCompleter GoTo<CR>
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-'''
+
+# update時のbuildがおもすぎなのでペンディング
+# [[plugins]]
+# repo = 'Valloric/YouCompleteMe'
+# build = 'python2 ./install.py --clang-completer --system-libclang'
+# on_ft = ['javascript']
+# hook_source = '''
+# let g:ycm_collect_identifiers_from_tags_files = 1
+# let g:UltiSnipsExpandTrigger = '<C-j>'
+# let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+# let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+# let g:EclimCompletionMethod = 'omnifunc'
+# autocmd FileType javascript nnoremap ,gd :<C-u>YcmCompleter GetDoc<CR>
+# autocmd Filetype javascript nnoremap ,gt :<C-u>YcmCompleter GoTo<CR>
+# autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+# '''
 
 ## rust
 [[plugins]]
