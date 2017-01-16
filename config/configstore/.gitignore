@@ -1,1 +1,3 @@
-update-notifier-nodemon.json
+# https://github.com/yeoman/update-notifier が自動でつくるファイルだが lastUpdateCheck とかいう自動更新されるフィールドが含まれる仕様のせいで管理しづらい。
+# 本来は Issue 立てて lastUpdateCheck の保存は XDG_COFIG_HOME じゃなく、XDG_CACHE_HOME の方を使えと文句言いたいが面倒なので無視で対処してる。
+/update-notifier-*.json
