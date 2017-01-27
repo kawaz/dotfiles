@@ -5,7 +5,7 @@
 cd-repos() {
   local d
   local repos="${XDG_DATA_HOME:-~/.local/share}/gopath/src"
-  d=$(cd "$repos" && for d in */*/*/.git; do echo "${d%/.git}"; done | peco --select-1 --layout bottom-up --query "$READLINE_LINE$*")
+  d=$(cd "$repos" && env - ls -td */*/*/.git | while read -r d;do echo "${d%/.git}"; done | peco --select-1 --layout bottom-up --query "$READLINE_LINE$*")
   if [[ -n $d ]]; then
     READLINE_LINE="cd $(printf %q "$repos/$d")"
     READLINE_POINT=${#READLINE_LINE}
