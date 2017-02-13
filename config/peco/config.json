@@ -10,7 +10,6 @@
   "Keymap": {
     "Pgup": "peco.ScrollPageUp",
     "Pgdn": "peco.ScrollPageDown",
-    "C-r": "peco.SelectUp",
     "ArrowLeft": "peco.BackwardChar",
     "ArrowRight": "peco.ForwardChar"
   }
