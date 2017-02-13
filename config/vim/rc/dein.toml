@@ -169,20 +169,22 @@ hook_add = '''
         \ }
   " Patched fonts for Powerline https://github.com/powerline/fonts
   let s:powerfont = s:powerfonts['powerline']
-  " TODO: syntastic, ctrlpmark, unite, vimshell, vimfiler, ...対応
+  " TODO: ctrlpmark, unite, vimshell, vimfiler, ...対応
   " TODO: winwidth(0) を見てレスポンシブ対応
   " TODO: gitのahead/behind数表示
   let g:lightline = {
         " \ 'colorscheme': 'wombat',
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'fugitive', 'gitgutter', 'readonly', 'relativepath', 'modified' ] ]
+        \             [ 'fugitive', 'gitgutter', 'readonly', 'relativepath', 'modified' ],
+        \             [ 'ale' ] ]
         \ },
         \ 'component_function': {
         \   'fugitive': 'LightLineFugitive',
         \   'gitgutter': 'LightLineGitgutter',
         \   'readonly': 'LightLineReadonly',
-        \   'modified': 'LightLineModified'
+        \   'modified': 'LightLineModified',
+        \   'ale': 'LightLineALEStatus'
         \ },
         \ 'separator': { 'left': s:powerfont.left, 'right': s:powerfont.right },
         \ 'subseparator': { 'left': s:powerfont.leftsub, 'right': s:powerfont.rightsub }
@@ -226,6 +228,10 @@ hook_add = '''
   " 編集マーク
   function! LightLineModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+  " ALE
+  function! LightLineALEStatus()
+    return ALEGetStatusLine()
   endfunction
 '''
 
@@ -397,9 +403,6 @@ hook_post_source = '''
   let g:go_metalinter_autosave = 1
   let g:go_auto_type_info = 1
   let g:go_auto_sameids = 1
-  " syntastic
-  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:go_list_type = "quickfix"
   " TODO: キーマップはまだ確認してないので後で確認する
   au FileType go nmap <leader>r <Plug>(go-run)
@@ -473,39 +476,26 @@ repo = 'kawaz/shellcheck.vim'
 on_ft = ['sh']
 
 [[plugins]]
-repo = 'kawaz/syntastic-local-eslint.vim'
-hook_add = "let g:syntastic_javascript_checkers = ['eslint']"
-
-[[plugins]]
 repo = 'kawaz/quickrun-local-mocha.vim'
 
-[[plugins]] # ファイル保存時にエラー行があればハイライトする
-repo = 'scrooloose/syntastic'
-hook_post_update = '''
-  " VimEnter時の謎エラーの回避（とりあえず版）
-  call system('sed -i.bak "s/lockvar g:syntastic_version/\"&/" ' . shellescape(dein#get("syntastic").path . "/plugin/syntastic.vim"))
-'''
+[[plugins]] # 今時のSyntastic/Neomake的なやつ（非同期で軽い）
+repo = 'w0rp/ale'
 hook_add = '''
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_error_symbol='✗'
-  let g:syntastic_warning_symbol='⚠'
-  let g:syntastic_style_error_symbol = '✗'
-  let g:syntastic_style_warning_symbol = '⚠'
-  " debug系
-  let g:syntastic_debug = 0
-  let g:syntastic_debug_file = expand('$TMPDIR/syntastic.log')
-  function! s:SyntasticDebugToggle()
-    let g:syntastic_debug = !g:syntastic_debug
-    echo (g:syntastic_debug ? '🔔  Enabled' : '🔕a Disabled').': ' . g:syntastic_debug_file
-  endfunction
-  command! SyntasticDebugToggle :call s:SyntasticDebugToggle()
-  " shellcheckの引数メモ
-  " -x      : 変数未定義のチェックなどでsource先ファイルも考慮するようにする
-  " -s bash : shebang が無い場合のデフォルトをbashモードにする
-  let g:syntastic_sh_shellcheck_args = '-x -s bash'
+  let g:ale_sign_error = '⨉ '
+  let g:ale_sign_warning = '⚠️ '
+  let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
+  " use quickfix instead of loclist
+  let g:ale_set_loclist = 0
+  let g:ale_set_quickfix = 1
+  let g:ale_open_list = 1
+  let g:ale_keep_list_window_open = 0
+  " TODO: hotfix for ale_open_list bug https://github.com/w0rp/ale/issues/272
+  if 1
+    let g:ale_lint_on_save = 1
+    let g:ale_lint_on_enter = 0
+  endif
+  " shellcheck ignores
+  let g:ale_linters_sh_shellckeck_exclusions = 'SCxxxx'
 '''
 
 [[plugins]]
