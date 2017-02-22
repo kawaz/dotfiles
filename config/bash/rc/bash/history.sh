@@ -34,7 +34,8 @@ history_push() {
   if [[ -z $history_push_current_session ]]; then
     history_push_current_session="$(date +%s)_$$_$BASH_SUBSHELL"
   fi
-  if [[ $(HISTTIMEFORMAT='' history 1) =~ ^\ *([0-9]+)[$' \t\n']+(.+)$ ]]; then
+  matcher=$'^\ *([0-9]+)[ \t\n]+(.+)$'
+  if [[ $(HISTTIMEFORMAT='' history 1) =~ $matcher ]]; then
     if [[ ${BASH_REMATCH[1]} != "$history_push_prev" ]]; then
       history_push_prev=${BASH_REMATCH[1]}
       local ms ymd d f
