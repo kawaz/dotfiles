@@ -310,19 +310,17 @@ repo = 'editorconfig/editorconfig-vim'
 
 ## Javascript
 [[plugins]]
-repo = 'othree/yajs.vim'
+repo = 'pangloss/vim-javascript'
 on_ft = ['javascript']
-[[plugins]]
-repo = 'othree/es.next.syntax.vim'
-on_ft = ['javascript']
-[[plugins]]
-# http://maxmellon.hateblo.jp/entry/2016/12/13/000000
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascript']
-hook_source = '''
-let g:vim_jsx_pretty_enable_jsx_highlight = 1
-let g:vim_jsx_pretty_colorful_config = 1
+hook_add = '''
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+" set foldmethod=syntax
 '''
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = ['javascript']
 
 # update時のbuildがおもすぎなのでペンディング
 # [[plugins]]
