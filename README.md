@@ -1,6 +1,6 @@
 kawaz'z dotfiles
 
-## SETUP
+# SETUP
 とりあえず以下を実行しておけば大体環境が整う。
 
 ```bash
@@ -14,11 +14,11 @@ echo ". ~/.dotfiles/config/bash/bashrc" >> ~/.bashrc
 echo ". ~/.dotfiles/config/bash/bashrc-delay.sh" >> ~/.bashrc
 ```
 
-## 起動処理メモ
+# 起動処理メモ
 - `config/bash/bashrc` は `config/bash/rc*/*.sh` を順番に読み込んでいく
 - ローカル環境のみで読み込みたい場合は rc.local か rc.after に置いておく
 
-## 設定適用の遅延について
+# 設定適用の遅延について
 共用サーバの共用ユーザでほかの人も利用するような環境の場合は bashrc の代わりに、bashrc-delay.sh を読むようにしておく。
 自分環境を有効化したい場合は手で `dotfiles-on` を実行すると bashrc の方の読込みが発動する。
 または、環境変数 `XMODIFIERS` に `@dotfiles=on` が含まれていると `bashrc-delay.sh` が読み込まれた直後に自動で `dotfiles-on` が実行される。
