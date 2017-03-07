@@ -129,9 +129,9 @@ endif " }}}
 
 " マップ定義 {{{
 " F2,F3でタブ切り替え、F4でバッファ削除 {{{
-map <F2> <ESC>:tabprevious<CR>
-map <F3> <ESC>:tabnext<CR>
-map <F4> <ESC>:tabclose<CR>
+nmap <F2> <ESC>:tabprevious<CR>
+nmap <F3> <ESC>:tabnext<CR>
+nmap <F4> <ESC>:tabclose<CR>
 " }}}
 " 削除キーでyankしない
 nnoremap x "_x
