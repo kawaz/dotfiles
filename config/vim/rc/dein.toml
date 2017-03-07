@@ -364,18 +364,22 @@ on_ft = ['toml']
 
 
 ##  markdown
-
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+depends = ['tabular', 'vim-markdown-quote-syntax']
+on_ft = ['markdown']
+hook_add = '''
+  let g:vim_markdown_folding_disabled = 1
+  let g:vim_markdown_better_folding = 1
+  let g:vim_markdown_no_default_key_mappings=1
+  let g:vim_markdown_new_list_item_indent = 2
+'''
+hook_post_source = '''
+  syntax cluster Spell remove=mkdCode
+'''
 [[plugins]]
 repo = 'joker1007/vim-markdown-quote-syntax'
 on_ft = ['markdown']
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown']
-depends = ['tabular', 'vim-markdown-quote-syntax']
-hook_add = '''
-  let g:vim_markdown_new_list_item_indent = 2
-'''
 
 [[plugins]]
 # 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
