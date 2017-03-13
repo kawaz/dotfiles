@@ -304,6 +304,11 @@ hook_add = '''
 repo = 'godlygeek/tabular'
 
 [[plugins]]
+# Markdownのテーブル編集を簡単にする :TableModeToggle
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = 'markdown'
+
+[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 # languages
