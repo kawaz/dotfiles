@@ -1,6 +1,7 @@
 [user]
   name = Yoshiaki Kawazu
   email = kawazzz@gmail.com
+  useConfigOnly = true
 [color]
   ui = auto
 [log]
