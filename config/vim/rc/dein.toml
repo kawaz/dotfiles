@@ -326,6 +326,10 @@ let g:javascript_plugin_flow = 1
 [[plugins]]
 repo = 'mxw/vim-jsx'
 on_ft = ['javascript']
+hook_add = '''
+" 拡張子が.jsでも効くようにする(デフォルトは.jsxのみ)
+let g:jsx_ext_required = 0
+'''
 
 # update時のbuildがおもすぎなのでペンディング
 # [[plugins]]
