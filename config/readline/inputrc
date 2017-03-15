@@ -21,4 +21,17 @@
 $if Bash
   # C-^ で $DOTFILES_DIR/ が入力されるようにする
   "\C-^": '$DOTFILES_DIR/'
+
+  # ターミナルのベルを無効化する（audible=音, visible=画面フラッシュ, none:無視）(default: audible)
+  set bell-style none
+  # 補完候補のマッチ部分をハイライトする (default: off)
+  set colored-completion-prefix on
+  # ファイル名の補完候補を色付けする (default: off)
+  set colored-stats on
+  # ディレクトリ名の補完候補の末尾に / を付ける (default: on)
+  set mark-directories on
+  # 補完候補数が多い時に表示確認を行うかどうかのしきい値（0なら常に確認しない） (default: 100)
+  set completion-query-items 0
+  # 補完候補の表示が画面に収まらない時にMORE風ページャを起動するか？本当は好きなページャを使いたいがそれは出来ないぽ (default: on)
+  set page-completions on
 $endif
