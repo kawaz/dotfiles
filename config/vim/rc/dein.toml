@@ -254,7 +254,7 @@ let g:quickrun_config._ = {
 repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]] # C-pでファイル選択が捗る http://bit.ly/NuXA5u
-repo = 'kien/ctrlp.vim'
+repo = 'ctrlpvim/ctrlp.vim'
 hook_add = '''
   let g:ctrlp_use_migemo = 1
   " ignoreされてるファイル/ディレクトリは検索しない（高速化）
