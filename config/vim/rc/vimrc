@@ -166,6 +166,9 @@ if dein#util#_is_mac()
 endif
 " すぐ閉じたいfiletypeを q で閉じる
 au MyAutoCmd FileType help,qf,quickrun nmap q :bw<CR>
+" Qをコロス
+nnoremap Q <Nop>
+
 " }}} マップ定義
 
 " ft=sh の設定 set fmd=syntax にすると効く
