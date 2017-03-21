@@ -254,11 +254,17 @@ let g:quickrun_config._ = {
 repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]] # C-pでファイル選択が捗る http://bit.ly/NuXA5u
-repo = 'kien/ctrlp.vim'
+repo = 'ctrlpvim/ctrlp.vim'
 hook_add = '''
-  let g:ctrlp_use_migemo = 1
+  " <cr>をタブで開くにマッピング（eのデフォルトから<cr>を除いて、tのマッピングに追加する）
+  let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+    \ 'AcceptSelection("t")': ['<c-t>', '<cr>']
+    \ }
   " ignoreされてるファイル/ディレクトリは検索しない（高速化）
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+  " .gitなどを探してそこから下を探せるようにする
+  let g:ctrlp_working_path_mode = 'ra'
 '''
 
 [[plugins]] # 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
