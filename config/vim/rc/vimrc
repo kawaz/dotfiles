@@ -164,8 +164,8 @@ if dein#util#_is_mac()
   " 選択範囲をyank→ ヤンク内容が入った無名レジスタをpbcopyに渡す→ 選択範囲を元に戻す
   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>gv
 endif
-" help を q で閉じる
-au MyAutoCmd FileType help nmap q :bw<CR>
+" すぐ閉じたいfiletypeを q で閉じる
+au MyAutoCmd FileType help,qf,quickrun nmap q :bw<CR>
 " }}} マップ定義
 
 " ft=sh の設定 set fmd=syntax にすると効く
