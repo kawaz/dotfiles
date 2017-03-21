@@ -92,10 +92,11 @@ set autoindent " オートインデントを有効化
 autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
 autocmd FileType * setlocal formatoptions-=tc "自動折り返しを無効にする
 autocmd InsertLeave * set nopaste "インサートモードを抜けたら自動でPASTEモードを抜ける
-set softtabstop=2 " タブ幅を2タブスペースにする {{{
+" タブ幅を2タブスペースにする
+set softtabstop=2
 set shiftwidth=2
 set tabstop=2
-set expandtab " }}}
+set expandtab
 
 " 検索系
 set ignorecase " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -128,14 +129,13 @@ if &term =~# 'xterm' && !has('nvim')
 endif " }}}
 
 " マップ定義 {{{
-" F2,F3でタブ切り替え、F4でバッファ削除 {{{
+" F2,F3でタブ切り替え、F4でバッファ削除
 nmap <F2> <ESC>:tabprevious<CR>
 nmap <F3> <ESC>:tabnext<CR>
 nmap <F4> <ESC>:tabclose<CR>
-" }}}
 " 削除キーでyankしない
 nnoremap x "_x
-" 表示行単位で行移動する {{{
+" 表示行単位で行移動する
 nnoremap j gj
 onoremap j gj
 xnoremap j gj
@@ -148,25 +148,22 @@ xnoremap <Down> gj
 nnoremap <Up> gk
 onoremap <Up> gk
 xnoremap <Up> gk
-" }}}
-" C-a, C-eで行頭行末に移動する {{{
+" C-a, C-eで行頭行末に移動する
 inoremap <C-a> <ESC>^i
 inoremap <C-e> <ESC>$i
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" }}}
-" VISUALモードでインデント操作後に選択範囲を保つ {{{
+" VISUALモードでインデント操作後に選択範囲を保つ
 vnoremap = =gv
 vnoremap > >gv
 vnoremap < <gv
-" }}}
-" C-c でMacのクリップボードにコピーする {{{
+" C-c でMacのクリップボードにコピーする
 if dein#util#_is_mac()
   " 無名レジスタ""の内容をpbcopyに渡す
   nmap <C-c> :call system('pbcopy', getreg('"'))<CR>
   " 選択範囲をyank→ ヤンク内容が入った無名レジスタをpbcopyに渡す→ 選択範囲を元に戻す
   vmap <C-c> y:call system('pbcopy', getreg('"'))<CR>gv
-endif " }}}
+endif
 " help を q で閉じる
 au MyAutoCmd FileType help nmap q :bw<CR>
 " }}} マップ定義
