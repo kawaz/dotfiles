@@ -508,10 +508,12 @@ hook_add = '''
     let g:ale_set_loclist = 0
     let g:ale_set_quickfix = 1
   endif
-  " shellcheck ignores
-  let g:ale_linters_sh_shellckeck_exclusions = 'SCxxxx'
   " let g:ale_open_list = 1
   " let g:ale_keep_list_window_open = 0
+  " shellcheck ignores (comma separated value, ex:'SCxxxx,SCxxxx')
+  " SC1091: 変数のあるsource (例:source "$foo/bar.sh")
+  " SC2016: シングルクオート文字列中の変数ぽいのは展開されないよ警告 (例:echo '$foo')
+  let g:ale_linters_sh_shellcheck_exclusions = 'SC1091,SC2016'
 '''
 
 [[plugins]]
