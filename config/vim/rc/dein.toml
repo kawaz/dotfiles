@@ -510,6 +510,9 @@ hook_add = '''
   endif
   " let g:ale_open_list = 1
   " let g:ale_keep_list_window_open = 0
+  " C-j/k でALE警告箇所を移動する
+  nmap <C-K> <Plug>(ale_previous)
+  nmap <C-J> <Plug>(ale_next)
   " shellcheck ignores (comma separated value, ex:'SCxxxx,SCxxxx')
   " SC1091: 変数のあるsource (例:source "$foo/bar.sh")
   " SC2016: シングルクオート文字列中の変数ぽいのは展開されないよ警告 (例:echo '$foo')
