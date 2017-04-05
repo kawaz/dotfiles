@@ -503,18 +503,15 @@ hook_add = '''
   let g:ale_sign_error = '⨉ '
   let g:ale_sign_warning = '⚠️ '
   let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
-  " use quickfix instead of loclist
-  let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 1
-  let g:ale_open_list = 1
-  let g:ale_keep_list_window_open = 0
-  " TODO: hotfix for ale_open_list bug https://github.com/w0rp/ale/issues/272
   if 1
-    let g:ale_lint_on_save = 1
-    let g:ale_lint_on_enter = 0
+    " use quickfix instead of loclist
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 1
   endif
   " shellcheck ignores
   let g:ale_linters_sh_shellckeck_exclusions = 'SCxxxx'
+  " let g:ale_open_list = 1
+  " let g:ale_keep_list_window_open = 0
 '''
 
 [[plugins]]
