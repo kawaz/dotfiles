@@ -499,6 +499,7 @@ repo = 'kawaz/quickrun-local-mocha.vim'
 [[plugins]] # 今時のSyntastic/Neomake的なやつ（非同期で軽い）
 repo = 'w0rp/ale'
 hook_add = '''
+  let g:ale_sign_column_always = 1
   let g:ale_sign_error = '⨉ '
   let g:ale_sign_warning = '⚠️ '
   let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
