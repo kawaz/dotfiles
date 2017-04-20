@@ -267,6 +267,7 @@ hook_add = '''
 [[plugins]] # 行番号の左側にdiffの+-とかが表示されるようにする、[c と ]c で前後のHunkに移動できる。
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
+  let g:gitgutter_sign_column_always = 1
   let g:gitgutter_sign_modified = 'M'
   let g:gitgutter_max_signs = 5000
   " カレント行のhunkについて diff/add/reset を行うマップを追加
@@ -495,21 +496,24 @@ repo = 'kawaz/quickrun-local-mocha.vim'
 [[plugins]] # 今時のSyntastic/Neomake的なやつ（非同期で軽い）
 repo = 'w0rp/ale'
 hook_add = '''
+  let g:ale_sign_column_always = 1
   let g:ale_sign_error = '⨉ '
   let g:ale_sign_warning = '⚠️ '
   let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
-  " use quickfix instead of loclist
-  let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 1
-  let g:ale_open_list = 1
-  let g:ale_keep_list_window_open = 0
-  " TODO: hotfix for ale_open_list bug https://github.com/w0rp/ale/issues/272
   if 1
-    let g:ale_lint_on_save = 1
-    let g:ale_lint_on_enter = 0
+    " use quickfix instead of loclist
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 1
   endif
-  " shellcheck ignores
-  let g:ale_linters_sh_shellckeck_exclusions = 'SCxxxx'
+  " let g:ale_open_list = 1
+  " let g:ale_keep_list_window_open = 0
+  " C-j/k でALE警告箇所を移動する
+  nmap <C-K> <Plug>(ale_previous)
+  nmap <C-J> <Plug>(ale_next)
+  " shellcheck ignores (comma separated value, ex:'SCxxxx,SCxxxx')
+  " SC1091: 変数のあるsource (例:source "$foo/bar.sh")
+  " SC2016: シングルクオート文字列中の変数ぽいのは展開されないよ警告 (例:echo '$foo')
+  let g:ale_linters_sh_shellcheck_exclusions = 'SC1091,SC2016'
 '''
 
 [[plugins]]
