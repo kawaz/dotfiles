@@ -1,64 +1,64 @@
 [user]
-  name = Yoshiaki Kawazu
-  email = kawazzz@gmail.com
-  useConfigOnly = true
+	name = Yoshiaki Kawazu
+	email = kawazzz@gmail.com
+	useConfigOnly = true
 [color]
-  ui = auto
+	ui = auto
 [log]
-  date = iso
+	date = iso
 [alias]
-  st = status
-  co = checkout
-  tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
-  tr-all = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --all
-  # hub
-  pr = pull-request
-  open = browse
-  # see config/git/hooks/log.sh
-  hooks-log = !"ls -rt \"${TMPDIR:-/tmp}\"/git-hooks-log.[0-6]|while read -r f;do [[ -f $f ]] && cat \"$f\";done"
+	st = status
+	co = checkout
+	tr = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+	tr-all = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset' --all
+	# hub
+	pr = pull-request
+	open = browse
+	# see config/git/hooks/log.sh
+	hooks-log = !"ls -rt \"${TMPDIR:-/tmp}\"/git-hooks-log.[0-6]|while read -r f;do [[ -f $f ]] && cat \"$f\";done"
 [core]
-  autocrlf = input
+	autocrlf = input
 [pager]
-  log  = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
-  show = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
-  diff = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+	log = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+	show = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
+	diff = (diff-highlight 2>/dev/null || cat) | ${PAGER:-less}
 [interactive]
-  diffFilter = (diff-highlight 2>/dev/null || cat)
+	diffFilter = (diff-highlight 2>/dev/null || cat)
 [diff]
-  compactionHeuristic = true
+	compactionHeuristic = true
 [merge]
-  ff = false
+	ff = false
 [pull]
-  ff = only
+	ff = only
 [push]
 	default = current
 [rebase]
-  # rebase時に作業中のファイルがあればでその前後で stash / stash pop を自動で実行させる。これは pull にも効く。
-  autostash = true
-  # --fixupとか--squashされたcommitがrebase -iの時に自動でsquashされるようにする
-  autosquash = true
+	# rebase時に作業中のファイルがあればでその前後で stash / stash pop を自動で実行させる。これは pull にも効く。
+	autostash = true
+	# --fixupとか--squashされたcommitがrebase -iの時に自動でsquashされるようにする
+	autosquash = true
 [github]
-  user = kawaz
+	user = kawaz
 [tig "bind"]
-  generic = g move-first-line
-  generic = G move-last-line
+	generic = g move-first-line
+	generic = G move-last-line
 [url "git@github.com:"]
-  pushinsteadof = "git://github.com/"
-  pushinsteadof = "https://github.com/"
+	pushinsteadof = "git://github.com/"
+	pushinsteadof = "https://github.com/"
 [url "git@bitbucket.org:"]
-  insteadof = "https://bitbucket.org/"
+	insteadof = "https://bitbucket.org/"
 
 [include]
-  # 絶対パス表記が必要な設定などの設定用 (e.g. core.hooksPath)
-  path = ../../cache/gitconfig.local
+	# 絶対パス表記が必要な設定などの設定用 (e.g. core.hooksPath)
+	path = ../../cache/gitconfig.local
 
 # sourcetree
 [difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 [mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 # filters
 [filter "lfs"]
@@ -66,5 +66,5 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 [filter "config_npm_config"]
-  clean = grep -v '/:_authToken='
+	clean = grep -v '/:_authToken='
 	smudge = cat
