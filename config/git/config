@@ -31,7 +31,7 @@
 [pull]
   ff = only
 [push]
-  default = simple
+	default = current
 [rebase]
   # rebase時に作業中のファイルがあればでその前後で stash / stash pop を自動で実行させる。これは pull にも効く。
   autostash = true
