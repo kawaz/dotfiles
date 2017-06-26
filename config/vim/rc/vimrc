@@ -135,11 +135,9 @@ if &term =~# 'xterm' && !has('nvim')
 endif " }}}
 
 " マップ定義 {{{
-" F2,F3でタブ切り替え、F4でバッファ削除、F1のデフォルトヘルプは無効化
-nmap <F1> <Nop>
-nmap <F2> <ESC>:tabprevious<CR>
-nmap <F3> <ESC>:tabnext<CR>
-nmap <F4> <ESC>:tabclose<CR>
+" F1,F2でタブ切り替え、F4でバッファ削除、F1のデフォルトヘルプは無効化
+nmap <F1> <ESC>:tabprevious<CR>
+nmap <F2> <ESC>:tabnext<CR>
 " 削除キーでyankしない
 nnoremap x "_x
 " 表示行単位で行移動する
