@@ -514,6 +514,13 @@ hook_add = '''
   " SC1091: 変数のあるsource (例:source "$foo/bar.sh")
   " SC2016: シングルクオート文字列中の変数ぽいのは展開されないよ警告 (例:echo '$foo')
   let g:ale_linters_sh_shellcheck_exclusions = 'SC1091,SC2016'
+  " :ALEFix
+  let g:ale_fixers = {
+        \   'javascript': [
+        \       'eslint',
+        \       'remove_trailing_lines',
+        \   ],
+        \}
 '''
 
 [[plugins]]
