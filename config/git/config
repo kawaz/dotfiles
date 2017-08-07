@@ -26,6 +26,7 @@
 	diffFilter = (diff-highlight 2>/dev/null || cat)
 [diff]
 	compactionHeuristic = true
+	indentHeuristic = true
 [merge]
 	ff = false
 [pull]
