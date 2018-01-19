@@ -182,6 +182,9 @@ let g:sh_fold_functions = 1 " sh の関数をフォルディングする
 let g:sh_fold_heredoc = 1   " ヒアドキュメントをフォルディングする
 let g:sh_fold_ifdofor = 0   " if/do/forブロックをフォルディングする
 
+" /tmp配下のファイルではバックアップファイルを作らない(Macのcrontab使えない問題対策)
+set backupskip+=/tmp/*,/private/tmp/*
+
 " 古い設定をコメントアウトで残してあるだけ {{{
 " " 補完の凄いやつ
 " NeoBundle 'Shougo/neocomplete'
