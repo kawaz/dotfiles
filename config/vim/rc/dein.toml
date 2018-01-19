@@ -15,8 +15,8 @@ hook_add = '''
 let g:context_filetype#filetypes = {
       \ 'sh': [
       \   {
-      \    'start': '[^<]<<\([''"]\?\)\([a-zA-Z0-9]\+\)\1$',
-      \    'end': '^\1$', 'filetype': '\2',
+      \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
+      \    'end': '^\2$', 'filetype': '\2',
       \   },
       \ ],
       \}"}}}
