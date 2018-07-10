@@ -181,7 +181,7 @@ hook_add = '''
         \   'gitgutter': 'LightLineGitgutter',
         \   'readonly': 'LightLineReadonly',
         \   'modified': 'LightLineModified',
-        \   'ale': 'LightLineALEStatus'
+        \   'ale': 'ALEGetStatusLine'
         \ },
         \ 'separator': { 'left': s:powerfont.left, 'right': s:powerfont.right },
         \ 'subseparator': { 'left': s:powerfont.leftsub, 'right': s:powerfont.rightsub }
@@ -225,10 +225,6 @@ hook_add = '''
   " 編集マーク
   function! LightLineModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-  endfunction
-  " ALE
-  function! LightLineALEStatus()
-    return ALEGetStatusLine()
   endfunction
 '''
 
