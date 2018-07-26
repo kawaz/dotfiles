@@ -15,6 +15,7 @@
 	# hub
 	pr = pull-request
 	open = browse
+  get = !"ghq get"
 	# see config/git/hooks/log.sh
 	hooks-log = !"ls -rt \"${TMPDIR:-/tmp}\"/git-hooks-log.[0-6]|while read -r f;do [[ -f $f ]] && cat \"$f\";done"
 [core]
