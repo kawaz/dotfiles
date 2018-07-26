@@ -70,3 +70,6 @@
 [filter "config_npm_config"]
 	clean = grep -v '/:_authToken='
 	smudge = cat
+[filter "config_hub"]
+	clean = perl -pe 's/^(\\s+oauth_token\\s*:\\s*).*/$1SECRET_TOKEN/'
+	smudge = cat

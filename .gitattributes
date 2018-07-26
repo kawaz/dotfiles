@@ -1,1 +1,2 @@
 /config/npm/config filter=config_npm_config
+/config/hub        filter=config_hub
