@@ -18,6 +18,11 @@ else
   export XDG_DATA_HOME=~/.local/share
 fi
 
+# add /usr/local/bin to PATH
+if [[ :$PATH: != *:/usr/local/bin:* ]]; then
+  export PATH=/usr/local/bin:$PATH
+fi
+
 # dotfiles space
 export DOTFILES_LOCAL="$XDG_CACHE_HOME/dotfiles"
 if ! [[ -d $DOTFILES_LOCAL/bin ]]; then
