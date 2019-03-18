@@ -2,11 +2,13 @@
 # http://qiita.com/kawaz/items/a8485f3fbe449c248f9c
 if ! type -P diff-highlight >/dev/null 2>&1; then
   (
-  for d in /usr/local /usr "$DOTFILES_LOCAL"; do
-    if [[ -x $d/share/git-core/contrib/diff-highlight/diff-highlight ]]; then
-      ln -sfn "$d/share/git-core/contrib/diff-highlight/diff-highlight" "$DOTFILES_LOCAL/bin/"
-      exit
-    fi
+  for prefix in /usr/local /usr "$DOTFILES_LOCAL"; do
+    for path in share/git-core/contrib/{,diff-highlight/}diff-highlight; do
+      if [[ -f $prefix/$path && -x $prefix/$path ]]; then
+        ln -sfn "$prefix/$path" "$DOTFILES_LOCAL/bin/diff-highlight"
+        exit
+      fi
+    done
   done
   )
 fi
