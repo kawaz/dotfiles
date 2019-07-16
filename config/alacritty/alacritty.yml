@@ -100,6 +100,12 @@ tabspaces: 8
 
 # Font configuration (changes require restart)
 font:
+  normal:
+    family: HackGen Console for Powerline
+    style: Regular
+  bold:
+    family: HackGen Console for Powerline
+    style: Bold
   # Normal (roman) font face
   #normal:
     # Font family
