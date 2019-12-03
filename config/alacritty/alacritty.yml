@@ -19,4 +19,10 @@ mouse:
 selection:
   save_to_clipboard: true
 
-
+key_bindings:
+  - { key: Key0,      mods: Command,         action: ResetFontSize    }
+  - { key: Minus,     mods: Command,         action: DecreaseFontSize }
+  - { key: Equals,    mods: Command,         action: IncreaseFontSize } # デフォ設定のハズだが効いてない模様
+  - { key: Minus,     mods: Command|Shift,   action: IncreaseFontSize } # Equal が効かないようなので新規作成
+  - { key: Add,       mods: Command,          action: IncreaseFontSize } # デフォ設定のハズだが効いてない模様
+  - { key: Semicolon, mods: Command|Shift,   action: IncreaseFontSize } # Plus が効かないようなので新規作成
