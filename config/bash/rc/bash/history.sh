@@ -71,6 +71,13 @@ if type peco >/dev/null 2>&1; then
     } |
     { # HISTSIZEの数だけ取り出す
       count=0
+      # 時間を見やすくする関数
+      if (( 4<BASH_VERSINFO || (4==BASH_VERSINFO && 2<=BASH_VERSINFO[2]) )); then
+        echo_ts_line() { printf '%(%Y%m%dT%H%M%S)T %s\n' "${1:0:(-3)}" "$2"; }
+      else
+        # 4.2未満のbashでは %(fmt)T が使え無いけど date コマンドとかで代用するとクソ遅いので潔く諦める
+        echo_ts_line() { echo "$1 $2"; }
+      fi
       while (( count < ${HISTSIZE:-500} )) && read -r f; do
         [[ -f $f ]] || continue
         while (( count < ${HISTSIZE:-500} )) && IFS= read -r line; do
@@ -85,12 +92,7 @@ if type peco >/dev/null 2>&1; then
           [[ $allline == *$'\n'"$line"$'\n'* ]] && continue
           allline+="$line"$'\n'
           (( count += 1 ))
-          # 時間を見やすくすると遅いので対策検討中
-          if [[ -n $HISTHACK_FORMATTIME ]]; then
-            echo "$(date -d "@${ts:0:(-3)}" +%Y-%m-%dT%T%z) $line"
-          else
-            echo "$ts $line"
-          fi
+          echo_ts_line "$ts" "$line"
         done < <(tac "$f")
       done
     } |
