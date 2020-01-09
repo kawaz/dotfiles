@@ -533,3 +533,7 @@ hook_source = '''
 [[plugins]]
 # ツリー状のundo履歴をブラウズする :GundoTree
 repo = 'sjl/gundo.vim'
+
+[[plugins]]
+# CUE のハイライティング
+repo = 'jjo/vim-cue'
