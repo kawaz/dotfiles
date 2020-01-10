@@ -48,10 +48,24 @@ history_push() {
   fi
   return $s
 }
-
 if [[ ";$PROMPT_COMMAND;" != *";history_push;"* ]]; then
   PROMPT_COMMAND="history_push${PROMPT_COMMAND:+";$PROMPT_COMMAND"}"
 fi
+
+# 保存したオレオレヒストリファイルを history -r する
+history_read() {
+  find "$DOTFILES_DIR"/local/share/bash/history/ -type f -mtime -14 -print0 |
+    xargs -0 ls -rt |
+    xargs cat |
+    while IFS= read -r line; do
+      echo "#${line%%[0-9][0-9][0-9] *}"
+      eval "t=${line#* } ; echo \"$t\""
+    done > "${XDG_CACHE_HOME:-/tmp}/_bash_history"
+  history -c
+  history -r "${XDG_CACHE_HOME:-/tmp}"/_bash_history
+}
+# 新規シェルで Ctr-P とかで履歴が見れるようにヒストリを読み込む
+history_read
 
 # C-r の履歴検索をハック
 if type peco >/dev/null 2>&1; then
