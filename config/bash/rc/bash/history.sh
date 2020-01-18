@@ -59,7 +59,7 @@ history_read() {
     xargs cat |
     while IFS= read -r line; do
       echo "#${line%%[0-9][0-9][0-9] *}"
-      eval "t=${line#* } ; echo \"$t\""
+      eval "t=${line#* }; echo \"\$t\""
     done > "${XDG_CACHE_HOME:-/tmp}/_bash_history"
   history -c
   history -r "${XDG_CACHE_HOME:-/tmp}"/_bash_history
