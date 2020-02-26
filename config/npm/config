@@ -3,4 +3,4 @@ init-author-name=Yoshiaki Kawazu
 init-author-email=kawazzz@gmail.com
 init-author-url=https://twitter.com/kawaz
 init-license=MIT
-progress=
+progress=true
