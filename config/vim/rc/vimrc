@@ -117,22 +117,6 @@ set wildmode=longest,list,full " コマンドラインウィンドウのTAB補�
 set hidden " 編集のままバッファ切り替えができるようにする
 set mouse= " マウスモード無効（嬉しかった事より邪魔な事の方が多かったので）
 set scrolloff=10 " カーソル位置を画面中央に保つ(画面上下10行より先のカーソル移動は画面の方がスクロールする)
-" クリップボードからの貼り付け時に自動インデントを無効にする http://bit.ly/IhAnBe {{{
-if &term =~# 'xterm' && !has('nvim')
-  " nvim は何もしなくても自動でpaste/nopasteしてくれるっぽい？
-  let &t_ti .= "\e[?2004h"
-  let &t_te .= "\e[?2004l"
-  let &pastetoggle = "\e[201~"
-  function! XTermPasteBegin(ret) abort
-    setlocal paste
-    return a:ret
-  endfunction
-  " mappings
-  noremap <special> <expr> <Esc>[200~ XTermPasteBegin('0i')
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin('')
-  cnoremap <special> <Esc>[200~ <nop>
-  cnoremap <special> <Esc>[201~ <nop>
-endif " }}}
 
 " マップ定義 {{{
 " F1,F2でタブ切り替え、F4でバッファ削除、F1のデフォルトヘルプは無効化
