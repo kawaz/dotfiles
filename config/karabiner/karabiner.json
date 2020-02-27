@@ -16,148 +16,31 @@
                 },
                 "rules": [
                     {
-                        "description": "コマンドキーを単体で押したときに、英数・かなキーを送信する。（左コマンドキーは英数、右コマンドキーはかな） (rev 3)",
+                        "description": "If ja | ESC -> 英数, ESC, ESC",
                         "manipulators": [
                             {
-                                "from": {
-                                    "key_code": "left_command",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
+                                "conditions": [
                                     {
-                                        "key_code": "left_command",
-                                        "lazy": true
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "japanese_eisuu"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "left_command"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "right_command",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_command",
-                                        "lazy": true
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "japanese_kana"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "right_command"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "CTRLキーを単体で押したときに、英数・かなキーを送信する。（左CTRLキーは英数、右CTRLキーはかな）",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "left_control",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_control",
-                                        "lazy": true
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "japanese_eisuu"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "left_control"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "right_control",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_control",
-                                        "lazy": true
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "japanese_kana"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "right_control"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "escキーを押したときに、英数キーも送信する（vim用）",
-                        "manipulators": [
-                            {
                                 "from": {
                                     "key_code": "escape"
                                 },
                                 "to": [
                                     {
+                                        "key_code": "japanese_eisuu"
+                                    },
+                                    {
                                         "key_code": "escape"
                                     },
                                     {
-                                        "key_code": "japanese_eisuu"
+                                        "key_code": "escape"
                                     }
                                 ],
                                 "type": "basic"
@@ -165,16 +48,17 @@
                         ]
                     },
                     {
-                        "description": "Ctrl+[を押したときに、英数キーも送信する（vim用） (rev 2)",
+                        "description": "If ja | Control-[ -> 英数, ESC, Control-[",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "keyboard_types": [
-                                            "ansi",
-                                            "iso"
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
                                         ],
-                                        "type": "keyboard_type_if"
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -187,24 +71,34 @@
                                 },
                                 "to": [
                                     {
+                                        "key_code": "japanese_eisuu"
+                                    },
+                                    {
+                                        "key_code": "escape"
+                                    },
+                                    {
                                         "key_code": "open_bracket",
                                         "modifiers": [
                                             "control"
                                         ]
-                                    },
-                                    {
-                                        "key_code": "japanese_eisuu"
                                     }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "If ja | Control-] -> 英数, ESC, Control-]",
+                        "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "keyboard_types": [
-                                            "jis"
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
                                         ],
-                                        "type": "keyboard_type_if"
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -217,9 +111,88 @@
                                 },
                                 "to": [
                                     {
+                                        "key_code": "japanese_eisuu"
+                                    },
+                                    {
+                                        "key_code": "escape"
+                                    },
+                                    {
                                         "key_code": "close_bracket",
                                         "modifiers": [
                                             "control"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "If ja | Command-TAB / Command-Shift-TAB -> Command-TAB / Command-Shift-TAB, IMEオフ (for アプリ切り替え時にIMEオフ)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    },
+                                    {
+                                        "select_input_source": {
+                                            "input_mode_id": "com.apple.inputmethod.Roman"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "If ja | Alt-SPACE -> Alt-SPACE, 英数 (for Alfred)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_alt"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": [
+                                            "left_alt"
                                         ]
                                     },
                                     {
@@ -231,12 +204,13 @@
                         ]
                     },
                     {
-                        "description": "Use Option + Number to Switch Tabs in Chrome & Firefox",
+                        "description": "If ja | Command-L -> Command-L, 英数, ESC (for Safari/Chrome/Firefox)",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com.apple.Safari",
                                             "^com.google.Chrome",
                                             "^org.mozilla.firefox"
                                         ],
@@ -244,270 +218,25 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "1",
+                                    "key_code": "l",
                                     "modifiers": {
                                         "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
+                                            "command"
                                         ]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "key_code": "1",
+                                        "key_code": "l",
                                         "modifiers": [
                                             "left_command"
                                         ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
+                                    },
                                     {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "2",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
+                                        "key_code": "japanese_eisuu"
+                                    },
                                     {
-                                        "key_code": "2",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "3",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "3",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "4",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "4",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "5",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "5",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "6",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "6",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "7",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "7",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "8",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "8",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com.google.Chrome",
-                                            "^org.mozilla.firefox"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "9",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "9",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
+                                        "key_code": "escape"
                                     }
                                 ],
                                 "type": "basic"
@@ -620,7 +349,16 @@
                 "delay_milliseconds_before_open_device": 1000
             },
             "selected": true,
-            "simple_modifications": [],
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "caps_lock"
+                    },
+                    "to": {
+                        "key_code": "left_control"
+                    }
+                }
+            ],
             "virtual_hid_keyboard": {
                 "country_code": 0,
                 "mouse_key_xy_scale": 100
