@@ -16,6 +16,22 @@
                 },
                 "rules": [
                     {
+                        "description": "RightCommand -> fn",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "fn"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "英数-ANY -> LeftCommand-ANY",
                         "manipulators": [
                             {
