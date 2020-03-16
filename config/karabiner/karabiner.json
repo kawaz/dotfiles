@@ -32,7 +32,7 @@
                         ]
                     },
                     {
-                        "description": "英数-ANY -> LeftCommand-ANY",
+                        "description": "LeftCommand ≒ 英数 | 英数-ANY -> Command-ANY / 英数 (alone) -> 英数, Command",
                         "manipulators": [
                             {
                                 "from": {
@@ -49,6 +49,33 @@
                                     }
                                 ],
                                 "to_if_alone": [
+                                    {
+                                        "key_code": "japanese_eisuu"
+                                    },
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "LeftCommand ≒ 英数 | LeftCommand (alone) -> Command, 英数",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "left_command"
+                                    },
                                     {
                                         "key_code": "japanese_eisuu"
                                     }
