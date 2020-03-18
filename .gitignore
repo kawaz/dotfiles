@@ -3,3 +3,5 @@
 /local
 /config/nvim/.init.vim-rplugin~
 /config/gocode/config.json
+/config/gcloud/
+/config/DMM/
