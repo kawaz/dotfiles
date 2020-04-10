@@ -16,22 +16,6 @@
                 },
                 "rules": [
                     {
-                        "description": "RightCommand -> fn",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "right_command"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "fn"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "LeftCommand ≒ 英数 | 英数-ANY -> Command-ANY / 英数 (alone) -> 英数, Command",
                         "manipulators": [
                             {
@@ -85,7 +69,7 @@
                         ]
                     },
                     {
-                        "description": "If ja | ESC -> 英数, ESC, ESC",
+                        "description": "If ja | ESC -> 英数, 英数, ESC",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -106,7 +90,7 @@
                                         "key_code": "japanese_eisuu"
                                     },
                                     {
-                                        "key_code": "escape"
+                                        "key_code": "japanese_eisuu"
                                     },
                                     {
                                         "key_code": "escape"
@@ -117,7 +101,7 @@
                         ]
                     },
                     {
-                        "description": "If ja | Control-[ -> 英数, ESC, Control-[",
+                        "description": "If ja | Control-[ -> 英数, 英数, Control-[",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -143,6 +127,9 @@
                                         "key_code": "japanese_eisuu"
                                     },
                                     {
+                                        "key_code": "japanese_eisuu"
+                                    },
+                                    {
                                         "key_code": "escape"
                                     },
                                     {
@@ -157,7 +144,7 @@
                         ]
                     },
                     {
-                        "description": "If ja | Control-] -> 英数, ESC, Control-]",
+                        "description": "If ja | Control-] -> 英数, 英数, Control-]",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -183,7 +170,7 @@
                                         "key_code": "japanese_eisuu"
                                     },
                                     {
-                                        "key_code": "escape"
+                                        "key_code": "japanese_eisuu"
                                     },
                                     {
                                         "key_code": "close_bracket",
@@ -273,7 +260,7 @@
                         ]
                     },
                     {
-                        "description": "If ja | Command-L -> Command-L, 英数, ESC (for Safari/Chrome/Firefox)",
+                        "description": "If ja | Command-L -> Command-L, 英数, 英数 (for Safari/Chrome/Firefox)",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -305,7 +292,7 @@
                                         "key_code": "japanese_eisuu"
                                     },
                                     {
-                                        "key_code": "escape"
+                                        "key_code": "japanese_eisuu"
                                     }
                                 ],
                                 "type": "basic"
@@ -313,7 +300,7 @@
                         ]
                     },
                     {
-                        "description": "If Alacritty | Enter -> Enter, Command (何かCommandが押されっぱなしみたいになるバグの対応)",
+                        "description": "If Alacritty | Enter -> Enter, Command (FIXME: 何かCommandが押されっぱなしみたいになるバグの対応)",
                         "manipulators": [
                             {
                                 "conditions": [
