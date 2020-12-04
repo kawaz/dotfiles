@@ -56,7 +56,7 @@ let g:is_bash=1 " shebangが無い時のshのsyntaxをbashモードにする（�
 " 装飾系
 set number " 行番号を表示
 set cursorline " カーソル行の強調表示
-set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,eol:¬,nbsp:% " 非表示文字を見えるようにする
+set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:% " 非表示文字を見えるようにする
 set conceallevel=2 " コンシールを有効にする 0:無効 1:空白に置き換え 2:隠す 3:完全に隠す?
 set concealcursor=inc " カレント行のコンシールを有効なままにするモードを指定(nvicの組み合わせ n:normal v:visual i:insert c:command
 " JSONファイルのINSERTモード中はconcealを無効にする
@@ -157,6 +157,8 @@ endif
 au MyAutoCmd FileType help,qf,quickrun nmap q :bw<CR>
 " Qをコロス
 nnoremap Q <Nop>
+" 保存時にsudo権限で無理やり保存
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 " }}} マップ定義
 
