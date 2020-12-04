@@ -157,6 +157,8 @@ endif
 au MyAutoCmd FileType help,qf,quickrun nmap q :bw<CR>
 " Qをコロス
 nnoremap Q <Nop>
+" 保存時にsudo権限で無理やり保存
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 " }}} マップ定義
 
