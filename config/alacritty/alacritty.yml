@@ -6,10 +6,10 @@ scrolling:
 
 font:
   normal:
-    family: "HackGen Console for Powerline"
+    family: "HackGen Console"
     style: "Regular"
   bold:
-    family: "HackGen Console for Powerline"
+    family: "HackGen Console"
     style: "Bold"
 
 mouse:
