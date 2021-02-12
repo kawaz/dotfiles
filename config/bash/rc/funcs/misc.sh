@@ -4,12 +4,18 @@ println() {
   printf "%s\n" "$*"
 }
 
-quote () {
-  local q=()
-  for _ in "$@"; do
-    q+=("$(printf %q "$_")")
-  done
-  printf "%s\n" "${q[*]}"
+quote() {
+  local v
+  quote-v v "$@"
+  echo "$v"
+}
+quote-v() {
+  printf -v "$1" x || return $$
+  eval "if [[ \$# == 1 ]]; then $1=; return; fi; printf -v $1 '%q ' \"\${@:2:\$#-1}\"; $1=\${$1:0:\${#$1}-1}"
+}
+quote-a() {
+  printf -v "$1" x || return $$
+  eval "$1=($(quote "${@:2:$#}"))"
 }
 
 scriptdir() {
@@ -31,7 +37,9 @@ nsec() {
 msec() {
   local d
   d=$(PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
-  if [[ $("$d" +%N) == [0-9]* ]]; then
+  if [[ $EPOCHREALTIME == [0-9]* ]]; then
+    msec() { [[ $EPOCHREALTIME =~ ^([0-9]+)\.([0-9][0-9][0-9]) ]] && echo "${BASH_REMATCH[1]}${BASH_REMATCH[2]}"; }
+  elif [[ $("$d" +%N) == [0-9]* ]]; then
     eval "msec() { $d +%s%3N; }"
   else
     msec() { date +%s000; }
