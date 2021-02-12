@@ -75,3 +75,5 @@
 [filter "config_hub"]
 	clean = perl -pe 's/^(\\s+oauth_token\\s*:\\s*).*/$1SECRET_TOKEN/'
 	smudge = cat
+[init]
+	defaultBranch = default
