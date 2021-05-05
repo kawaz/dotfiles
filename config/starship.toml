@@ -1,0 +1,14 @@
+add_newline = false
+
+[directory]
+truncate_to_repo = false
+
+[time]
+disabled = false
+format =" [$time]($style)"
+time_format = "%m/%d %T"
+utc_time_offset = "+9"
+
+# packageモジュールを無効にし、プロンプトから完全に隠します
+[package]
+disabled = true
