@@ -25,29 +25,33 @@ let g:context_filetype#filetypes = {
 [[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時に必要。
 repo = 'kana/vim-textobj-user'
 
-[[plugins]] # コード補完
-repo = 'Shougo/deoplete.nvim'
-if = 'has("nvim")'
-on_i = 1
+# LSP
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+depends = ['prabirshrestha/vim-lsp']
 hook_add = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#sources#go#package_dot = 1
-  set completeopt-=preview " プレビューウィンドウを開かないようにする
-  "set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
-  " TAB や Shift-TAB で補完補完候補を上下する
-  if ! dein#tap('neosnippet.vim')
-    " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  endif
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-  inoremap <expr><UP>   pumvisible() ? "\<C-p>" : "<UP>"
-  inoremap <expr><DOWN> pumvisible() ? "\<C-n>" : "<DOWN>"
-  " python3が無かったらメッセージを表示
-  if has('nvim') && !has('python3')
-    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9 or execute 'pip3 install neovim --upgrade' and :call dein#update()"
-  endif
+let g:lsp_settings = {
+      \   'intelephense': {
+        \     'workspace_config': {
+          \       'intelephense': {
+            \         'phpVersion': '8.0.0',
+            \         'environment': {
+              \           'phpVersion': '8.0.0'
+              \         }
+              \       }
+              \     }
+              \   }
+              \ }
 '''
+
+# 補完プラグイン
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
+depends = ['prabirshrestha/asyncomplete.vim', 'prabirshrestha/vim-lsp']
 
 [[plugins]]
 repo = 'Shougo/neocomplete'
@@ -147,7 +151,7 @@ hook_add = '''
   let g:hybrid_reduced_contrast = 0
   set background=dark
   " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
-  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  " 但し Colorscheme イベントの発生が抑制されないよう nested を付ける。
   au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
@@ -310,165 +314,6 @@ on_ft = 'markdown'
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
-# languages
-
-## Javascript
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript']
-hook_add = '''
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
-" set foldmethod=syntax
-'''
-[[plugins]]
-repo = 'mxw/vim-jsx'
-on_ft = ['javascript']
-hook_add = '''
-" 拡張子が.jsでも効くようにする(デフォルトは.jsxのみ)
-let g:jsx_ext_required = 0
-'''
-
-# update時のbuildがおもすぎなのでペンディング
-# [[plugins]]
-# repo = 'Valloric/YouCompleteMe'
-# build = 'python2 ./install.py --clang-completer --system-libclang'
-# on_ft = ['javascript']
-# hook_source = '''
-# let g:ycm_collect_identifiers_from_tags_files = 1
-# let g:UltiSnipsExpandTrigger = '<C-j>'
-# let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-# let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-# let g:EclimCompletionMethod = 'omnifunc'
-# autocmd FileType javascript nnoremap ,gd :<C-u>YcmCompleter GetDoc<CR>
-# autocmd Filetype javascript nnoremap ,gt :<C-u>YcmCompleter GoTo<CR>
-# autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-# '''
-
-## rust
-[[plugins]]
-# completion (C-x C-o) and navigation (:gd goto definition)
-repo = 'racer-rust/vim-racer'
-on_ft = ['rust']
-
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-on_ft = ['rust']
-
-[[plugins]]
-repo = 'rhysd/rust-doc.vim'
-on_ft = ['rust']
-
-[[plugins]]
-repo = 'kawaz/rustsrcpath.vim'
-on_ft = ['rust']
-depends = ['vim-racer']
-
-## toml
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = ['toml']
-
-
-##  markdown
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-depends = ['tabular', 'vim-markdown-quote-syntax']
-on_ft = ['markdown']
-hook_add = '''
-  let g:vim_markdown_folding_disabled = 1
-  let g:vim_markdown_better_folding = 1
-  let g:vim_markdown_no_default_key_mappings=1
-  let g:vim_markdown_new_list_item_indent = 2
-'''
-hook_post_source = '''
-  syntax cluster Spell remove=mkdCode
-'''
-[[plugins]]
-repo = 'joker1007/vim-markdown-quote-syntax'
-on_ft = ['markdown']
-
-[[plugins]]
-# 外部コマンドに依存しないMarkdownプレビュー、open-browser.vimとリアルタイムプレビューできて素敵
-repo = 'kannokanno/previm'
-hook_add = '''
-  " TODO: :PrevimOpen でブラウザを開けるんだがquick-runで開きたい
-'''
-
-
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = ['go']
-hook_post_source = '''
-  " MEMO: gocode set autobuild true を実行しておくとvendor内のライブラリ補完もできるようになる
-  let g:go_fmt_command = 'goimports'
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_fields = 1
-  let g:go_highlight_types = 1
-  let g:go_highlight_operators = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_term_enabled = 1
-  let g:go_metalinter_autosave = 1
-  let g:go_auto_type_info = 1
-  let g:go_auto_sameids = 1
-  let g:go_list_type = "quickfix"
-  " TODO: キーマップはまだ確認してないので後で確認する
-  au FileType go nmap <leader>r <Plug>(go-run)
-  au FileType go nmap <leader>b <Plug>(go-build)
-  au FileType go nmap <leader>t <Plug>(go-test)
-  au FileType go nmap <leader>c <Plug>(go-coverage)
-  au FileType go nmap <Leader>ds <Plug>(go-def-split)
-  au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-  au FileType go nmap <Leader>gd <Plug>(go-doc)
-  au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-  au FileType go nmap <Leader>s <Plug>(go-implements)
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <Leader>e <Plug>(go-rename)
-'''
-hook_post_source = '''
-  " 関連ツールの自動インストール
-  if executable('go')
-    execute 'GoInstallBinaries'
-  endif
-'''
-
-
-## test
-[[plugins]] # テストコードへジャンプ
-repo = 'janko-m/vim-test'
-hook_add = '''
-  let g:test#strategy = 'neovim'
-  " mappings
-  nmap <silent> <leader>f :TestNearest<CR>
-  nmap <silent> <leader>i :TestFile<CR>
-  nmap <silent> <leader>a :TestSuite<CR>
-  nmap <silent> <leader>l :TestLast<CR>
-  nmap <silent> <leader>g :TestVisit<CR>
-  " 言語ごとのオプション
-  let test#python#pytest#options = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
-  let test#go#gotest#options     = {'nearest': '-v', 'file': '-v', 'suite': '-v'}
-'''
-
-[[plugins]] # tagsの凄い奴
-repo = 'majutsushi/tagbar'
-hook_add = '''
-  nmap <F8> :TagbarToggle<CR>
-  " auto-ctags
-  let g:auto_ctags = 1
-  let g:auto_ctags_directory_list = ['.git', '.svn']
-  let g:auto_ctags_tags_name = 'tags'
-  let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-  let g:auto_ctags_filetype_mode = 1
-  " let g:tagbar_left = 1
-'''
-hook_post_source = '''
-  call tagbar#autoopen(1)
-'''
-
 [[plugins]] # g> g< gs で引数の位置交換を簡単に行う
 repo = 'machakann/vim-swap'
 
@@ -477,13 +322,6 @@ repo = 'rhysd/devdocs.vim'
 hook_add = '''
   autocmd FileType c,cpp,rust,haskell,python,go,javascript,ruby,php nmap <buffer>K <Plug>(devdocs-under-cursor)
 '''
-
-[[plugins]] # 自動でctagsを実行する
-repo = 'soramugi/auto-ctags.vim'
-
-[[plugins]]
-repo = 'kawaz/shellcheck.vim'
-on_ft = ['sh']
 
 [[plugins]]
 repo = 'kawaz/quickrun-local-mocha.vim'
@@ -530,10 +368,12 @@ hook_source = '''
   CAlterCommand e tabnew
 '''
 
+# toml
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+
 [[plugins]]
 # ツリー状のundo履歴をブラウズする :GundoTree
 repo = 'sjl/gundo.vim'
 
-[[plugins]]
-# CUE のハイライティング
-repo = 'jjo/vim-cue'
