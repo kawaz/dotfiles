@@ -1,5 +1,8 @@
 add_newline = false
 
+[hostname]
+ssh_only = false
+
 [directory]
 truncate_to_repo = false
 
