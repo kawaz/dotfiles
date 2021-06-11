@@ -64,13 +64,45 @@ let g:skip_loading_mswin        = 1
 let g:did_install_syntax_menu   = 1
 
 " 表示系
+" ステータスラインを2行にする
+setglobal cmdheight=2
+setglobal laststatus=2
 set fileformats=unix,dos,mac " 改行コードの自動認識
-set ambiwidth=single " ■ とか※ とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
+"set ambiwidth=single " ■ とか※ とかの一部文字を半角として扱うようにする（本音は全角扱いが良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
+set ambiwidth=double " ■ とか※ とかの一部文字を半角として扱うようにする（本音はdouble(全角)が良いがそれによる不具合も多いのでsingleが無難という結論、iTermの設定とかもambigous widthはシングルにすることにした）
 set showmatch " 括弧入力時の対応する括弧を表示
 set foldmethod=marker " ファイルを開いた時にマーカーがフォルディングされた状態になるようにする
 set nospell " スペルチェックは必要な時に手動で有効化するのでデフォはoffにしておく
 set spelllang+=cjk " 日本語はスペルチェック対象から外す
 let g:is_bash=1 " shebangが無い時のshのsyntaxをbashモードにする（デフォだとshになってしまう）
+
+" ssh公開鍵をハイライト＆省略表示する
+syntax match mySshKeyOptions /^\([a-z0-9\-]\+\(="\(\\"|[^"]\)*"\)\?\(,[a-z0-9\-]\+\(="\(\\"|[^"]\)*"\)\?\)* \)$/ contained nextgroup=mySshKeyType
+syntax match mySshKeyType /\<ssh-\(ecdsa\|ed25519\|rsa\) /he=e-1 nextgroup=mySshKeyValue
+syntax match mySshKeyTypeDeprecated /\<ssh-\(dss\|rsa1\) /he=e-1 nextgroup=mySshKeyValue
+syntax match mySshKeyValue /[a-zA-Z0-9+\/]\{68,}=\{,2}/ contained contains=mySshKeyValueConceal keepend nextgroup=mySshKeyComment "68 is length of ed25519 key
+syntax match mySshKeyValueConceal /\S\+/ms=s+34,me=e-34 contained conceal cchar=~
+syntax match mySshKeyComment /.*$/ contained
+hi link mySshKeyType Type
+hi link mySshKeyTypeDeprecated Error
+hi link mySshKeyValue String
+hi link mySshKeyValueConceal mySshKeyValue
+hi link mySshKeyComment Comment
+" カーソル位置のsyntaxとhilightを確認する
+function! s:get_highlight_info()
+  for id in synstack(line("."), col("."))
+    let name = synIDattr(id, "name")
+    execute "syn list " . name
+    execute "hi " . name
+    let linkTo = matchstr(execute("hi " . name), " links to \\zs.\\+")
+    while linkTo != ''
+      execute "hi " . linkTo
+      let linkTo = matchstr(execute("hi " . linkTo), " links to \\zs.\\+")
+    endwhile
+    let hiname = synIDtrans(id)
+  endfor
+endfunction
+command! HighlightInfo call s:get_highlight_info()
 
 " 装飾系
 setglobal cmdheight=2 " コマンドラインを2行にする
@@ -79,10 +111,10 @@ set number " 行番号を表示
 set cursorline " カーソル行の強調表示
 set list listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:% " 非表示文字を見えるようにする
 set conceallevel=2 " コンシールを有効にする 0:無効 1:空白に置き換え 2:隠す 3:完全に隠す?
-set concealcursor=inc " カレント行のコンシールを有効なままにするモードを指定(nvicの組み合わせ n:normal v:visual i:insert c:command
+set concealcursor=nc " カレント行のコンシールを有効なままにするモードを指定(nvicの組み合わせ n:normal v:visual i:insert c:command
 " JSONファイルのINSERTモード中はconcealを無効にする
 au MyAutoCmd InsertEnter *.json setlocal conceallevel=0 concealcursor=
-au MyAutoCmd InsertLeave *.json setlocal conceallevel=2 concealcursor=inc
+au MyAutoCmd InsertLeave *.json setlocal conceallevel=2 concealcursor=nc
 
 " 注意すべき文字をハイライト {{{
 " listcharsを個別に取り出してmagicモードの正規表現で只の文字として使えるようエスケープ
@@ -119,6 +151,9 @@ set autoindent " オートインデントを有効化
 autocmd FileType * setlocal formatoptions-=ro "コメント行で改行すると次の行もコメントになってしまうのを防止する
 autocmd FileType * setlocal formatoptions-=tc "自動折り返しを無効にする
 autocmd InsertLeave * set nopaste "インサートモードを抜けたら自動でPASTEモードを抜ける
+if exists('&completeslash')
+  setglobal completeslash=slash " /で補完
+endif
 " タブ幅を2タブスペースにする
 set softtabstop=2
 set shiftwidth=2
