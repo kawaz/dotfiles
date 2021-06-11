@@ -1,0 +1,27 @@
+#add_newline = false
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[hostname]
+ssh_only = false
+format = "[$hostname]($style):"
+
+[directory]
+truncate_to_repo = false
+
+[jobs]
+symbol = "+"
+
+[time]
+disabled = false
+format ="[$time]($style)"
+time_format = "%m/%d %T"
+utc_time_offset = "+9"
+
+# packageモジュールを無効にし、プロンプトから完全に隠します
+[package]
+disabled = true

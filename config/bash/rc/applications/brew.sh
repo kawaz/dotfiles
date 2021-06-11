@@ -3,6 +3,11 @@
 
 brew_prefix="/usr/local" # $(brew --prefix)
 
+# brew
+brew() {
+  PATH=/usr/bin:/bin:/usr/sbin:/sbin "$(command brew --prefix)"/bin/brew "$@"
+}
+
 # coreutils
 export PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
 

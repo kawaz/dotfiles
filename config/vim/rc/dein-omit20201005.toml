@@ -1,0 +1,64 @@
+[[plugins]] # コード補完
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_i = 1
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#sources#go#package_dot = 1
+  set completeopt-=preview " プレビューウィンドウを開かないようにする
+  "set completeopt+=noinsert " 最初の候補がデフォで選択されるようにする
+  " TAB や Shift-TAB で補完補完候補を上下する
+  if ! dein#tap('neosnippet.vim')
+    " neosnippet使う場合はそっちも考慮した設定をしてるのでスキップ
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  endif
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  inoremap <expr><UP>   pumvisible() ? "\<C-p>" : "<UP>"
+  inoremap <expr><DOWN> pumvisible() ? "\<C-n>" : "<DOWN>"
+  " python3が無かったらメッセージを表示
+  if has('nvim') && !has('python3')
+    echo "require python3 https://gist.github.com/kawaz/393c7f62fe6e857cc3d9 or execute 'pip3 install neovim --upgrade' and :call dein#update()"
+  endif
+'''
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+depends = ['Shougo/deoplete.nvim']
+
+## Javascript
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
+hook_add = '''
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+" set foldmethod=syntax
+'''
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = ['javascript']
+hook_add = '''
+" 拡張子が.jsでも効くようにする(デフォルトは.jsxのみ)
+let g:jsx_ext_required = 0
+'''
+## Svelte
+[[plugins]]
+repo = 'evanleck/vim-svelte'
+depends = ['pangloss/vim-javascript']
+hook_add = '''
+"let g:svelte_indent_script = 0
+"let g:svelte_indent_style = 0
+let g:svelte_preprocessors = ['typescript']
+'''
+[[plugins]]
+repo = 'kawaz/shellcheck.vim'
+on_ft = ['sh']
+
+[[plugins]] # 自動でctagsを実行する
+repo = 'soramugi/auto-ctags.vim'
+
+
+[[plugins]]
+# CUE のハイライティング
+repo = 'jjo/vim-cue'

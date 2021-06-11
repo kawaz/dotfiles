@@ -1,5 +1,15 @@
 .env
 /cache
 /local
+/tmp
+
 /config/nvim/.init.vim-rplugin~
-/config/gocode/config.json
+/config/gcloud/
+/config/DMM/
+/config/configstore/firebase-tools.json
+
+# どうでもいい系
+/config/dlv/
+/config/jgit/
+/config/wireshark
+/config/netdata-docker/
