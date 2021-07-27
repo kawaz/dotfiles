@@ -12,9 +12,9 @@ font:
     family: "HackGen35 Console"
     style: "Bold"
 
-mouse:
-  url:
-    modifiers: "Command"
+#mouse:
+#  url:
+#    modifiers: "Command"
 
 selection:
   save_to_clipboard: true
