@@ -69,6 +69,30 @@
                         ]
                     },
                     {
+                        "description": "RightCommand ≒ かな | RightCommand (alone) -> Command, かな",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "right_command"
+                                    },
+                                    {
+                                        "key_code": "japanese_kana"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "If ja | ESC -> 英数, 英数, ESC",
                         "manipulators": [
                             {
