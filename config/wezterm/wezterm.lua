@@ -25,6 +25,7 @@ function font_with_fallback(name, params)
 end
 
 return {
+  debug_key_events = true,
   default_prog = {"/usr/local/bin/bash", "-l"},
 
   use_ime = true,
@@ -32,8 +33,9 @@ return {
   -- フォントリガチャを無効化
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
   -- フォントを白源にする
-  --font = font_with_fallback('HackGen'),
-  font_size = 11.0,
+  -- font = font_with_fallback('HackGen'),
+  font_size = 10.0,
+  -- フォントサイズを変えてもウィンドウサイズは変えないようにする
   adjust_window_size_when_changing_font_size = false,
   -- タブを常に表示する（default）
   hide_tab_bar_if_only_one_tab = false,
@@ -49,9 +51,13 @@ return {
 
   keys = {
     {key="V", mods="CMD", action=wezterm.action{PasteFrom="Clipboard"}},
-
     {key="F", mods="CMD", action="ToggleFullScreen"},
     {key="Z", mods="CMD", action="TogglePaneZoomState"},
+    -- 
+    {key="p", mods="CMD", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+    {key="p", mods="CMD|SHIFT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+
+
     {key="L", mods="CMD", action="ShowLauncher"},
     {key="V", mods="CTRL", action=wezterm.action{EmitEvent="showww"}},
     {key="H", mods="CTRL|OPT|SHIFT", action="ShowTabNavigator"},
@@ -60,8 +66,8 @@ return {
 
   -- アクティブでないPaneをデフォルトより更に暗くする
   inactive_pane_hsb = {
-    saturation = 0.6,
-    brightness = 0.5,
+    saturation = 0.8,
+    brightness = 0.8,
   },
 
   -- シェルを exit 0 以外で終了したときに [Process completed] の表示のままPaneが閉じないのを閉じるようにする
