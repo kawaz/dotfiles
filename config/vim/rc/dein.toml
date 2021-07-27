@@ -8,19 +8,19 @@ build = 'make'
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
 
-[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim', 'vim-textobj-user']
-hook_add = '''
-let g:context_filetype#filetypes = {
-      \ 'sh': [
-      \   {
-      \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
-      \    'end': '^\2$', 'filetype': '\2',
-      \   },
-      \ ],
-      \}"}}}
-'''
+#[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+#repo = 'osyo-manga/vim-precious'
+#depends = ['context_filetype.vim', 'vim-textobj-user']
+#hook_add = '''
+#let g:context_filetype#filetypes = {
+#      \ 'sh': [
+#      \   {
+#      \    'start': '[^<]<<\([\\''"]\?\)\([a-zA-Z0-9]\+\)\1$',
+#      \    'end': '^\2$', 'filetype': '\2',
+#      \   },
+#      \ ],
+#      \}"}}}
+#'''
 
 [[plugins]] # vim-precious で <Plug>(textobj-precious-i) を使用したい時に必要。
 repo = 'kana/vim-textobj-user'
@@ -154,6 +154,13 @@ hook_add = '''
   " 但し Colorscheme イベントの発生が抑制されないよう nested を付ける。
   au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
+
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
 
 [[plugins]] # ステータスラインを手軽にかっこ良くする(要フォントパッチ)
 repo = 'itchyny/lightline.vim'
