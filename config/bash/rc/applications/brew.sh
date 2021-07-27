@@ -8,6 +8,9 @@ brew() {
   PATH=/usr/bin:/bin:/usr/sbin:/sbin "$(command brew --prefix)"/bin/brew "$@"
 }
 
+# Gatekeeperを抑制するオプション(このファイルはXXからダウンロードされましたっていうダイアログが出ないようにする)
+export HOMEBREW_CASK_OPTS="--no-quarantine"
+
 # coreutils
 export PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
 
