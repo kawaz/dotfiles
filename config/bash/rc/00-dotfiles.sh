@@ -22,6 +22,10 @@ fi
 if [[ :$PATH: != *:/usr/local/bin:* ]]; then
   export PATH=/usr/local/bin:$PATH
 fi
+# add /opt/homebrew/bin to PATH
+if [[ :$PATH: != *:/opt/homebrew/bin:* ]]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
 
 # dotfiles space
 export DOTFILES_LOCAL="$XDG_CACHE_HOME/dotfiles"

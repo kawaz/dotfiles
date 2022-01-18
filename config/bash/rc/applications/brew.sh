@@ -1,11 +1,11 @@
 # Mac以外では無視
 [[ $OSTYPE == darwin* ]] || return 0
 
-brew_prefix="/usr/local" # $(brew --prefix)
+brew_prefix=$(brew --prefix)
 
 # brew
 brew() {
-  PATH=/usr/bin:/bin:/usr/sbin:/sbin "$(command brew --prefix)"/bin/brew "$@"
+  "$(PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin command brew --prefix)"/bin/brew "$@"
 }
 
 # Gatekeeperを抑制するオプション(このファイルはXXからダウンロードされましたっていうダイアログが出ないようにする)

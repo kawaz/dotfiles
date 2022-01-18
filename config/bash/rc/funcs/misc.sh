@@ -25,7 +25,7 @@ scriptdir() {
 
 nsec() {
   local d
-  d=$(PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
+  d=$(PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
   if [[ $("$d" +%N) == [0-9]* ]]; then
     eval "nsec() { $d +%s%9N; }"
   else
@@ -36,7 +36,7 @@ nsec() {
 
 msec() {
   local d
-  d=$(PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
+  d=$(PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/bin:/bin type -p date)
   if [[ $EPOCHREALTIME == [0-9]* ]]; then
     msec() { [[ $EPOCHREALTIME =~ ^([0-9]+)\.([0-9][0-9][0-9]) ]] && echo "${BASH_REMATCH[1]}${BASH_REMATCH[2]}"; }
   elif [[ $("$d" +%N) == [0-9]* ]]; then
