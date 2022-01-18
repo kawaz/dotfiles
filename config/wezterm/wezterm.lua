@@ -26,8 +26,8 @@ end
 
 return {
   debug_key_events = true,
-  default_prog = {"/usr/local/bin/bash", "-l"},
-
+  -- default_prog = {"/usr/local/bin/bash", "-l"},
+  default_prog = {"/opt/homebrew/bin/bash", "-l"},
   use_ime = true,
   color_scheme = "Raycast_Dark",
   -- フォントリガチャを無効化
