@@ -84,4 +84,4 @@
   clean = perl -pe 's/^([\\s\\W]*(client_id|client_secret|token)\\s*=).*/$1 SECRET/'
 	smudge = cat
 [init]
-	defaultBranch = default
+	defaultBranch = main
