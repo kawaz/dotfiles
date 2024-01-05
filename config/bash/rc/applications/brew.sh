@@ -1,27 +1,25 @@
 # Mac以外では無視
 [[ $OSTYPE == darwin* ]] || return 0
 
-brew_prefix=$(brew --prefix)
-
-# brew
-brew() {
-  "$(PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin command brew --prefix)"/bin/brew "$@"
-}
+if [[ -z $HOMEBREW_PREFIX ]]; then
+  # shellcheck disable=SC1090
+  . <(brew shellenv)
+  # this is set HOMEBREW_PREFIX HOMEBREW_CELLAR HOMEBREW_REPOSITORY
+  # and add PATH MANPATH INFOPATH
+fi
 
 # Gatekeeperを抑制するオプション(このファイルはXXからダウンロードされましたっていうダイアログが出ないようにする)
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # coreutils
-export PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin${PATH+:$PATH}"
 
 # findutils
 alias find=gfind
 alias xargs=gxargs
 
 # bash_completion
-if [[ -f "$brew_prefix/etc/bash_completion" ]]; then
-  # shellcheck disable=SC1090
-  . "$brew_prefix/etc/bash_completion"
+if [[ -f "$HOMEBREW_PREFIX/etc/bash_completion" ]]; then
+  # shellcheck disable=SC1090,SC1091
+  . "$HOMEBREW_PREFIX/etc/bash_completion"
 fi
-
-unset -v brew_prefix
